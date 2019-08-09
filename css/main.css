@@ -209,8 +209,8 @@ span.exturl {
 }
 a:hover,
 span.exturl:hover {
-  border-bottom-color: #d5683d;
-  color: #d5683d;
+  border-bottom-color: #e55c25;
+  color: #e55c25;
 }
 video {
   display: block;
@@ -368,7 +368,7 @@ td {
 }
 html,
 body {
-  background: #586c50;
+  background: #608769;
   height: 100%;
 }
 .container {
@@ -888,8 +888,8 @@ pre .javascript .function {
   line-height: 2;
 }
 .btn:hover {
-  background: #d5683d;
-  border-color: #d5683d;
+  background: #e55c25;
+  border-color: #e55c25;
   color: #fff;
 }
 .btn +.btn {
@@ -947,7 +947,7 @@ pre .javascript .function {
 .pagination .prev:hover,
 .pagination .next:hover,
 .pagination .page-number:hover {
-  border-top-color: #d5683d;
+  border-top-color: #e55c25;
 }
 .pagination .space {
   margin: 0;
@@ -979,7 +979,7 @@ pre .javascript .function {
   .pagination .prev:hover,
   .pagination .next:hover,
   .pagination .page-number:hover {
-    border-bottom-color: #d5683d;
+    border-bottom-color: #e55c25;
   }
 }
 .comments {
@@ -996,8 +996,8 @@ pre .javascript .function {
   margin: 0.1em 0.2em;
 }
 .comment-button-group .comment-button.active {
-  background: #d5683d;
-  border-color: #d5683d;
+  background: #e55c25;
+  border-color: #e55c25;
   color: #fff;
 }
 .comment-position {
@@ -1018,7 +1018,7 @@ pre .javascript .function {
   padding-top: 0;
 }
 .back-to-top {
-  background: #d5683d;
+  background: #e55c25;
   bottom: -100px;
   box-sizing: border-box;
   color: #fff;
@@ -1055,7 +1055,7 @@ pre .javascript .function {
   position: relative;
 }
 .headband {
-  background: #d5683d;
+  background: #e55c25;
   height: 3px;
 }
 .site-meta {
@@ -1068,7 +1068,7 @@ pre .javascript .function {
   }
 }
 .brand {
-  background: #d5683d;
+  background: #e55c25;
   border-bottom: none;
   color: #fff;
   display: inline-block;
@@ -1172,7 +1172,7 @@ pre .javascript .function {
 }
 .menu .menu-item a:hover,
 .menu .menu-item span.exturl:hover {
-  border-bottom-color: #d5683d;
+  border-bottom-color: #e55c25;
 }
 .menu .menu-item .fa {
   margin-right: 5px;
@@ -1291,7 +1291,7 @@ pre .javascript .function {
   border-bottom-color: #666;
 }
 .posts-collapse .post-header:hover::before {
-  background: #d5683d;
+  background: #e55c25;
 }
 .posts-collapse .post-title {
   font-size: 1em;
@@ -1488,7 +1488,7 @@ pre .javascript .function {
 }
 .post-nav-item a:hover {
   border-bottom: none;
-  color: #d5683d;
+  color: #e55c25;
 }
 .post-nav-item a:active {
   top: 2px;
@@ -1579,7 +1579,7 @@ pre .javascript .function {
   display: none;
 }
 .sidebar {
-  background: #d5683d;
+  background: #e55c25;
   bottom: 0;
   box-shadow: inset 0 2px 6px #000;
   position: fixed;
@@ -1639,7 +1639,7 @@ pre .javascript .function {
   padding: 2px;
 }
 .site-author-name {
-  color: #d5683d;
+  color: #e55c25;
   font-weight: 600;
   margin: 0;
   text-align: center;
@@ -1664,7 +1664,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #9ef169;
+  background: #49f493;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -1776,7 +1776,7 @@ pre .javascript .function {
   display: block;
 }
 .sidebar-toggle {
-  background: #d5683d;
+  background: #e55c25;
   bottom: 45px;
   cursor: pointer;
   height: 14px;
@@ -2196,7 +2196,7 @@ ul.breadcrumb li+li:last-child {
   margin: 10px;
 }
 .tag-cloud a:hover {
-  color: #d5683d !important;
+  color: #e55c25 !important;
 }
 .header {
   margin: 0 auto;
@@ -2321,7 +2321,7 @@ ul.breadcrumb li+li:last-child {
   position: relative;
 }
 .site-meta {
-  background: #d5683d;
+  background: #e55c25;
   color: #fff;
   padding: 20px 0;
 }
@@ -2478,8 +2478,8 @@ ul.breadcrumb li+li:last-child {
 }
 .sidebar a:hover,
 .sidebar span.exturl:hover {
-  border-bottom-color: #d5683d;
-  color: #d5683d;
+  border-bottom-color: #e55c25;
+  color: #e55c25;
 }
 .sidebar-inner {
   background: #fff;
