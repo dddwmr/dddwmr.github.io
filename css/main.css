@@ -205,12 +205,19 @@ span.exturl {
   color: #555;
   outline: none;
   text-decoration: none;
-  cursor: pointer;
 }
 a:hover,
 span.exturl:hover {
   border-bottom-color: #e55c25;
   color: #e55c25;
+}
+a *,
+span.exturl * {
+  cursor: url("http://om8u46rmb.bkt.clouddn.com/sword2.ico"), auto !important;
+}
+a :active,
+span.exturl :active {
+  cursor: url("http://om8u46rmb.bkt.clouddn.com/sword1.ico"), auto !important;
 }
 video {
   display: block;
@@ -1664,7 +1671,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #49f493;
+  background: #ff4288;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
