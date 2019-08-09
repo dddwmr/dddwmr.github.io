@@ -375,7 +375,7 @@ td {
 }
 html,
 body {
-  background: #d6d9ae;
+  background: #d3d6c3;
   height: 100%;
 }
 .container {
@@ -1674,7 +1674,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #9eb3ff;
+  background: #30b1ee;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
