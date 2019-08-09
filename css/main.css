@@ -372,7 +372,7 @@ body {
 }
 html body,
 body body {
-  background: #d6d0ae;
+  background: #6bb6a1;
 }
 .container {
   position: relative;
@@ -1668,7 +1668,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #2e3b5e;
+  background: #e0ff09;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
