@@ -348,7 +348,7 @@ table {
   width: 100%;
 }
 table > tbody > tr:nth-of-type(odd) {
-  background-color: #f9f9f9;
+  background-color: #fff;
 }
 table > tbody > tr:hover {
   background-color: #f96;
@@ -1674,7 +1674,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #e4ff94;
+  background: #b9c7d0;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
