@@ -232,14 +232,14 @@ img {
   max-width: 100%;
 }
 hr {
-  background-color: #ddd;
+  background-color: #cd5c5c;
   background-image: repeating-linear-gradient(-45deg, #fff, #fff 4px, transparent 4px, transparent 8px);
   border: none;
   height: 3px;
   margin: 40px 0;
 }
 blockquote {
-  border-left: 4px solid #ddd;
+  border-left: 4px solid #cd5c5c;
   color: #666;
   margin: 0;
   padding: 0 15px;
@@ -363,8 +363,8 @@ td {
 }
 th,
 td {
-  border: 1px solid #ddd;
-  border-bottom: 3px solid #ddd;
+  border: 1px solid #cd5c5c;
+  border-bottom: 3px solid #cd5c5c;
 }
 th {
   font-weight: 700;
@@ -752,17 +752,17 @@ pre .javascript .function {
 .post-body .tabs ul.nav-tabs li.tab.active,
 .tabs-comment ul.nav-tabs li.tab.active {
   border-bottom: 1px solid transparent;
-  border-left: 1px solid #ddd;
-  border-right: 1px solid #ddd;
+  border-left: 1px solid #cd5c5c;
+  border-right: 1px solid #cd5c5c;
   border-top: 3px solid #fc6423;
 }
 @media (max-width: 413px) {
   .post-body .tabs ul.nav-tabs li.tab.active,
   .tabs-comment ul.nav-tabs li.tab.active {
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #cd5c5c;
     border-left: 3px solid #fc6423;
-    border-right: 1px solid #ddd;
-    border-top: 1px solid #ddd;
+    border-right: 1px solid #cd5c5c;
+    border-top: 1px solid #cd5c5c;
   }
 }
 .post-body .tabs ul.nav-tabs li.tab.active a,
@@ -772,7 +772,7 @@ pre .javascript .function {
 }
 .post-body .tabs .tab-content .tab-pane,
 .tabs-comment .tab-content .tab-pane {
-  border: 1px solid #ddd;
+  border: 1px solid #cd5c5c;
   padding: 20px 20px 0 20px;
 }
 .post-body .tabs .tab-content .tab-pane:not(.active),
@@ -1134,7 +1134,7 @@ pre .javascript .function {
 }
 @media (max-width: 767px) {
   .site-nav {
-    border-top: 1px solid #ddd;
+    border-top: 1px solid #cd5c5c;
     clear: both;
     display: none;
     margin: 0 -10px;
@@ -1403,7 +1403,7 @@ pre .javascript .function {
   visibility: visible;
 }
 .posts-expand .post-body img {
-  border: 1px solid #ddd;
+  border: 1px solid #cd5c5c;
   box-sizing: border-box;
   margin: 0 auto 20px;
   padding: 3px;
@@ -1674,7 +1674,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #09df7c;
+  background: #81cbff;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
