@@ -181,13 +181,13 @@
                     <h1 id="pagetitle" class="archivestitle"></h1>
                     <script>
                         if(location.href.indexOf('about')!=-1){
-                            pagetitle.textContent = '给我来十盒冰淇淋';
+                            pagetitle.textContent = '十盒冰淇淋';
                         }else if(location.href.indexOf('tags')!=-1||location.href.indexOf('categories')!=-1){
                             var a=location.href.substring(location.href.length-5,location.href.length-1);
                             if(a==='tags'){
                                 pagetitle.textContent = '标签';
                             }else if(a==='ries'){
-                                pagetitle.textContent = '分页';
+                                pagetitle.textContent = '分类';
                             }
                         }
                     </script>
