@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-08-24T08:30:01.133Z</updated>
+  <updated>2019-08-24T08:36:52.993Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,17 +21,18 @@
     <link href="http://yoursite.com/2019/08/25/insert-int0/"/>
     <id>http://yoursite.com/2019/08/25/insert-int0/</id>
     <published>2019-08-24T16:03:15.000Z</published>
-    <updated>2019-08-24T08:30:01.133Z</updated>
+    <updated>2019-08-24T08:36:52.993Z</updated>
     
-    <content type="html"><![CDATA[<p><img src="/2019/08/25/insert-int0/C:%5Chexo%5Csource_posts%5Cinsert-int0%5C1-01.png" alt="avatar"></p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+    <content type="html"><![CDATA[<p>&lt;img src=”_posts/insert-int0”,alt=”R”,width=600 height=300&gt;</p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;&lt;img src=&quot;/2019/08/25/insert-int0/C:%5Chexo%5Csource_posts%5Cinsert-int0%5C1-01.png&quot; alt=&quot;avatar&quot;&gt;&lt;/p&gt;
+        &lt;p&gt;&amp;lt;img src=”_posts/insert-int0”,alt=”R”,width=600 height=300&amp;gt;&lt;/p&gt;
 &lt;script&gt;
-        document.querySel
+        document.querySelectorAll(&#39;.github-emoji&#39;)
+       
       
     
     </summary>
