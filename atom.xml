@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-08-24T06:03:59.221Z</updated>
+  <updated>2019-08-24T06:38:56.256Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title></title>
-    <link href="http://yoursite.com/2019/08/24/Index/"/>
-    <id>http://yoursite.com/2019/08/24/Index/</id>
-    <published>2019-08-24T02:56:31.272Z</published>
-    <updated>2019-08-24T06:03:59.221Z</updated>
+    <title>insert into</title>
+    <link href="http://yoursite.com/2019/08/24/insert%20into/"/>
+    <id>http://yoursite.com/2019/08/24/insert into/</id>
+    <published>2019-08-24T00:00:00.000Z</published>
+    <updated>2019-08-24T06:38:56.256Z</updated>
     
     <content type="html"><![CDATA[<script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
     
@@ -38,6 +38,12 @@
     
     </summary>
     
+      <category term="ctfweb" scheme="http://yoursite.com/categories/ctfweb/"/>
+    
+    
+      <category term="bugku" scheme="http://yoursite.com/tags/bugku/"/>
+    
+      <category term="sql注入" scheme="http://yoursite.com/tags/sql%E6%B3%A8%E5%85%A5/"/>
     
   </entry>
   
