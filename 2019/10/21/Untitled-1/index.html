@@ -209,7 +209,7 @@
 <h3 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h3><p>经过搜索这里是phpmyadmin4.8.1远程文件包含漏洞<br>所以先看懂这个漏洞-&gt;做题</p>
 <h2 id="phpmyadmin4-8-1远程文件包含漏洞（CVE-2018-12613）"><a href="#phpmyadmin4-8-1远程文件包含漏洞（CVE-2018-12613）" class="headerlink" title="phpmyadmin4.8.1远程文件包含漏洞（CVE-2018-12613）"></a>phpmyadmin4.8.1远程文件包含漏洞（CVE-2018-12613）</h2><h3 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h3><p>一个攻击者可以在服务器上包含（查看和潜在执行）文件的漏洞被发现。该漏洞来自一部分代码，其中页面在phpMyAdmin中被重定向和加载，以及对白名单页面进行不正确的测试。攻击者必须经过身份验证，但在这些情况下除外：</p>
 <p>$_cfg [‘AllowArbitraryServer’] = true：攻击者可以指定他/她已经控制的任何主机，并在phpMyAdmin上执行任意代码</p>
-<p>$ cfg [‘ServerDefault’] = 0：这会绕过登录并在没有任何身份验证的情况下运行易受攻击的代码</p>
+<p>$_cfg [‘ServerDefault’] = 0：这会绕过登录并在没有任何身份验证的情况下运行易受攻击的代码</p>
 <h3 id="漏洞成因"><a href="#漏洞成因" class="headerlink" title="漏洞成因"></a>漏洞成因</h3><p>   在index.php里50-63行</p>
 <pre class=" language-php"><code class="language-php"><span class="token variable">$target_blacklist</span> <span class="token operator">=</span> <span class="token keyword">array</span> <span class="token punctuation">(</span>
     <span class="token string">'import.php'</span><span class="token punctuation">,</span> <span class="token string">'export.php'</span>
@@ -225,7 +225,7 @@
     <span class="token keyword">include</span> <span class="token variable">$_REQUEST</span><span class="token punctuation">[</span><span class="token string">'target'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
     exit<span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>
-<p>满足五个条件<br>$_REQUEST[‘target’]不为空,是字符串,不以index开头,不在$target_blacklist中（import.php和export.php）<br>   <strong><em>Core::checkPageValidity($REQUEST[‘target’])为真,则包含参数所指定的文件</em></strong></p>
+<p>满足五个条件<br>$_REQUEST[‘target’])不为空,是字符串,不以index开头,不在$target_blacklist中（import.php和export.php）<br>   <strong><em>Core::checkPageValidity($REQUEST[‘target’])为真,则包含参数所指定的文件</em></strong></p>
 <p>代码在libraries\classes\Core.php 443-476行</p>
 <p>Core::checkPageValidity</p>
 <pre class=" language-php"><code class="language-php"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">function</span> <span class="token function">checkPageValidity</span><span class="token punctuation">(</span><span class="token operator">&amp;</span><span class="token variable">$page</span><span class="token punctuation">,</span> <span class="token keyword">array</span> <span class="token variable">$whitelist</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
