@@ -228,7 +228,7 @@
     <span class="token keyword">include</span> <span class="token variable">$_REQUEST</span><span class="token punctuation">[</span><span class="token string">'target'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
     exit<span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>
-<p>满足五个条件:$_REQUEST[‘target’]不为空,是字符串,不以index开头,不在$target_blacklist中（import.php和export.php）<br>   <strong><em>Core::checkPageValidity($REQUEST[‘target’])为真,则包含参数所指定的文件</em></strong></p>
+<p>满足五个条件：$_REQUEST[‘target’]不为空，是字符串，不以index开头，<strong><em>Core::checkPageValidity($REQUEST[‘target’])为真,则包含参数所指定的文件</em></strong></p>
 <p>代码在libraries\classes\Core.php 443-476行</p>
 <p>Core::checkPageValidity</p>
 <pre class=" language-php"><code class="language-php"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">function</span> <span class="token function">checkPageValidity</span><span class="token punctuation">(</span><span class="token operator">&amp;</span><span class="token variable">$page</span><span class="token punctuation">,</span> <span class="token keyword">array</span> <span class="token variable">$whitelist</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
