@@ -152,7 +152,7 @@
             </div>
             <!-- Post -->
             <div class="typo" style="padding: 3rem;">
-                <h1 id="BUUCTF-WEB"><a href="#BUUCTF-WEB" class="headerlink" title="BUUCTF WEB"></a>BUUCTF WEB</h1><h2 id="HCTF2018WarmUp"><a href="#HCTF2018WarmUp" class="headerlink" title="HCTF2018WarmUp"></a>HCTF2018WarmUp</h2><p>菜鸡发现了一个平台BUUCTF，web第一题就要去查wp，哎<br>查看源码给了source.php,如下</p>
+                <h1 id="BUUCTF-WEB"><a href="#BUUCTF-WEB" class="headerlink" title="BUUCTF WEB"></a><strong>BUUCTF WEB</strong></h1><h2 id="HCTF2018WarmUp"><a href="#HCTF2018WarmUp" class="headerlink" title="HCTF2018WarmUp"></a>HCTF2018WarmUp</h2><p>菜鸡发现了一个平台BUUCTF，web第一题就要去查wp，哎<br>查看源码给了source.php,如下</p>
 <pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
     <span class="token function">highlight_file</span><span class="token punctuation">(</span><span class="token constant">__FILE__</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">class</span> <span class="token class-name">emmm</span>
@@ -225,7 +225,7 @@
     <span class="token keyword">include</span> <span class="token variable">$_REQUEST</span><span class="token punctuation">[</span><span class="token string">'target'</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
     exit<span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>
-<p>满足五个条件<br>   $_REQUEST[‘target’]不为空,是字符串,不以index开头,不在$target_blacklist中（import.php和export.php）<br>   <strong><em>Core::checkPageValidity($REQUEST[‘target’])为真,则包含参数所指定的文件</em></strong></p>
+<p>满足五个条件<br>      $_REQUEST[‘target’]不为空,是字符串,不以index开头,不在$target_blacklist中（import.php和export.php）<br>   <strong><em>Core::checkPageValidity($REQUEST[‘target’])为真,则包含参数所指定的文件</em></strong></p>
 <p>代码在libraries\classes\Core.php 443-476行</p>
 <p>Core::checkPageValidity</p>
 <pre class=" language-php"><code class="language-php"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">function</span> <span class="token function">checkPageValidity</span><span class="token punctuation">(</span><span class="token operator">&amp;</span><span class="token variable">$page</span><span class="token punctuation">,</span> <span class="token keyword">array</span> <span class="token variable">$whitelist</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
