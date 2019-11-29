@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>WWW</title>
+  <title>dWm2&#39;s Blog</title>
   
   <subtitle>W&#39;Note</subtitle>
   <link href="/atom.xml" rel="self"/>
@@ -10,7 +10,7 @@
   <id>http://dddwmr.github.io/</id>
   
   <author>
-    <name>ddd_wmr</name>
+    <name>dWm2</name>
     
   </author>
   
