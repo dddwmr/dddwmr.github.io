@@ -150,7 +150,7 @@
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
                 <i class="icon icon-lg icon-chevron-left"></i>
             </a>
-            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Búsqueda">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
                 <i class="icon icon-lg icon-search"></i>
             </a>
@@ -195,13 +195,31 @@
 <div class="container body-wrap">
     <article class="page-article fade" itemprop="blogPage">
         
-            <div class="card page-about-me flex-row">
-                <a href="/" class="avatar waves-effect waves-circle waves-light"><img src="/img/avatar.jpg"></a>
-                <div class="content flex-col">
-                    <p><strong>dWm2</strong></p>
-                    <p><em></em></p>
-                    <p>业精于勤荒于嬉，行成于思毁于随</p>
-                </div>
+            <div class="post-content page-content" id="page-content" itemprop="pageContent">
+                <p>秃头先行者 前排吃瓜人</p>
+<p>用Blog来记录我的学习进程</p>
+<p>抖抖抖王某人前来报到</p>
+<p>これから お世話に なります</p>
+<p>请多多关照呀</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
             </div>
         
 
@@ -257,7 +275,7 @@
     <div class="footer-content">
         <span class="power">
             <i class="icon icon-lg icon-copyright"></i>
-            2017
+            2019
             <i class="icon icon-lg icon-heart"></i>
             <a href="http://dddwmr.github.io">tomotoes.com</a>
             <br/>
@@ -289,7 +307,7 @@
         </span>
         <br/>
 
-        <span class="license">This blog is licensed under a <a rel="license" rel="external nofollow" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        <span class="license">Este blog está licenciado bajo una <a rel="license" rel="external nofollow" href="https://creativecommons.org/licenses/by/4.0/">licencia internacional Creative Commons Attribution 4.0</a>.</span>
     </div>
 </footer>
 
