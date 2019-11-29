@@ -49,7 +49,7 @@
 <meta property="og:site_name" content="dwm2&#39;s Home">
 <meta property="og:description" content="document.querySelectorAll(&apos;.github-emoji&apos;)           .forEach(el =&amp;gt; {             if (!el.dataset.src) { return; }             const img = document.createElement(&apos;img&apos;);             img.style">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-09T03:42:09.052Z">
+<meta property="og:updated_time" content="2019-11-29T06:17:17.330Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="分类">
 <meta name="twitter:description" content="document.querySelectorAll(&apos;.github-emoji&apos;)           .forEach(el =&amp;gt; {             if (!el.dataset.src) { return; }             const img = document.createElement(&apos;img&apos;);             img.style">
@@ -67,7 +67,7 @@
 
 <body>
     <div id="loading" class="active"></div>
-    <aside id="menu"  class="hide" >
+    <aside id="menu"   >
   <div class="inner flex-row-vertical">
     <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
         <i class="icon icon-lg icon-close"></i>
@@ -163,7 +163,7 @@
         </a>
     </div>
 </header>
-<header class="content-header page-header">
+<header class="content-header categories-header">
     
     
     <div class="container fade-scale">
@@ -193,78 +193,28 @@
 
 </header>
 
-
-<div class="container body-wrap">
-    <article class="page-article fade" itemprop="blogPage">
-        
-            <div class="post-content page-content" id="page-content" itemprop="pageContent">
-                <script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
-            </div>
-        
-
-        
-    <div class="page-reward">
-        <nav class="myreward">
-            <a id="rewardBtn" href="javascript:;"><span>打&nbsp;赏</span><span>装成好像很多人打赏的样子</span></a>
-        </nav>
-    </div>
-
-
-
-        
+<div class="container body-wrap fade">
     
-
-    
-
-    
-
-
-    </article>
-    
-<div id="reward" class="page-modal reward-lay">
-    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <h3 class="reward-title">
-        <i class="icon icon-quote-left"></i>
-        <span>感谢您的鼓励支持！</span>
-        <i class="icon icon-quote-right"></i>
-    </h3>
-    <div class="reward-content">
-        
-        <div class="reward-code">
-            <img id="rewardCode" data-img="/img/dog.jpeg" alt="打赏二维码">
+    	<h5 class="tag-tip">
+            <i class="icon icon-lg icon-th-list"></i>
+            目前共&nbsp;1&nbsp;大分类
+        </h5>
+        <div class="card-pool">
+            
+                    <a class="MyTagLink" href="/categories/ctfweb/" itemprop="url">
+    <div class="card-card">
+        <div class="card-container">
+            <span href="/categories/ctfweb/" class="card-link">ctfweb</span>
+            <span class="card-count">
+                (3)
+            </span>
         </div>
-        
-        <label class="reward-toggle">
-            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
-                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
-            <div class="reward-toggle-ctrol">
-                <span class="reward-toggle-item wechatPay">&nbsp;&nbsp;微信&nbsp;&nbsp;</span>
-                <span class="reward-toggle-item alipayPay">支付宝</span>
-            </div>
-        </label>
-        
-        <i class="icon icon-caret-up"></i>
     </div>
-</div>
+</a>
 
+                    
+        </div>
+    
 
 </div>
 
@@ -319,7 +269,7 @@
 
 <!-- 主题配置脚本 -->
 <script>
-var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
 </script>
 
 <!-- jquery -->
