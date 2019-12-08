@@ -56,7 +56,7 @@
 <meta property="og:image" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/5.png">
 <meta property="og:image" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/4.jpg">
 <meta property="og:image" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/5.jpg">
-<meta property="og:updated_time" content="2019-12-08T06:08:21.173Z">
+<meta property="og:updated_time" content="2019-12-08T06:26:21.679Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HASH长度扩展攻击">
 <meta name="twitter:description" content="HASH长度扩展攻击因为遇到了相关题目，下面以md5为例，写一下md5的工作原理和对hash扩展攻击的理解。 md5的工作原理如下图所示   其中笼统的一共可以分为四个部分 *Padding填充 *Length填充长度 *初始化向量 *复杂的函数运算（这里可以忽略） 大体概括：md5是分组加密。加密时以每512bit(64byte=&amp;gt;16个数字)为一组，从第一组开始，与四个固定的初始化向量进">
@@ -398,7 +398,7 @@ webre()</code></pre><p>hashpump库使用说明</p>
     Returns:
         A tuple containing the new hex digest and the new message.
 &gt;&gt;&gt; hashpumpy.hashpump('ffffffff', 'original_data', 'data_to_add', len('KEYKEYKEY'))
-('e3c4a05f', 'original_datadata_to_add')</code></pre><p>===》也可以用bp爆破</p>
+('e3c4a05f', 'original_datadata_to_add')</code></pre><p>===&gt; 也可以用bp爆破</p>
 <img src="/2019/11/30/md5扩展攻击/5.jpg" title="image">
 
 <p>参考：</p>
@@ -429,7 +429,7 @@ webre()</code></pre><p>hashpump库使用说明</p>
     <div class="content">
         
 <span class="post-time">
-    Última actualización<time datetime="2019-12-08T06:08:21.173Z" itemprop="dateUpdated">2019-12-08 06:08:21</time>
+    Última actualización<time datetime="2019-12-08T06:26:21.679Z" itemprop="dateUpdated">2019-12-08 06:26:21</time>
 </span>
 
 
