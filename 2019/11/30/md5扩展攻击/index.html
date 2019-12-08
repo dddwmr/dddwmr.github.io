@@ -56,7 +56,7 @@
 <meta property="og:image" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/5.png">
 <meta property="og:image" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/4.jpg">
 <meta property="og:image" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/5.jpg">
-<meta property="og:updated_time" content="2019-12-08T05:19:36.330Z">
+<meta property="og:updated_time" content="2019-12-08T05:26:32.322Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HASH长度扩展攻击">
 <meta name="twitter:description" content="HASH长度扩展攻击因为遇到了相关题目，下面以md5为例，写一下md5的工作原理和对hash扩展攻击的理解。 md5的工作原理如下图所示   其中笼统的一共可以分为四个部分 *Padding填充 *Length填充长度 *初始化向量 *复杂的函数运算（这里可以忽略） 大体概括：md5是分组加密。加密时以每512bit(64byte=&amp;gt;16个数字)为一组，从第一组开始，与四个固定的初始化向量进">
@@ -211,7 +211,7 @@
             <br id="mybreak"/>
             
 	<i class="icon icon-lg icon-folder-o"></i>
-	分类：<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/原理/">原理</a></li></ul>
+	分类：<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/攻击原理/">攻击原理</a></li></ul>
 
 
             <i>·</i>
@@ -401,8 +401,9 @@ webre()</code></pre><p>hashpump库使用说明</p>
 ('e3c4a05f', 'original_datadata_to_add')</code></pre><p>===》也可以用bp爆破</p>
 <img src="/2019/11/30/md5扩展攻击/5.jpg" title="image">
 
-
-
+<p>参考：</p>
+<p><a href="https://blog.csdn.net/qq1045553189/article/details/87566846" target="_blank" rel="noopener">https://blog.csdn.net/qq1045553189/article/details/87566846</a></p>
+<p><a href="https://err0rzz.github.io/2017/09/18/hash长度扩展攻击/" target="_blank" rel="noopener">https://err0rzz.github.io/2017/09/18/hash%E9%95%BF%E5%BA%A6%E6%89%A9%E5%B1%95%E6%94%BB%E5%87%BB/</a></p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -428,7 +429,7 @@ webre()</code></pre><p>hashpump库使用说明</p>
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2019-12-08T05:19:36.330Z" itemprop="dateUpdated">2019-12-08 05:19:36</time>
+    Last updated: <time datetime="2019-12-08T05:26:32.322Z" itemprop="dateUpdated">2019-12-08 05:26:32</time>
 </span>
 
 

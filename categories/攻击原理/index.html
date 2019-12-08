@@ -6,7 +6,7 @@
     
     
     
-    <title>归档: 2019 | dWm2&#39;s Home</title>
+    <title>分类: 攻击原理 | dWm2&#39;s Home</title>
     <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     
     <meta name="theme-color" content="white">
@@ -45,7 +45,7 @@
 <meta name="keywords" content="dWmr2">
 <meta property="og:type" content="website">
 <meta property="og:title" content="dWm2&#39;s Home">
-<meta property="og:url" content="http://dddwmr.github.io/archives/2019/index.html">
+<meta property="og:url" content="http://dddwmr.github.io/categories/攻击原理/index.html">
 <meta property="og:site_name" content="dWm2&#39;s Home">
 <meta property="og:description" content="一个彩笔">
 <meta property="og:locale" content="zh-Hans">
@@ -94,14 +94,14 @@
                   </a>
               </li>
             
-              <li class="waves-block waves-effect active">
+              <li class="waves-block waves-effect">
                   <a href="/archives"  >
                     <i class="icon icon-lg icon-archives"></i>
                     <span>归 档</span><i class="icon icon-lg icon-caret-left"></i>
                   </a>
               </li>
             
-              <li class="waves-block waves-effect">
+              <li class="waves-block waves-effect active">
                   <a href="/categories"  >
                     <i class="icon icon-lg icon-th-list"></i>
                     <span>分 类</span><i class="icon icon-lg icon-caret-left"></i>
@@ -145,7 +145,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">归档</div>
+        <div class="flex-col header-title ellipsis">分类: 攻击原理</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -162,7 +162,7 @@
         </a>
     </div>
 </header>
-<header class="content-header archives-header">
+<header class="content-header categories-header">
     
     
     <div class="container fade-scale">
@@ -172,7 +172,19 @@
             </h1>
             <h5 class="subtitle">
                 
-                    <h1 class="archivestitle">Archives</h1>
+                    <h1 id="pagetitle" class="archivestitle"></h1>
+                    <script>
+                        if(location.href.indexOf('about')!=-1){
+                            pagetitle.textContent = 'dwm2';
+                        }else if(location.href.indexOf('tags')!=-1||location.href.indexOf('categories')!=-1){
+                            var a=location.href.substring(location.href.length-5,location.href.length-1);
+                            if(a==='tags'){
+                                pagetitle.textContent = 'Tags';
+                            }else if(a==='ries'){
+                                pagetitle.textContent = 'Categories';
+                            }
+                        }
+                    </script>
                 
             </h5>
         </div>
@@ -182,23 +194,22 @@
 
 <div class="container body-wrap fade">
     
-
-    
+        
+        
+        <h5 class="tag-tip">
+            <i class="icon icon-tag"></i>
+            关于
+            <span style="color:rgb(100, 100, 100)">攻击原理</span>
+            共&nbsp;1&nbsp;篇文章</h5>
+        <div class="waterfall">
             
-            <h3 class="archive-separator">
-                <i class="icon icon-lg icon-folder-o"></i>&nbsp;&nbsp;
-                2019
-            </h3>
-            <div class="waterfall">
-    
-
-        <article class="archive-article" onclick="location.href='/2019/11/30/md5扩展攻击/'">
+                <article class="archive-article" onclick="location.href='/2019/11/30/md5扩展攻击/'">
     <div class="archive-article-date">
       
       <time class="my-post-time">
         <i class="icon icon-lg icon-file-text-o"></i>
         &nbsp;
-          11-29
+          2019-11-29
       </time>
     </div>
     <div class="archive-article-inner">
@@ -219,102 +230,12 @@
 
     </div>
   </article>
-
+            
+        </div>
     
 
-        <article class="archive-article" onclick="location.href='/2019/11/13/Jarvis OJ(web)WP/'">
-    <div class="archive-article-date">
-      
-      <time class="my-post-time">
-        <i class="icon icon-lg icon-file-text-o"></i>
-        &nbsp;
-          11-13
-      </time>
-    </div>
-    <div class="archive-article-inner">
-      
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a href="/2019/11/13/Jarvis OJ(web)WP/">jarvis OJ WEB WP</a>
-    </h3>
-  
-
-
-
-      <br/>
-      
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jarvis-OJ/">jarvis OJ</a></li></ul>
-
-    </div>
-  </article>
-
-    
-
-        <article class="archive-article" onclick="location.href='/2019/10/21/BUUCTFwp/'">
-    <div class="archive-article-date">
-      
-      <time class="my-post-time">
-        <i class="icon icon-lg icon-file-text-o"></i>
-        &nbsp;
-          10-21
-      </time>
-    </div>
-    <div class="archive-article-inner">
-      
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a href="/2019/10/21/BUUCTFwp/">BUUCTF WEB wp</a>
-    </h3>
-  
-
-
-
-      <br/>
-      
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/BUUCTF/">BUUCTF</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/代码审计/">代码审计</a></li></ul>
-
-    </div>
-  </article>
-
-    
-
-        <article class="archive-article" onclick="location.href='/2019/08/24/insert into/'">
-    <div class="archive-article-date">
-      
-      <time class="my-post-time">
-        <i class="icon icon-lg icon-file-text-o"></i>
-        &nbsp;
-          08-24
-      </time>
-    </div>
-    <div class="archive-article-inner">
-      
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a href="/2019/08/24/insert into/">insert into</a>
-    </h3>
-  
-
-
-
-      <br/>
-      
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bugku/">bugku</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sql注入/">sql注入</a></li></ul>
-
-    </div>
-  </article>
-
-    
-    </div>
-
-    
 </div>
+
 
         <footer class="footer">
     <div class="footer-content">
