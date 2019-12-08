@@ -57,7 +57,7 @@
 <meta property="og:image" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/4.jpg">
 <meta property="og:image" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/7.png">
 <meta property="og:image" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/5.jpg">
-<meta property="og:updated_time" content="2019-12-08T06:29:40.633Z">
+<meta property="og:updated_time" content="2019-12-08T06:34:25.664Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HASH长度扩展攻击">
 <meta name="twitter:description" content="HASH长度扩展攻击因为遇到了相关题目，下面以md5为例，写一下md5的工作原理和对hash扩展攻击的理解。 md5的工作原理如下图所示   其中笼统的一共可以分为四个部分 *Padding填充 *Length填充长度 *初始化向量 *复杂的函数运算（这里可以忽略） 大体概括：md5是分组加密。加密时以每512bit(64byte=&amp;gt;16个数字)为一组，从第一组开始，与四个固定的初始化向量进">
@@ -368,7 +368,7 @@ make install</code></pre><h3 id="未知salt长度"><a href="#未知salt长度" c
 <p>以上是已知条件。</p>
 <p>满足第一个条件只需要比较时$role开头是admin,接下来的字符是’\0’即可。</p>
 <p>结合条件二，就可以这样构造</p>
-<p>salt+;"tseug":5:s+padding+;"nimda":5:s </p>
+<p>s:5:”admin”;+padding+s:5:”guest”;</p>
 <p>而问题在于我们并不知道salt的长度</p>
 <p>===&gt;可以写脚本爆破(借脚本参考)</p>
 <pre><code>#!/usr/bin/python
@@ -383,7 +383,7 @@ def webre():
     string1 = ';"nimda":5:s'
     for i in range(15):
         digest, message = hashpumpy.hashpump(sha,string0,string1,i)
-        payload ={'role':urllib.quote(message[::-1]), 'hsh':digest}  // quote()用于把'\x00'都变成'%00' [::-1]用于反转字符
+        payload ={'role':urllib.quote(message[::-1]), 'hsh':digest}  // quote()用于把url编码，    [::-1]用于反转字符
         print(i,payload) 
         html = requests.get(url,cookies=payload).content 
         if 'Welcome' in html: 
@@ -432,7 +432,7 @@ webre()</code></pre><p>hashpump库使用说明</p>
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2019-12-08T06:29:40.633Z" itemprop="dateUpdated">2019-12-08 06:29:40</time>
+    Last updated: <time datetime="2019-12-08T06:34:25.664Z" itemprop="dateUpdated">2019-12-08 06:34:25</time>
 </span>
 
 
