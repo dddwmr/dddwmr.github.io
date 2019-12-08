@@ -56,7 +56,7 @@
 <meta property="og:image" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/5.png">
 <meta property="og:image" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/4.jpg">
 <meta property="og:image" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/5.jpg">
-<meta property="og:updated_time" content="2019-12-08T05:50:56.167Z">
+<meta property="og:updated_time" content="2019-12-08T06:08:21.173Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HASH长度扩展攻击">
 <meta name="twitter:description" content="HASH长度扩展攻击因为遇到了相关题目，下面以md5为例，写一下md5的工作原理和对hash扩展攻击的理解。 md5的工作原理如下图所示   其中笼统的一共可以分为四个部分 *Padding填充 *Length填充长度 *初始化向量 *复杂的函数运算（这里可以忽略） 大体概括：md5是分组加密。加密时以每512bit(64byte=&amp;gt;16个数字)为一组，从第一组开始，与四个固定的初始化向量进">
@@ -160,7 +160,7 @@
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
                 <i class="icon icon-lg icon-chevron-left"></i>
             </a>
-            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="検索">
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Búsqueda">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
                 <i class="icon icon-lg icon-search"></i>
             </a>
@@ -240,7 +240,7 @@
 <p>但是显而易见我们加密的字符大多数情况下不能正好为64byte，md5以填充的方式解决这个问题。</p>
 <h3 id="Padding填充"><a href="#Padding填充" class="headerlink" title="Padding填充"></a>Padding填充</h3><p><u><strong>填多少</strong></u></p>
 <p>md5根据消息的长度来确定填充的字节数，由于64byte中最后的8byte用来存储原消息长度，故</p>
-<p>填充后消息长度 mod 512 = <strong>448</strong> (512-8<em>8)  *</em>bit**</p>
+<p>填充后消息长度 mod 512 = 448 (512-8*8)  bit</p>
 <p>eg.如果信息是‘message’ -&gt; 7byte -&gt; 56bit，那么就填充392bit。</p>
 <p><u><strong>填啥</strong></u></p>
 <p>使用二进制补位</p>
@@ -256,7 +256,7 @@
 
 <h2 id="MD5长度扩展攻击"><a href="#MD5长度扩展攻击" class="headerlink" title="MD5长度扩展攻击"></a>MD5长度扩展攻击</h2><p>MD5拓展攻击正是针对加盐措施的一种升级后的攻击手段，我们可以在不知道盐的情况下得出加盐后的md5的值。但需要在以下条件才能实现：</p>
 <p>1.我们要知道salt的长度。(为了能得到正确的填充）<br>2.要知道任意一个由salt加密后的md5值，并且知道没有加盐的明文。<br>3.用户可以提交md5值。</p>
-<p>例如我们知道一条信息的MD5值是78e731027d8fd50ed642340b7c9a63b3，我们还同时得知信息长度为7byte，此信息如下图补位（这里的信息可以替换成salt+已知信息，这种情况下需要知道salt长度）</p>
+<p>例如我们知道一条信息的MD5值是78e731027d8fd50ed642340b7c9a63b3，我们还同时得知信息长度为7byte，此信息如下图补位（这里的信息可以替换成salt+已知信息，加盐情况下需要知道salt长度）</p>
 <img src="/2019/11/30/md5扩展攻击/3.png" title="image">
 
 <p>然后它与初始向量复杂运算，得到</p>
@@ -429,7 +429,7 @@ webre()</code></pre><p>hashpump库使用说明</p>
     <div class="content">
         
 <span class="post-time">
-    最終更新：<time datetime="2019-12-08T05:50:56.167Z" itemprop="dateUpdated">2019-12-08 05:50:56</time>
+    Última actualización<time datetime="2019-12-08T06:08:21.173Z" itemprop="dateUpdated">2019-12-08 06:08:21</time>
 </span>
 
 
@@ -573,7 +573,7 @@ webre()</code></pre><p>hashpump库使用说明</p>
         </span>
         <br/>
 
-        <span class="license">このブログの内容物は<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ja">クリエイティブ・コモンズ 表示 - 非営利 - 継承 4.0 国際ライセンスの下に提供されています</a></span>
+        <span class="license">Este blog está licenciado bajo una <a rel="license" rel="external nofollow" href="https://creativecommons.org/licenses/by/4.0/">licencia internacional Creative Commons Attribution 4.0</a>.</span>
     </div>
 </footer>
 
