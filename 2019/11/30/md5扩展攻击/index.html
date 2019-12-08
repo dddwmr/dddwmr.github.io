@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta http-equiv="Content-Language" content="zh-cn">
+    <meta charset="utf-8">
+    
+    
+    
+    <title>HASH长度扩展攻击 | dWm2&#39;s Home</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    
+    <meta name="theme-color" content="white">
+    
+    
+    <meta name="keywords" content="HASH">
+    
+    
+
+    
+
+    <!-- Baidu Push -->
+<script>
+	(function(){
+		var bp = document.createElement('script');
+		var curProtocol = window.location.protocol.split(':')[0];
+		if (curProtocol === 'https') {
+			bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+		}
+		else {
+			bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+		}
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(bp, s);
+	})();
+
+	var _hmt = _hmt || [];
+</script>
+
+
+	<script src="//hm.baidu.com/hm.js?dWm2"></script>
+
+
+    
+    <meta name="description" content="HASH长度扩展攻击因为遇到了相关题目，下面以md5为例，写一下md5的工作原理和对hash扩展攻击的理解。 md5的工作原理如下图所示   其中笼统的一共可以分为四个部分 *Padding填充 *Length填充长度 *初始化向量 *复杂的函数运算（这里可以忽略） 大体概括：md5是分组加密。加密时以每512bit(64byte=&amp;gt;16个数字)为一组，从第一组开始，与四个固定的初始化向量进">
+<meta name="keywords" content="HASH">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HASH长度扩展攻击">
+<meta property="og:url" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/index.html">
+<meta property="og:site_name" content="dWm2&#39;s Home">
+<meta property="og:description" content="HASH长度扩展攻击因为遇到了相关题目，下面以md5为例，写一下md5的工作原理和对hash扩展攻击的理解。 md5的工作原理如下图所示   其中笼统的一共可以分为四个部分 *Padding填充 *Length填充长度 *初始化向量 *复杂的函数运算（这里可以忽略） 大体概括：md5是分组加密。加密时以每512bit(64byte=&amp;gt;16个数字)为一组，从第一组开始，与四个固定的初始化向量进">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/1.png">
+<meta property="og:image" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/2.png">
+<meta property="og:image" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/3.png">
+<meta property="og:image" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/4.png">
+<meta property="og:image" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/5.png">
+<meta property="og:image" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/4.jpg">
+<meta property="og:image" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/5.jpg">
+<meta property="og:updated_time" content="2019-12-08T05:19:36.330Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HASH长度扩展攻击">
+<meta name="twitter:description" content="HASH长度扩展攻击因为遇到了相关题目，下面以md5为例，写一下md5的工作原理和对hash扩展攻击的理解。 md5的工作原理如下图所示   其中笼统的一共可以分为四个部分 *Padding填充 *Length填充长度 *初始化向量 *复杂的函数运算（这里可以忽略） 大体概括：md5是分组加密。加密时以每512bit(64byte=&amp;gt;16个数字)为一组，从第一组开始，与四个固定的初始化向量进">
+<meta name="twitter:image" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/1.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="dWm2&#39;s Home" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link id="style" rel="stylesheet" href="/css/style.css?v=3.0">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+            
+<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+    <aside id="menu"  class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" >
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg" alt="avatar">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname" id="name">dWmr2</h5>
+          
+            <div id="mymotto" class="motto"></div>
+          
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+              <li class="waves-block waves-effect">
+                  <a href="/"  >
+                    <i class="icon icon-lg icon-home"></i>
+                    <span>主 页</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/archives"  >
+                    <i class="icon icon-lg icon-archives"></i>
+                    <span>归 档</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/categories"  >
+                    <i class="icon icon-lg icon-th-list"></i>
+                    <span>分 类</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/tags"  >
+                    <i class="icon icon-lg icon-tags"></i>
+                    <span>标 签</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/about"  >
+                    <i class="icon icon-lg icon-smile-o"></i>
+                    <span>关 于</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+      <div class="nav2">
+          
+              <a class="nav2item" data-title="Github" href="https://github.com/dddwmr" target="_blank"title="Github" >
+                <i class="icon icon-lg icon-github github"></i>
+              </a>
+          
+
+            </div>
+        
+      </ul>
+        
+    </div>
+  </div>
+ 
+</aside>
+
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">HASH长度扩展攻击</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        <a href="../../atom.xml" target="_blank" class="header-icon waves-effect waves-circle waves-light" id="Rss">
+            <i class="icon icon-lg icon-rss"></i>
+        </a>
+    </div>
+</header>
+<header class="content-header post-header">
+    
+    
+    <div class="container fade-scale">
+        <div id="myheader">
+            <h1 class="title">
+                
+            </h1>
+            <h5 class="subtitle">
+                
+                
+            </h5>
+        </div>
+    </div>
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#HASH长度扩展攻击"><span class="post-toc-number">1.</span> <span class="post-toc-text">HASH长度扩展攻击</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#md5的工作原理"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">md5的工作原理</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Padding填充"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">Padding填充</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#初始化向量"><span class="post-toc-number">1.1.2.</span> <span class="post-toc-text">初始化向量</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#MD5长度扩展攻击"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">MD5长度扩展攻击</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#原理实现"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">原理实现</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#已知salt长度"><span class="post-toc-number">1.3.1.</span> <span class="post-toc-text">已知salt长度</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#null"><span class="post-toc-number">2.</span> <span class="post-toc-text">Admins Only!</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#未知salt长度"><span class="post-toc-number">2.0.1.</span> <span class="post-toc-text">未知salt长度</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+   
+<article id="post-md5扩展攻击"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">HASH长度扩展攻击</h1>
+        <div class="post-meta">
+            <i class="icon icon-lg icon-calendar-o"></i>
+            发表于
+            <time class="post-time" title="2019-11-29 21:26:59" datetime="2019-11-29T21:26:59.000Z"  itemprop="datePublished">2019-11-29</time>
+
+            <br id="mybreak"/>
+            
+	<i class="icon icon-lg icon-folder-o"></i>
+	分类：<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/原理/">原理</a></li></ul>
+
+
+            <i>·</i>
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>次浏览
+</span>
+
+
+        </div>
+        <div class="post-count-custom">
+            <i class="icon icon-lg icon-comment-o"></i>
+            阅读本文可能花费您&nbsp;<span class="post-count">4</span>&nbsp;分钟
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="HASH长度扩展攻击"><a href="#HASH长度扩展攻击" class="headerlink" title="HASH长度扩展攻击"></a>HASH长度扩展攻击</h1><p>因为遇到了相关题目，下面以md5为例，写一下md5的工作原理和对hash扩展攻击的理解。</p>
+<h2 id="md5的工作原理"><a href="#md5的工作原理" class="headerlink" title="md5的工作原理"></a>md5的工作原理</h2><p>如下图所示</p>
+<img src="/2019/11/30/md5扩展攻击/1.png" title="image">
+
+<p>其中笼统的一共可以分为四个部分</p>
+<p><strong>*Padding填充</strong></p>
+<p><strong>*Length填充长度</strong></p>
+<p><strong>*初始化向量</strong></p>
+<p><strong>*复杂的函数运算</strong>（这里可以忽略）</p>
+<p>大体概括：md5是分组加密。加密时以每512bit(64byte=&gt;16个数字)为一组，从第一组开始，与四个固定的初始化向量进行复杂运算，进而得到四个新的向量，再将<strong>计算得到的向量作为下一组运算的初始向量</strong>继续运算。</p>
+<p>但是显而易见我们加密的字符大多数情况下不能正好为64byte，md5以填充的方式解决这个问题。</p>
+<h3 id="Padding填充"><a href="#Padding填充" class="headerlink" title="Padding填充"></a>Padding填充</h3><p><u><strong>填多少</strong></u></p>
+<p>md5根据消息的长度来确定填充的字节数，由于64byte中最后的8byte用来存储原消息长度，故</p>
+<p>填充后消息长度 mod 512 = <strong>448</strong> (512-8<em>8)  *</em>bit**</p>
+<p>eg.如果信息是‘message’ -&gt; 7byte -&gt; 56bit，那么就填充392bit。</p>
+<p><u><strong>填啥</strong></u></p>
+<p>使用二进制补位</p>
+<p>10000000 …</p>
+<p>转成十六进制就是第一个字节是0x80，剩余数据用 0x00 填充。</p>
+<p>承上面那个例子，那么这里要填 0x80 + 0x00 *48</p>
+<p><strong><u>填充消息长度</u></strong></p>
+<p>这里需要注意长度是小端存储的，即高字节存放在高地址中。</p>
+<h3 id="初始化向量"><a href="#初始化向量" class="headerlink" title="初始化向量"></a>初始化向量</h3><p>A      01 23 45 67     0x67452301<br>B      89 AB CD EF  0xEFCDAB89<br>C      FE DC BA 98  0x98BADCFE<br>D      76 54 32 10     0x10325476</p>
+<p>以上是四个固定的初始化向量，他们也是小端存储。</p>
+<p>再与补位后的消息进行复杂运算后，还是上面的‘message’例子，最终得到的md5<em>值是</em>78e731027d8fd50ed642340b7c9a63b3。</p>
+<img src="/2019/11/30/md5扩展攻击/2.png" title="image">
+
+<h2 id="MD5长度扩展攻击"><a href="#MD5长度扩展攻击" class="headerlink" title="MD5长度扩展攻击"></a>MD5长度扩展攻击</h2><p>MD5拓展攻击正是针对加盐措施的一种升级后的攻击手段，我们可以在不知道盐的情况下得出加盐后的md5的值。但需要在以下条件才能实现：</p>
+<p>1.我们要知道salt的长度。(为了能得到正确的填充）<br>2.要知道任意一个由salt加密后的md5值，并且知道没有加盐的明文。<br>3.用户可以提交md5值。</p>
+<p>例如我们知道一条信息的MD5值是78e731027d8fd50ed642340b7c9a63b3，我们还同时得知信息长度为7byte，此信息如下图补位（这里的信息可以替换成salt+已知信息，这种情况下需要知道salt长度）</p>
+<img src="/2019/11/30/md5扩展攻击/3.png" title="image">
+
+<p>然后它与初始向量复杂运算，得到</p>
+<p>A=0x0231e778<br>B=0x0ed58f7d<br>C=0x0b3442d6<br>D=0xb3639a7c</p>
+<p>也就是上面的MD5值。</p>
+<p>若在已补位后的消息后继续追加字符串‘admin’，</p>
+<p>则会对其再次进行补位成为第二组。</p>
+<p>他会把上面得出的这组值作为初始向量，并与他进行复杂运算。这样会得到最终的md5值e53a681a30ff99e3f6522270ca7db244。</p>
+<p>这个值是md5（消息+填充+追加消息）。实际上就是md5(message+填充+admin)的值。</p>
+<h2 id="原理实现"><a href="#原理实现" class="headerlink" title="原理实现"></a>原理实现</h2><h3 id="已知salt长度"><a href="#已知salt长度" class="headerlink" title="已知salt长度"></a>已知salt长度</h3><p><strong>实验吧–让我进去</strong></p>
+<pre class=" language-php+HTML"><code class="language-php+HTML"><?php
+<html>
+<body>
+
+<pre>
+$flag = "XXXXXXXXXXXXXXXXXXXXXXX";
+$secret = "XXXXXXXXXXXXXXX"; // This secret is 15 characters long for security!
+
+$username = $_POST["username"];
+$password = $_POST["password"];
+
+if (!empty($_COOKIE["getmein"])) {
+    if (urldecode($username) === "admin" && urldecode($password) != "admin") {
+        if ($COOKIE["getmein"] === md5($secret . urldecode($username . $password))) {
+            echo "Congratulations! You are a registered user.\n";
+            die ("The flag is ". $flag);
+        }
+        else {
+            die ("Your cookies don't match up! STOP HACKING THIS SITE.");
+        }
+    }
+    else {
+        die ("You are not an admin! LEAVE.");
+    }
+}
+
+setcookie("sample-hash", md5($secret . urldecode("admin" . "admin")), time() + (60 * 60 * 24 * 7));
+
+if (empty($_COOKIE["source"])) {
+    setcookie("source", 0, time() + (60 * 60 * 24 * 7));
+}
+else {
+    if ($_COOKIE["source"] != 0) {
+        echo ""; // This source code is outputted here
+    }
+}
+    </pre>
+<h1>Admins Only!</h1>
+<p>If you have the correct credentials, log in below. If not, please LEAVE.</p>
+<form method="POST">
+    Username: <input type="text" name="username"> <br>
+    Password: <input type="password" name="password"> <br>
+    <button type="submit">Submit</button>
+</form>
+
+</body>
+</html></code></pre>
+<p>分析判断条件</p>
+<pre class=" language-php"><code class="language-php"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">urldecode</span><span class="token punctuation">(</span><span class="token variable">$username</span><span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token string">"admin"</span> <span class="token operator">&amp;&amp;</span> <span class="token function">urldecode</span><span class="token punctuation">(</span><span class="token variable">$password</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token string">"admin"</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$COOKIE</span><span class="token punctuation">[</span><span class="token string">"getmein"</span><span class="token punctuation">]</span> <span class="token operator">===</span> <span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$secret</span> <span class="token punctuation">.</span> <span class="token function">urldecode</span><span class="token punctuation">(</span><span class="token variable">$username</span> <span class="token punctuation">.</span> <span class="token variable">$password</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
+<p>只要user始终为admin,pw的值不为admin就可达成条件</p>
+<p>同时已知条件user=admin，pw=admin（secret+adminadmin）的 <strong>sample-hash=571580b26c65f306376d4f64e53cb5c7</strong>（从cookie得到）</p>
+<p>题中给出<strong>salt长度为15</strong></p>
+<p>这里就可以使用md5扩展攻击，在原基础上添加任意消息即可达成目的。</p>
+<p>工具hashpump</p>
+<img src="/2019/11/30/md5扩展攻击/4.png" title="image">
+
+<p>因为user值不变，也相当于salt的一部分，所以data直接填admin，salt长度为20（15+5）</p>
+<img src="/2019/11/30/md5扩展攻击/5.png" title="image">
+
+<pre><code>f599284f8f2116348036a3f46e79c12b</code></pre><p>传到cookie的getmein里</p>
+<pre><code>password=admin%80%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%c8%00%00%00%00%00%00%00dwm2</code></pre><p>由于还有个urldecode,转下码post上去得到flag。</p>
+<p>//HashPump下载</p>
+<pre><code>git clone https://github.com/bwall/HashPump
+apt-get install g++ libssl-dev
+cd HashPump
+make
+make install</code></pre><h3 id="未知salt长度"><a href="#未知salt长度" class="headerlink" title="未知salt长度"></a>未知salt长度</h3><p><strong>Jarvis OJ–flag在管理员手里</strong></p>
+<pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+                <span class="token variable">$auth</span> <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+                <span class="token variable">$role</span> <span class="token operator">=</span> <span class="token string">"guest"</span><span class="token punctuation">;</span>
+                <span class="token variable">$salt</span> <span class="token operator">=</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isset</span><span class="token punctuation">(</span><span class="token variable">$_COOKIE</span><span class="token punctuation">[</span><span class="token string">"role"</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                        <span class="token variable">$role</span> <span class="token operator">=</span> <span class="token function">unserialize</span><span class="token punctuation">(</span><span class="token variable">$_COOKIE</span><span class="token punctuation">[</span><span class="token string">"role"</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//需要传入被序列化的数据</span>
+                        <span class="token variable">$hsh</span> <span class="token operator">=</span> <span class="token variable">$_COOKIE</span><span class="token punctuation">[</span><span class="token string">"hsh"</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+                        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$role</span><span class="token operator">===</span><span class="token string">"admin"</span> <span class="token operator">&amp;&amp;</span> <span class="token variable">$hsh</span> <span class="token operator">===</span> <span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$salt</span><span class="token punctuation">.</span><span class="token function">strrev</span><span class="token punctuation">(</span><span class="token variable">$_COOKIE</span><span class="token punctuation">[</span><span class="token string">"role"</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>     <span class="token comment" spellcheck="true">//strrve函数反转字符串</span>
+                                <span class="token variable">$auth</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+                        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                                <span class="token variable">$auth</span> <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+                        <span class="token punctuation">}</span>
+                <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                        <span class="token variable">$s</span> <span class="token operator">=</span> <span class="token function">serialize</span><span class="token punctuation">(</span><span class="token variable">$role</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token function">setcookie</span><span class="token punctuation">(</span><span class="token string">'role'</span><span class="token punctuation">,</span><span class="token variable">$s</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token variable">$hsh</span> <span class="token operator">=</span> <span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$salt</span><span class="token punctuation">.</span><span class="token function">strrev</span><span class="token punctuation">(</span><span class="token variable">$s</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token function">setcookie</span><span class="token punctuation">(</span><span class="token string">'hsh'</span><span class="token punctuation">,</span><span class="token variable">$hsh</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$auth</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                        <span class="token keyword">echo</span> "<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h3</span><span class="token punctuation">></span></span></span>Welcome Admin<span class="token punctuation">.</span> Your flag is
+                <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                        <span class="token keyword">echo</span> <span class="token string">"&lt;h3>Only Admin can see the flag!!&lt;/h3>"</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+        <span class="token delimiter">?></span> <span class="token comment" spellcheck="true">//只截取了PHP部分</span>
+</code></pre>
+<p>分析代码，flag输出条件是 $role===”admin” &amp;&amp;hsh===md5($salt.strrev($_COOKIE[“role”]))</p>
+<img src="/2019/11/30/md5扩展攻击/4.jpg" title="image">
+
+<p>这里得到<strong>$salt.strrev(s:5:”guest”;)</strong>的hsh，即$salt.’;"tseug":5:s’的md5值： hsh=3a4727d57463f122833d9e732f94e4e0</p>
+<p>以上是已知条件。</p>
+<p>满足第一个条件只需要比较时$role开头是admin,接下来的字符是’\0’即可。</p>
+<p>结合条件二，就可以这样构造</p>
+<p>salt+;"tseug":5:s+padding+;"nimda":5:s </p>
+<p>而问题在于我们并不知道salt的长度</p>
+<p>===&gt;可以写脚本爆破(借脚本参考)</p>
+<pre><code>#!/usr/bin/python
+# -*- coding=utf -*-
+import requests,hashpumpy,urllib
+
+
+def webre():
+    url = 'http://web.jarvisoj.com:32778/'
+    sha = '3a4727d57463f122833d9e732f94e4e0'
+    string0 = ';"tseug":5:s'
+    string1 = ';"nimda":5:s'
+    for i in range(15):
+        digest, message = hashpumpy.hashpump(sha,string0,string1,i)
+        payload ={'role':urllib.quote(message[::-1]), 'hsh':digest}  # quote()用于把'\x00'都变成'%00' [::-1]用于反转字符
+        print(i,payload) 
+        html = requests.get(url,cookies=payload).content 
+        if 'Welcome' in html: 
+            print(html)
+webre()</code></pre><p>hashpump库使用说明</p>
+<pre><code>hashpump(...)
+    hashpump(hexdigest, original_data, data_to_add, key_length) -&gt; (digest, message)
+    Arguments:
+        hexdigest(str):      Hex-encoded result of hashing key + original_data.
+        original_data(str):  Known data used to get the hash result hexdigest.
+        data_to_add(str):    Data to append
+        key_length(int):     Length of unknown data prepended to the hash
+    Returns:
+        A tuple containing the new hex digest and the new message.
+&gt;&gt;&gt; hashpumpy.hashpump('ffffffff', 'original_data', 'data_to_add', len('KEYKEYKEY'))
+('e3c4a05f', 'original_datadata_to_add')</code></pre><p>===》也可以用bp爆破</p>
+<img src="/2019/11/30/md5扩展攻击/5.jpg" title="image">
+
+
+
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2019-12-08T05:19:36.330Z" itemprop="dateUpdated">2019-12-08 05:19:36</time>
+</span>
+
+
+        
+        原文链接：<a href="/2019/11/30/md5扩展攻击/" target="_blank" rel="external">http://dddwmr.github.io/2019/11/30/md5扩展攻击/</a>
+        
+    </div>
+    <footer>
+        <div onclick="location.href='http://dddwmr.github.io'">
+            <img src="/img/avatar.jpg" alt="dWmr2">
+            <a>dWmr2</a>
+        </div>
+    </footer>
+</blockquote>
+
+        
+    <div class="page-reward">
+        <nav class="myreward">
+            <a id="rewardBtn" href="javascript:;"><span>打&nbsp;赏</span><span>装成好像很多人打赏的样子</span></a>
+        </nav>
+    </div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HASH/">HASH</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://dddwmr.github.io/2019/11/30/md5扩展攻击/&title=《HASH长度扩展攻击》 — dWm2's Home&pic=http://dddwmr.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://dddwmr.github.io/2019/11/30/md5扩展攻击/&title=《HASH长度扩展攻击》 — dWm2's Home&source=一个彩笔" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://dddwmr.github.io/2019/11/30/md5扩展攻击/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《HASH长度扩展攻击》 — dWm2's Home&url=http://dddwmr.github.io/2019/11/30/md5扩展攻击/&via=http://dddwmr.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://dddwmr.github.io/2019/11/30/md5扩展攻击/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/11/13/Jarvis OJ(web)WP/" id="post-next" class="post-nav-link">
+        <h4 class="title" data-hover="下一篇：jarvis OJ WEB WP">下一篇：jarvis OJ WEB WP</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+    
+
+    
+
+    
+
+
+</article>
+
+</div>
+
+        <footer class="footer">
+    <div class="footer-content">
+        <span class="power">
+            <i class="icon icon-lg icon-copyright"></i>
+            2019
+            <i class="icon icon-lg icon-heart"></i>
+            <a href="http://dddwmr.github.io">dddwmr.cn</a>
+            <br/>
+            Power by
+            <a href="https://hexo.io/" target="_blank" rel="external nofollow">Hexo</a>&nbsp;·&nbsp;
+            Theme
+            <a class="tomotoeslink" href="https://github.com/tomotoes/hexo-theme-tomotoes/" target="_blank" rel="external nofollow">tomotoes</a>
+        </span>
+
+        <br/>
+
+        <span id="RunTime" style="color:#a7a7a2;"></span>
+        <br/>
+
+        <span>
+            
+	<i class="icon icon-lg icon-user">
+<span id="busuanzi_container_site_uv" style='display:none'>
+       <span id="busuanzi_value_site_uv"></span>
+    </span>人</i>
+    ·
+    <i class="icon icon-lg icon-eye">
+    <span id="busuanzi_container_site_pv" style='display:none'>
+      访问次数：<span id="busuanzi_value_site_pv"></span><span id="busuanzi_value_site_pv"></span>
+    </span>次
+    </i>
+
+
+        </span>
+        <br/>
+
+        <span class="license">This blog is licensed under a <a rel="license" rel="external nofollow" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+    </div>
+</footer>
+
+    </main>
+    
+        
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        <span>感谢您的鼓励支持！</span>
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" data-img="/img/dog.jpeg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.png" data-alipay="/img/alipay.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechatPay">&nbsp;&nbsp;微信&nbsp;&nbsp;</span>
+                <span class="reward-toggle-item alipayPay">支付宝</span>
+            </div>
+        </label>
+        
+        <i class="icon icon-caret-up"></i>
+    </div>
+</div>
+
+
+    
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://dddwmr.github.io/2019/11/30/md5扩展攻击/&title=《HASH长度扩展攻击》 — dWm2's Home&pic=http://dddwmr.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://dddwmr.github.io/2019/11/30/md5扩展攻击/&title=《HASH长度扩展攻击》 — dWm2's Home&source=一个彩笔" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://dddwmr.github.io/2019/11/30/md5扩展攻击/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《HASH长度扩展攻击》 — dWm2's Home&url=http://dddwmr.github.io/2019/11/30/md5扩展攻击/&via=http://dddwmr.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://dddwmr.github.io/2019/11/30/md5扩展攻击/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p class="wechatshare">扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACLElEQVR42u3aQW7DMAxEUd//0u62QCN5hiMXEfW1MgLH0cuCJkVel7zuX+vv56Pr0bdGTxh9smzBgAFjW8Y9XXNGjTp6vnL/cCcwYMA4gDEPhfn1iKcH8Yc9w4ABA4awCT04zpEwYMCAsTbg6sXnfLv6PTBgwDiZoRSx+XmXmyy+UovDgAFjQ4Z+6v7/16/0N2DAgLEV4zZXLUDPQ+QdLxgwYPRmJGlf3qSsDWcM/xoYMGC0ZiS3umWq2+yMSlYYMGA0Yry3XTdku63ND+8NGDBgNGUkh/LJqMSqhgQMGDBOYOi31gC1gzw7cMOAAaMpwy0ykyM2JcV0n3a5W4QBA8a2DLfdmHxXQc7D9If7YcCA0ZqRbE4vaPWELymeYcCA0ZVhhDM5RCZHe8pvPXQ2YMCA0Y6hF7S1JmUtWVRIdnsABgwY2zLcgJuH6VoK+JDCwoABozUjiVfu8FZy3GZPi8CAAaMdQ08WVzUD3M+L2S4MGDCOYditxNLRv5tcRu8TGDBgbMhImpF6p1QfCKtdw4AB4wRGLSwmA2R6cJfeEjBgwDiMoW/RbYgmgxoPPBgwYDRl3OZy2wn50Jid28KAAaMdIz9dX5utueXrsiYBDBgwvp5RG8+qhUU99bTbmTBgwDiA8V78dgcyaokjDBgwYCTBtzY8YR/2wYABA4Y7+hAsfVBsccCFAQPG1zP00KkXlm7i6B7kwYAB4xxGEgSTn1f+glVtURgwYGzL+AG5MNsZXlh8ngAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <!-- waves按钮特效 -->
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<!-- 主题配置脚本 -->
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+</script>
+
+<!-- jquery -->
+<script src="/js/jquery.min.js?v=3.0"></script>
+
+<!-- 搜索 -->
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item waves-block waves-effect" onclick="location.href='{path}'">
+    <div class="title ellipsis" title="{title}">{title}</div>
+</li>
+</template>
+
+
+<!-- main博客脚本 -->
+<script src="/js/main.min.js?v=3.0" ></script>
+
+<!-- 动画&配置 -->
+<script src="/js/script.min.js?v=3.0" ></script>
+
+<!-- 脚本管理 -->
+<script>
+
+if(window.innerWidth > 800){
+	/* 3D标题 */
+	$(".content-header").on("mousemove", threedee);
+
+	/* 底部追随鼠标 */
+	$(".footer").hover(2);
+
+	/* gotop键的涟漪 */
+	$("#gotop").hover(1);
+
+	/* 赞赏的粒子雨 */
+	$("#reward").hover(3);
+
+	/* 微信公众号的底部渲染 */
+	$("#wechat").hover(4);
+
+    /* 标题跳动 */
+    $(".archivestitle").bumpyText();
+
+	/* 图片点击放大 */
+	const postimg = jQuery(".post-content img:not(.github-emoji)");
+	postimg.on("click",function(){
+
+		mask.classList.add("in");
+		main.classList.add("Mask");
+		menu.classList.add("Mask");
+		var myimg = this.cloneNode(true);
+		myimg.classList.add("imgShow");
+
+		setTimeout(function(){
+			jQuery(myimg).animate({
+				opacity:"1"
+			},1000);
+		},0);
+
+		document.body.appendChild(myimg);
+
+		myimg.onclick=function(){
+			document.body.removeChild(myimg);
+			mask.classList.remove("in");
+			main.classList.remove("Mask");
+			menu.classList.remove("Mask");
+		};
+
+	});
+
+}
+
+/* 名字跳动 */
+$("#name").bumpyText();
+
+
+/* 网站运行时间 */
+setInterval(function () {
+	setTime("2019/10/11");
+}, 1000);
+
+/* 文章块的淡出 */
+postshow();
+
+/* 座右铭 */
+
+    elasticText({
+        id: "mymotto",
+        duration: 100,
+        effact: "easeOut",
+        content: ""
+    });
+
+
+
+/* 粘贴提示 */
+G($(".post-content"), location.href, "dWmr2");
+
+
+/* 控制台 */
+if (window.console && window.console.log) {
+	setTimeout(function () {
+		console.log("\n %c 一个坏掉的番茄 %c  © Simon Ma  http://tomotoes.com \n\n", "color:#FFFFFB;background:#1abc9c;padding:5px 0;border-radius:.5rem 0 0 .5rem;", "color:#FFFFFB;background:#080808;padding:5px 0;border-radius:0 .5rem .5rem 0;");
+	}, 0);
+}
+
+</script>
+
+
+
+
+<!-- 公式渲染 -->
+
+
+
+<!-- 不蒜子 -->
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+</body>
+</html>
