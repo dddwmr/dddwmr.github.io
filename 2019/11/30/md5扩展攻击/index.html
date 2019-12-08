@@ -56,7 +56,7 @@
 <meta property="og:image" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/5.png">
 <meta property="og:image" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/4.jpg">
 <meta property="og:image" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/5.jpg">
-<meta property="og:updated_time" content="2019-12-08T05:26:32.322Z">
+<meta property="og:updated_time" content="2019-12-08T05:50:56.167Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HASH长度扩展攻击">
 <meta name="twitter:description" content="HASH长度扩展攻击因为遇到了相关题目，下面以md5为例，写一下md5的工作原理和对hash扩展攻击的理解。 md5的工作原理如下图所示   其中笼统的一共可以分为四个部分 *Padding填充 *Length填充长度 *初始化向量 *复杂的函数运算（这里可以忽略） 大体概括：md5是分组加密。加密时以每512bit(64byte=&amp;gt;16个数字)为一组，从第一组开始，与四个固定的初始化向量进">
@@ -160,7 +160,7 @@
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
                 <i class="icon icon-lg icon-chevron-left"></i>
             </a>
-            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="検索">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
                 <i class="icon icon-lg icon-search"></i>
             </a>
@@ -194,7 +194,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#HASH长度扩展攻击"><span class="post-toc-number">1.</span> <span class="post-toc-text">HASH长度扩展攻击</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#md5的工作原理"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">md5的工作原理</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Padding填充"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">Padding填充</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#初始化向量"><span class="post-toc-number">1.1.2.</span> <span class="post-toc-text">初始化向量</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#MD5长度扩展攻击"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">MD5长度扩展攻击</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#原理实现"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">原理实现</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#已知salt长度"><span class="post-toc-number">1.3.1.</span> <span class="post-toc-text">已知salt长度</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#null"><span class="post-toc-number">2.</span> <span class="post-toc-text">Admins Only!</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#未知salt长度"><span class="post-toc-number">2.0.1.</span> <span class="post-toc-text">未知salt长度</span></a></li></ol></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#HASH长度扩展攻击"><span class="post-toc-number">1.</span> <span class="post-toc-text">HASH长度扩展攻击</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#md5的工作原理"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">md5的工作原理</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Padding填充"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">Padding填充</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#初始化向量"><span class="post-toc-number">1.1.2.</span> <span class="post-toc-text">初始化向量</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#MD5长度扩展攻击"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">MD5长度扩展攻击</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#原理实现"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">原理实现</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#已知salt长度"><span class="post-toc-number">1.3.1.</span> <span class="post-toc-text">已知salt长度</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#未知salt长度"><span class="post-toc-number">1.3.2.</span> <span class="post-toc-text">未知salt长度</span></a></li></ol></li></ol></li></ol>
         </nav>
     </aside>
    
@@ -224,7 +224,7 @@
         </div>
         <div class="post-count-custom">
             <i class="icon icon-lg icon-comment-o"></i>
-            阅读本文可能花费您&nbsp;<span class="post-count">4</span>&nbsp;分钟
+            阅读本文可能花费您&nbsp;<span class="post-count">7</span>&nbsp;分钟
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
             <h1 id="HASH长度扩展攻击"><a href="#HASH长度扩展攻击" class="headerlink" title="HASH长度扩展攻击"></a>HASH长度扩展攻击</h1><p>因为遇到了相关题目，下面以md5为例，写一下md5的工作原理和对hash扩展攻击的理解。</p>
@@ -267,53 +267,53 @@
 <p>他会把上面得出的这组值作为初始向量，并与他进行复杂运算。这样会得到最终的md5值e53a681a30ff99e3f6522270ca7db244。</p>
 <p>这个值是md5（消息+填充+追加消息）。实际上就是md5(message+填充+admin)的值。</p>
 <h2 id="原理实现"><a href="#原理实现" class="headerlink" title="原理实现"></a>原理实现</h2><h3 id="已知salt长度"><a href="#已知salt长度" class="headerlink" title="已知salt长度"></a>已知salt长度</h3><p><strong>实验吧–让我进去</strong></p>
-<pre class=" language-php+HTML"><code class="language-php+HTML"><?php
-<html>
-<body>
+<pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">></span></span></span>
+<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span></span>
 
-<pre>
-$flag = "XXXXXXXXXXXXXXXXXXXXXXX";
-$secret = "XXXXXXXXXXXXXXX"; // This secret is 15 characters long for security!
+<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>pre</span><span class="token punctuation">></span></span></span>
+<span class="token variable">$flag</span> <span class="token operator">=</span> <span class="token string">"XXXXXXXXXXXXXXXXXXXXXXX"</span><span class="token punctuation">;</span>
+<span class="token variable">$secret</span> <span class="token operator">=</span> <span class="token string">"XXXXXXXXXXXXXXX"</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// This secret is 15 characters long for security!</span>
 
-$username = $_POST["username"];
-$password = $_POST["password"];
+<span class="token variable">$username</span> <span class="token operator">=</span> <span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string">"username"</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$password</span> <span class="token operator">=</span> <span class="token variable">$_POST</span><span class="token punctuation">[</span><span class="token string">"password"</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
 
-if (!empty($_COOKIE["getmein"])) {
-    if (urldecode($username) === "admin" && urldecode($password) != "admin") {
-        if ($COOKIE["getmein"] === md5($secret . urldecode($username . $password))) {
-            echo "Congratulations! You are a registered user.\n";
-            die ("The flag is ". $flag);
-        }
-        else {
-            die ("Your cookies don't match up! STOP HACKING THIS SITE.");
-        }
-    }
-    else {
-        die ("You are not an admin! LEAVE.");
-    }
-}
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token variable">$_COOKIE</span><span class="token punctuation">[</span><span class="token string">"getmein"</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">urldecode</span><span class="token punctuation">(</span><span class="token variable">$username</span><span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token string">"admin"</span> <span class="token operator">&amp;&amp;</span> <span class="token function">urldecode</span><span class="token punctuation">(</span><span class="token variable">$password</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token string">"admin"</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$COOKIE</span><span class="token punctuation">[</span><span class="token string">"getmein"</span><span class="token punctuation">]</span> <span class="token operator">===</span> <span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$secret</span> <span class="token punctuation">.</span> <span class="token function">urldecode</span><span class="token punctuation">(</span><span class="token variable">$username</span> <span class="token punctuation">.</span> <span class="token variable">$password</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">echo</span> <span class="token string">"Congratulations! You are a registered user.\n"</span><span class="token punctuation">;</span>
+            <span class="token keyword">die</span> <span class="token punctuation">(</span><span class="token string">"The flag is "</span><span class="token punctuation">.</span> <span class="token variable">$flag</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            <span class="token keyword">die</span> <span class="token punctuation">(</span><span class="token string">"Your cookies don't match up! STOP HACKING THIS SITE."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token keyword">die</span> <span class="token punctuation">(</span><span class="token string">"You are not an admin! LEAVE."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 
-setcookie("sample-hash", md5($secret . urldecode("admin" . "admin")), time() + (60 * 60 * 24 * 7));
+<span class="token function">setcookie</span><span class="token punctuation">(</span><span class="token string">"sample-hash"</span><span class="token punctuation">,</span> <span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$secret</span> <span class="token punctuation">.</span> <span class="token function">urldecode</span><span class="token punctuation">(</span><span class="token string">"admin"</span> <span class="token punctuation">.</span> <span class="token string">"admin"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">time</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token number">60</span> <span class="token operator">*</span> <span class="token number">60</span> <span class="token operator">*</span> <span class="token number">24</span> <span class="token operator">*</span> <span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-if (empty($_COOKIE["source"])) {
-    setcookie("source", 0, time() + (60 * 60 * 24 * 7));
-}
-else {
-    if ($_COOKIE["source"] != 0) {
-        echo ""; // This source code is outputted here
-    }
-}
-    </pre>
-<h1>Admins Only!</h1>
-<p>If you have the correct credentials, log in below. If not, please LEAVE.</p>
-<form method="POST">
-    Username: <input type="text" name="username"> <br>
-    Password: <input type="password" name="password"> <br>
-    <button type="submit">Submit</button>
-</form>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token variable">$_COOKIE</span><span class="token punctuation">[</span><span class="token string">"source"</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">setcookie</span><span class="token punctuation">(</span><span class="token string">"source"</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token function">time</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token number">60</span> <span class="token operator">*</span> <span class="token number">60</span> <span class="token operator">*</span> <span class="token number">24</span> <span class="token operator">*</span> <span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">else</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$_COOKIE</span><span class="token punctuation">[</span><span class="token string">"source"</span><span class="token punctuation">]</span> <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">echo</span> <span class="token string">""</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// This source code is outputted here</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+    <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>pre</span><span class="token punctuation">></span></span></span>
+<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>h1</span><span class="token punctuation">></span></span></span>Admins Only<span class="token operator">!</span><span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>h1</span><span class="token punctuation">></span></span></span>
+<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span></span><span class="token keyword">If</span> you have the correct credentials<span class="token punctuation">,</span> log in below<span class="token punctuation">.</span> <span class="token keyword">If</span> not<span class="token punctuation">,</span> please <span class="token constant">LEAVE</span><span class="token punctuation">.</span><span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span></span>
+<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>form</span> <span class="token attr-name">method</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>POST<span class="token punctuation">"</span></span><span class="token punctuation">></span></span></span>
+    Username<span class="token punctuation">:</span> <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>username<span class="token punctuation">"</span></span><span class="token punctuation">></span></span></span> <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span><span class="token punctuation">></span></span></span>
+    Password<span class="token punctuation">:</span> <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>password<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>password<span class="token punctuation">"</span></span><span class="token punctuation">></span></span></span> <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>br</span><span class="token punctuation">></span></span></span>
+    <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>submit<span class="token punctuation">"</span></span><span class="token punctuation">></span></span></span>Submit<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">></span></span></span>
+<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>form</span><span class="token punctuation">></span></span></span>
 
-</body>
-</html></code></pre>
+<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span></span>
+<span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span></span></code></pre>
 <p>分析判断条件</p>
 <pre class=" language-php"><code class="language-php"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">urldecode</span><span class="token punctuation">(</span><span class="token variable">$username</span><span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token string">"admin"</span> <span class="token operator">&amp;&amp;</span> <span class="token function">urldecode</span><span class="token punctuation">(</span><span class="token variable">$password</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token string">"admin"</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
         <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$COOKIE</span><span class="token punctuation">[</span><span class="token string">"getmein"</span><span class="token punctuation">]</span> <span class="token operator">===</span> <span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$secret</span> <span class="token punctuation">.</span> <span class="token function">urldecode</span><span class="token punctuation">(</span><span class="token variable">$username</span> <span class="token punctuation">.</span> <span class="token variable">$password</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
@@ -429,7 +429,7 @@ webre()</code></pre><p>hashpump库使用说明</p>
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2019-12-08T05:26:32.322Z" itemprop="dateUpdated">2019-12-08 05:26:32</time>
+    最終更新：<time datetime="2019-12-08T05:50:56.167Z" itemprop="dateUpdated">2019-12-08 05:50:56</time>
 </span>
 
 
@@ -573,7 +573,7 @@ webre()</code></pre><p>hashpump库使用说明</p>
         </span>
         <br/>
 
-        <span class="license">This blog is licensed under a <a rel="license" rel="external nofollow" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</span>
+        <span class="license">このブログの内容物は<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ja">クリエイティブ・コモンズ 表示 - 非営利 - 継承 4.0 国際ライセンスの下に提供されています</a></span>
     </div>
 </footer>
 
