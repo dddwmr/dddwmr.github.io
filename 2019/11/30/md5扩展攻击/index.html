@@ -41,13 +41,13 @@
 
 
     
-    <meta name="description" content="HASH长度扩展攻击因为遇到了相关题目，下面以md5为例，写一下md5的工作原理和对hash扩展攻击的理解。 md5的工作原理如下图所示   其中笼统的一共可以分为四个部分 *Padding填充 *Length填充长度 *初始化向量 *复杂的函数运算（这里可以忽略） 大体概括：md5是分组加密。加密时以每512bit(64byte=&amp;gt;16个数字)为一组，从第一组开始，与四个固定的初始化向量进">
+    <meta name="description" content="因为遇到了相关题目，下面以md5为例，写一下md5的工作原理和对hash扩展攻击的理解。 md5的工作原理如下图所示   其中笼统的一共可以分为四个部分 *Padding填充 *Length填充长度 *初始化向量 *复杂的函数运算（这里可以忽略） 大体概括：md5是分组加密。加密时以每512bit(64byte=&amp;gt;16个数字)为一组，从第一组开始，与四个固定的初始化向量进行复杂运算，进而得到">
 <meta name="keywords" content="HASH">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HASH长度扩展攻击">
 <meta property="og:url" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/index.html">
 <meta property="og:site_name" content="dWm2&#39;s Home">
-<meta property="og:description" content="HASH长度扩展攻击因为遇到了相关题目，下面以md5为例，写一下md5的工作原理和对hash扩展攻击的理解。 md5的工作原理如下图所示   其中笼统的一共可以分为四个部分 *Padding填充 *Length填充长度 *初始化向量 *复杂的函数运算（这里可以忽略） 大体概括：md5是分组加密。加密时以每512bit(64byte=&amp;gt;16个数字)为一组，从第一组开始，与四个固定的初始化向量进">
+<meta property="og:description" content="因为遇到了相关题目，下面以md5为例，写一下md5的工作原理和对hash扩展攻击的理解。 md5的工作原理如下图所示   其中笼统的一共可以分为四个部分 *Padding填充 *Length填充长度 *初始化向量 *复杂的函数运算（这里可以忽略） 大体概括：md5是分组加密。加密时以每512bit(64byte=&amp;gt;16个数字)为一组，从第一组开始，与四个固定的初始化向量进行复杂运算，进而得到">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/1.png">
 <meta property="og:image" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/2.png">
@@ -57,10 +57,10 @@
 <meta property="og:image" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/4.jpg">
 <meta property="og:image" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/7.png">
 <meta property="og:image" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/5.jpg">
-<meta property="og:updated_time" content="2019-12-08T07:32:50.229Z">
+<meta property="og:updated_time" content="2019-12-09T02:42:51.259Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HASH长度扩展攻击">
-<meta name="twitter:description" content="HASH长度扩展攻击因为遇到了相关题目，下面以md5为例，写一下md5的工作原理和对hash扩展攻击的理解。 md5的工作原理如下图所示   其中笼统的一共可以分为四个部分 *Padding填充 *Length填充长度 *初始化向量 *复杂的函数运算（这里可以忽略） 大体概括：md5是分组加密。加密时以每512bit(64byte=&amp;gt;16个数字)为一组，从第一组开始，与四个固定的初始化向量进">
+<meta name="twitter:description" content="因为遇到了相关题目，下面以md5为例，写一下md5的工作原理和对hash扩展攻击的理解。 md5的工作原理如下图所示   其中笼统的一共可以分为四个部分 *Padding填充 *Length填充长度 *初始化向量 *复杂的函数运算（这里可以忽略） 大体概括：md5是分组加密。加密时以每512bit(64byte=&amp;gt;16个数字)为一组，从第一组开始，与四个固定的初始化向量进行复杂运算，进而得到">
 <meta name="twitter:image" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/1.png">
     
         <link rel="alternate" type="application/atom+xml" title="dWm2&#39;s Home" href="/atom.xml">
@@ -195,7 +195,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#HASH长度扩展攻击"><span class="post-toc-text">HASH长度扩展攻击</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#md5的工作原理"><span class="post-toc-text">md5的工作原理</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Padding填充"><span class="post-toc-text">Padding填充</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#初始化向量"><span class="post-toc-text">初始化向量</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#MD5长度扩展攻击"><span class="post-toc-text">MD5长度扩展攻击</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#原理实现"><span class="post-toc-text">原理实现</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#已知salt长度"><span class="post-toc-text">已知salt长度</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#未知salt长度"><span class="post-toc-text">未知salt长度</span></a></li></ol></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#md5的工作原理"><span class="post-toc-text">md5的工作原理</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Padding填充"><span class="post-toc-text">Padding填充</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#初始化向量"><span class="post-toc-text">初始化向量</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#MD5长度扩展攻击"><span class="post-toc-text">MD5长度扩展攻击</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#攻击原理"><span class="post-toc-text">攻击原理</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#原理实现"><span class="post-toc-text">原理实现</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#已知salt长度"><span class="post-toc-text">已知salt长度</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#未知salt长度"><span class="post-toc-text">未知salt长度</span></a></li></ol></li></ol></li></ol>
         </nav>
     </aside>
    
@@ -228,8 +228,8 @@
             阅读本文可能花费您&nbsp;<span class="post-count">7</span>&nbsp;分钟
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <h1 id="HASH长度扩展攻击"><a href="#HASH长度扩展攻击" class="headerlink" title="HASH长度扩展攻击"></a>HASH长度扩展攻击</h1><p>因为遇到了相关题目，下面以md5为例，写一下md5的工作原理和对hash扩展攻击的理解。</p>
-<h2 id="md5的工作原理"><a href="#md5的工作原理" class="headerlink" title="md5的工作原理"></a>md5的工作原理</h2><p>如下图所示</p>
+            <p>因为遇到了相关题目，下面以md5为例，写一下md5的工作原理和对hash扩展攻击的理解。</p>
+<h1 id="md5的工作原理"><a href="#md5的工作原理" class="headerlink" title="md5的工作原理"></a>md5的工作原理</h1><p>如下图所示</p>
 <img src="/2019/11/30/md5扩展攻击/1.png" title="image">
 
 <p>其中笼统的一共可以分为四个部分</p>
@@ -239,7 +239,7 @@
 <p><strong>*复杂的函数运算</strong>（这里可以忽略）</p>
 <p>大体概括：md5是分组加密。加密时以每512bit(64byte=&gt;16个数字)为一组，从第一组开始，与四个固定的初始化向量进行复杂运算，进而得到四个新的向量，再将<strong>计算得到的向量作为下一组运算的初始向量</strong>继续运算。</p>
 <p>但是显而易见我们加密的字符大多数情况下不能正好为64byte，md5以填充的方式解决这个问题。</p>
-<h3 id="Padding填充"><a href="#Padding填充" class="headerlink" title="Padding填充"></a>Padding填充</h3><p><u><strong>填多少</strong></u></p>
+<h2 id="Padding填充"><a href="#Padding填充" class="headerlink" title="Padding填充"></a>Padding填充</h2><p><u><strong>填多少</strong></u></p>
 <p>md5根据消息的长度来确定填充的字节数，由于64byte中最后的8byte用来存储原消息长度，故</p>
 <p>填充后消息长度 mod 512 = 448 (512-8*8)  bit</p>
 <p>eg.如果信息是‘message’ -&gt; 7byte -&gt; 56bit，那么就填充392bit。</p>
@@ -250,12 +250,12 @@
 <p>承上面那个例子，那么这里要填 0x80 + 0x00 *48</p>
 <p><strong><u>填充消息长度</u></strong></p>
 <p>这里需要注意长度是小端存储的，即高字节存放在高地址中。</p>
-<h3 id="初始化向量"><a href="#初始化向量" class="headerlink" title="初始化向量"></a>初始化向量</h3><p>A      01 23 45 67     0x67452301<br>B      89 AB CD EF  0xEFCDAB89<br>C      FE DC BA 98  0x98BADCFE<br>D      76 54 32 10     0x10325476</p>
+<h2 id="初始化向量"><a href="#初始化向量" class="headerlink" title="初始化向量"></a>初始化向量</h2><p>A      01 23 45 67     0x67452301<br>B      89 AB CD EF  0xEFCDAB89<br>C      FE DC BA 98  0x98BADCFE<br>D      76 54 32 10     0x10325476</p>
 <p>以上是四个固定的初始化向量，他们也是小端存储。</p>
 <p>再与补位后的消息进行复杂运算后，还是上面的‘message’例子，最终得到的md5<em>值是</em>78e731027d8fd50ed642340b7c9a63b3。</p>
 <img src="/2019/11/30/md5扩展攻击/2.png" title="image">
 
-<h2 id="MD5长度扩展攻击"><a href="#MD5长度扩展攻击" class="headerlink" title="MD5长度扩展攻击"></a>MD5长度扩展攻击</h2><p>MD5拓展攻击正是针对加盐措施的一种升级后的攻击手段，我们可以在不知道盐的情况下得出加盐后的md5的值。但需要在以下条件才能实现：</p>
+<h1 id="MD5长度扩展攻击"><a href="#MD5长度扩展攻击" class="headerlink" title="MD5长度扩展攻击"></a>MD5长度扩展攻击</h1><h2 id="攻击原理"><a href="#攻击原理" class="headerlink" title="攻击原理"></a>攻击原理</h2><p>MD5拓展攻击正是针对加盐措施的一种升级后的攻击手段，我们可以在不知道盐的情况下得出加盐后的md5的值。但需要在以下条件才能实现：</p>
 <p>1.我们要知道salt的长度。(为了能得到正确的填充）<br>2.要知道任意一个由salt加密后的md5值，并且知道没有加盐的明文。<br>3.用户可以提交md5值。</p>
 <p>例如我们知道一条信息的MD5值是78e731027d8fd50ed642340b7c9a63b3，我们还同时得知信息长度为7byte，此信息如下图补位（这里的信息可以替换成salt+已知信息，加盐情况下需要知道salt长度）</p>
 <img src="/2019/11/30/md5扩展攻击/3.png" title="image">
@@ -267,7 +267,7 @@
 <p>则会对其再次进行补位成为第二组。</p>
 <p>他会把上面得出的这组值作为初始向量，并与他进行复杂运算。这样会得到最终的md5值e53a681a30ff99e3f6522270ca7db244。</p>
 <p>这个值是md5（消息+填充+追加消息）。实际上就是md5(message+填充+admin)的值。</p>
-<h2 id="原理实现"><a href="#原理实现" class="headerlink" title="原理实现"></a>原理实现</h2><h3 id="已知salt长度"><a href="#已知salt长度" class="headerlink" title="已知salt长度"></a>已知salt长度</h3><p><strong>实验吧–让我进去</strong></p>
+<h2 id="原理实现"><a href="#原理实现" class="headerlink" title="原理实现"></a>原理实现</h2><h3 id="已知salt长度"><a href="#已知salt长度" class="headerlink" title="已知salt长度"></a><strong>已知salt长度</strong></h3><p><strong>实验吧–让我进去</strong></p>
 <pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
 <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">></span></span></span>
 <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span></span>
@@ -335,7 +335,7 @@
 apt-get install g++ libssl-dev
 cd HashPump
 make
-make install</code></pre><h3 id="未知salt长度"><a href="#未知salt长度" class="headerlink" title="未知salt长度"></a>未知salt长度</h3><p><strong>Jarvis OJ–flag在管理员手里</strong></p>
+make install</code></pre><h3 id="未知salt长度"><a href="#未知salt长度" class="headerlink" title="未知salt长度"></a><strong>未知salt长度</strong></h3><p><strong>Jarvis OJ–flag在管理员手里</strong></p>
 <pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
                 <span class="token variable">$auth</span> <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
                 <span class="token variable">$role</span> <span class="token operator">=</span> <span class="token string">"guest"</span><span class="token punctuation">;</span>
@@ -432,7 +432,7 @@ webre()</code></pre><p>hashpump库使用说明</p>
     <div class="content">
         
 <span class="post-time">
-    Última actualización<time datetime="2019-12-08T07:32:50.229Z" itemprop="dateUpdated">2019-12-08 07:32:50</time>
+    Última actualización<time datetime="2019-12-09T02:42:51.259Z" itemprop="dateUpdated">2019-12-09 02:42:51</time>
 </span>
 
 
