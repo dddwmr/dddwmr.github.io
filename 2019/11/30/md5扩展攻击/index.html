@@ -51,13 +51,13 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/1.png">
 <meta property="og:image" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/2.png">
-<meta property="og:image" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/3.png">
+<meta property="og:image" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/2.png">
 <meta property="og:image" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/4.png">
 <meta property="og:image" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/5.png">
 <meta property="og:image" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/4.jpg">
 <meta property="og:image" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/7.png">
 <meta property="og:image" content="http://dddwmr.github.io/2019/11/30/md5扩展攻击/5.jpg">
-<meta property="og:updated_time" content="2019-12-09T02:42:51.259Z">
+<meta property="og:updated_time" content="2019-12-09T03:33:18.973Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HASH长度扩展攻击">
 <meta name="twitter:description" content="因为遇到了相关题目，下面以md5为例，写一下md5的工作原理和对hash扩展攻击的理解。 md5的工作原理如下图所示   其中笼统的一共可以分为四个部分 *Padding填充 *Length填充长度 *初始化向量 *复杂的函数运算（这里可以忽略） 大体概括：md5是分组加密。加密时以每512bit(64byte=&amp;gt;16个数字)为一组，从第一组开始，与四个固定的初始化向量进行复杂运算，进而得到">
@@ -257,8 +257,8 @@
 
 <h1 id="MD5长度扩展攻击"><a href="#MD5长度扩展攻击" class="headerlink" title="MD5长度扩展攻击"></a>MD5长度扩展攻击</h1><h2 id="攻击原理"><a href="#攻击原理" class="headerlink" title="攻击原理"></a>攻击原理</h2><p>MD5拓展攻击正是针对加盐措施的一种升级后的攻击手段，我们可以在不知道盐的情况下得出加盐后的md5的值。但需要在以下条件才能实现：</p>
 <p>1.我们要知道salt的长度。(为了能得到正确的填充）<br>2.要知道任意一个由salt加密后的md5值，并且知道没有加盐的明文。<br>3.用户可以提交md5值。</p>
-<p>例如我们知道一条信息的MD5值是78e731027d8fd50ed642340b7c9a63b3，我们还同时得知信息长度为7byte，此信息如下图补位（这里的信息可以替换成salt+已知信息，加盐情况下需要知道salt长度）</p>
-<img src="/2019/11/30/md5扩展攻击/3.png" title="image">
+<p>例如我们知道一条信息的MD5值是78e731027d8fd50ed642340b7c9a63b3，我们还同时得知信息内容为message，可以构造出下图（这里的信息可以替换成salt+已知信息，加盐情况下需要知道salt长度）</p>
+<img src="/2019/11/30/md5扩展攻击/2.png" title="image">
 
 <p>然后它与初始向量复杂运算，得到</p>
 <p>A=0x0231e778<br>B=0x0ed58f7d<br>C=0x0b3442d6<br>D=0xb3639a7c</p>
@@ -266,7 +266,7 @@
 <p>若在已补位后的消息后继续追加字符串‘admin’，</p>
 <p>则会对其再次进行补位成为第二组。</p>
 <p>他会把上面得出的这组值作为初始向量，并与他进行复杂运算。这样会得到最终的md5值e53a681a30ff99e3f6522270ca7db244。</p>
-<p>这个值是md5（消息+填充+追加消息）。实际上就是md5(message+填充+admin)的值。</p>
+<p>这个值是md5（消息+填充+追加消息）。实际上就是md5(message+admin)的值。</p>
 <h2 id="原理实现"><a href="#原理实现" class="headerlink" title="原理实现"></a>原理实现</h2><h3 id="已知salt长度"><a href="#已知salt长度" class="headerlink" title="已知salt长度"></a><strong>已知salt长度</strong></h3><p><strong>实验吧–让我进去</strong></p>
 <pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
 <span class="token markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">></span></span></span>
@@ -319,7 +319,7 @@
 <pre class=" language-php"><code class="language-php"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">urldecode</span><span class="token punctuation">(</span><span class="token variable">$username</span><span class="token punctuation">)</span> <span class="token operator">===</span> <span class="token string">"admin"</span> <span class="token operator">&amp;&amp;</span> <span class="token function">urldecode</span><span class="token punctuation">(</span><span class="token variable">$password</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token string">"admin"</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
         <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$COOKIE</span><span class="token punctuation">[</span><span class="token string">"getmein"</span><span class="token punctuation">]</span> <span class="token operator">===</span> <span class="token function">md5</span><span class="token punctuation">(</span><span class="token variable">$secret</span> <span class="token punctuation">.</span> <span class="token function">urldecode</span><span class="token punctuation">(</span><span class="token variable">$username</span> <span class="token punctuation">.</span> <span class="token variable">$password</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
 <p>只要user始终为admin,pw的值不为admin就可达成条件</p>
-<p>同时已知条件user=admin，pw=admin（secret+adminadmin）的 <strong>sample-hash=571580b26c65f306376d4f64e53cb5c7</strong>（从cookie得到）</p>
+<p>同时已知user=admin，pw=admin的 <strong>sample-hash=571580b26c65f306376d4f64e53cb5c7</strong>（从cookie得到）</p>
 <p>题中给出<strong>salt长度为15</strong></p>
 <p>这里就可以使用md5扩展攻击，在原基础上添加任意消息即可达成目的。</p>
 <p>工具hashpump</p>
@@ -432,7 +432,7 @@ webre()</code></pre><p>hashpump库使用说明</p>
     <div class="content">
         
 <span class="post-time">
-    Última actualización<time datetime="2019-12-09T02:42:51.259Z" itemprop="dateUpdated">2019-12-09 02:42:51</time>
+    Última actualización<time datetime="2019-12-09T03:33:18.973Z" itemprop="dateUpdated">2019-12-09 03:33:18</time>
 </span>
 
 
