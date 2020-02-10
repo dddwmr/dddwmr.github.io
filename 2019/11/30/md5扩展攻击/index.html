@@ -57,7 +57,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/">ホーム</a>
+            <a class="nav-link" href="/">Home</a>
           </li>
         
           
@@ -65,7 +65,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/archives/">アーカイブ</a>
+            <a class="nav-link" href="/archives/">Archives</a>
           </li>
         
           
@@ -73,7 +73,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/categories/">カテゴリー</a>
+            <a class="nav-link" href="/categories/">Categories</a>
           </li>
         
           
@@ -81,7 +81,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/tags/">タグ</a>
+            <a class="nav-link" href="/tags/">Tags</a>
           </li>
         
           
@@ -89,7 +89,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/about/">本ブログ情報　</a>
+            <a class="nav-link" href="/about/">About</a>
           </li>
         
         
@@ -332,14 +332,17 @@
             <span class="token keyword">print</span><span class="token punctuation">(</span>html<span class="token punctuation">)</span>
 webre<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <p>hashpump库使用说明</p>
-<p>$$<br>hashpump(…)<br>    hashpump(hexdigest, original_data, data_to_add, key_length) -&gt; (digest, message)<br>    Arguments:<br>        hexdigest(str):      Hex-encoded result of hashing key + original_data.<br>        original_data(str):  Known data used to get the hash result hexdigest.<br>        data_to_add(str):    Data to append<br>        key_length(int):     Length of unknown data prepended to the hash<br>    Returns:<br>        A tuple containing the new hex digest and the new message.</p>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>hashpumpy.hashpump(‘ffffffff’, ‘original_data’, ‘data_to_add’, len(‘KEYKEYKEY’))<br>(‘e3c4a05f’, ‘original_datadata_to_add’)<br>$$<br>===&gt; 也可以用bp爆破</p>
-</blockquote>
-</blockquote>
-</blockquote>
+<pre><code>hashpump(...)
+    hashpump(hexdigest, original_data, data_to_add, key_length) -&gt; (digest, message)
+    Arguments:
+        hexdigest(str):      Hex-encoded result of hashing key + original_data.
+        original_data(str):  Known data used to get the hash result hexdigest.
+        data_to_add(str):    Data to append
+        key_length(int):     Length of unknown data prepended to the hash
+    Returns:
+        A tuple containing the new hex digest and the new message.
+&gt;&gt;&gt; hashpumpy.hashpump('ffffffff', 'original_data', 'data_to_add', len('KEYKEYKEY'))
+('e3c4a05f', 'original_datadata_to_add')</code></pre><p>===&gt; 也可以用bp爆破</p>
 <img src="/2019/11/30/md5扩展攻击/7.png" srcset="/img/loading.gif" title="image">
 
 <img src="/2019/11/30/md5扩展攻击/5.jpg" srcset="/img/loading.gif" title="image">
@@ -399,7 +402,7 @@ webre<span class="token punctuation">(</span><span class="token punctuation">)</
     <div class="d-none d-lg-block col-lg-2 toc-container">
       
   <div id="toc">
-    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;ディレクトリ</p>
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
     <div id="tocbot"></div>
   </div>
 
@@ -432,7 +435,7 @@ webre<span class="token punctuation">(</span><span class="token punctuation">)</
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">検索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -441,7 +444,7 @@ webre<span class="token punctuation">(</span><span class="token punctuation">)</
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">キーワード</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>

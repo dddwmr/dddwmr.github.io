@@ -162,14 +162,17 @@
             <span class="token keyword">print</span><span class="token punctuation">(</span>html<span class="token punctuation">)</span>
 webre<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <p>hashpump库使用说明</p>
-<p>$$<br>hashpump(…)<br>    hashpump(hexdigest, original_data, data_to_add, key_length) -&gt; (digest, message)<br>    Arguments:<br>        hexdigest(str):      Hex-encoded result of hashing key + original_data.<br>        original_data(str):  Known data used to get the hash result hexdigest.<br>        data_to_add(str):    Data to append<br>        key_length(int):     Length of unknown data prepended to the hash<br>    Returns:<br>        A tuple containing the new hex digest and the new message.</p>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>hashpumpy.hashpump(‘ffffffff’, ‘original_data’, ‘data_to_add’, len(‘KEYKEYKEY’))<br>(‘e3c4a05f’, ‘original_datadata_to_add’)<br>$$<br>===&gt; 也可以用bp爆破</p>
-</blockquote>
-</blockquote>
-</blockquote>
+<pre><code>hashpump(...)
+    hashpump(hexdigest, original_data, data_to_add, key_length) -&gt; (digest, message)
+    Arguments:
+        hexdigest(str):      Hex-encoded result of hashing key + original_data.
+        original_data(str):  Known data used to get the hash result hexdigest.
+        data_to_add(str):    Data to append
+        key_length(int):     Length of unknown data prepended to the hash
+    Returns:
+        A tuple containing the new hex digest and the new message.
+&gt;&gt;&gt; hashpumpy.hashpump('ffffffff', 'original_data', 'data_to_add', len('KEYKEYKEY'))
+('e3c4a05f', 'original_datadata_to_add')</code></pre><p>===&gt; 也可以用bp爆破</p>
 <img src="/2019/11/30/md5扩展攻击/7.png" srcset="/img/loading.gif" title="image">
 
 <img src="/2019/11/30/md5扩展攻击/5.jpg" srcset="/img/loading.gif" title="image">
@@ -235,7 +238,7 @@ webre<span class="token punctuation">(</span><span class="token punctuation">)</
 <h2 id="in-a-mess"><a href="#in-a-mess" class="headerlink" title="in a mess"></a>in a mess</h2><p>查看源码</p>
 <img src="/2019/11/13/Jarvis%20OJ(web)WP/Image8.png" srcset="/img/loading.gif" title="image">
 
-<p>分析<br>传入的a里如果不为0.则echo hahah并return<br>没有.就继续向下运行 给$data赋值从$a里读到的值如果data值等于 1112 is a nice lab!,id==0,b的长度大于5且b的第一个值是4 又要求b的第一个值不能等于4<br>才能运行flag.txt<br>每个条件都存在冲突<br>id php弱比较就能绕过 传入id=0e<br>a 看见file_get_contents函数想到文件包含 不知道有什么文件含这个字符串先放一下<br>b eregi可以%00截断 b=%0041111111<br>查了下大佬的wp<br>说a这里可以应用伪协议php://input<br>构造payload:<br>?id=0e&amp;a=php://input&amp;b=%004111111<br>同时post值1112 is a nice lab!<br>得到这样的回显<br>Come ON!!! {/^HT2mCpcvOLf}</p>
+<p>分析<br>传入的a里如果不为0.则echo hahah并return<br>没有.就继续向下运行 给$data赋值从$a里读到的值如果data值等于 1112 is a nice lab!,id==0,b的长度大于5且b的第一个值是4 又要求b的第一个值不能等于4<br>才能运行flag.txt<br>每个条件都存在冲突<br>id php弱比较就能绕过 传入id=0e<br>a 看见file_get_contents函数想到文件包含 不知道有什么文件含这个字符串先放一下<br>b eregi可以%00截断 b=%0041111111<br>查了下大佬的wp<br>说a这里可以应用伪协议php://input<br>构造payload:<br><strong>?id=0e&amp;a=php://input&amp;b=%004111111</strong><br>同时<strong>post值1112 is a nice lab!</strong><br>得到这样的回显<br>Come ON!!! {/^HT2mCpcvOLf}</p>
 <img src="/2019/11/13/Jarvis%20OJ(web)WP/Image9.png" srcset="/img/loading.gif" title="image">
 
 <p>盲猜他是个地址（长得也太难认了8</p>
