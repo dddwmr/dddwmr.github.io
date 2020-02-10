@@ -126,7 +126,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    891 字
+                    889 字
                   </span>&nbsp;
                 
 
@@ -227,8 +227,9 @@
         <span class="token keyword">echo</span> <span class="token string">"&lt;br>&lt;img src=\"https://i.loli.net/2018/11/01/5bdb0d93dc794.jpg\" />"</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>  
 <span class="token delimiter">?></span></code></pre>
-<p>hint.php<br>$$<br>flag not here, and flag in ffffllllaaaagggg<br>$$</p>
-<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>构造payload:<br>$$<br>?file=hint.php%253f/../../../../ffffllllaaaagggg<br>$$<br>传入得到flag</p>
+<p>hint.php</p>
+<pre><code>flag not here, and flag in ffffllllaaaagggg</code></pre><h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>构造payload:</p>
+<pre><code>?file=hint.php%253f/../../../../ffffllllaaaagggg</code></pre><p>传入得到flag</p>
 <p>具体为啥这么构造，参考下面的漏洞。</p>
 <h3 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h3><p>经过搜索这里是phpmyadmin4.8.1远程文件包含漏洞<br>所以先看懂这个漏洞-&gt;做题</p>
 <h2 id="phpmyadmin4-8-1远程文件包含漏洞（CVE-2018-12613）"><a href="#phpmyadmin4-8-1远程文件包含漏洞（CVE-2018-12613）" class="headerlink" title="phpmyadmin4.8.1远程文件包含漏洞（CVE-2018-12613）"></a>phpmyadmin4.8.1远程文件包含漏洞（CVE-2018-12613）</h2><h3 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h3><p>一个攻击者可以在服务器上包含（查看和潜在执行）文件的漏洞被发现。该漏洞来自一部分代码，其中页面在phpMyAdmin中被重定向和加载，以及对白名单页面进行不正确的测试。攻击者必须经过身份验证，但在这些情况下除外：</p>
