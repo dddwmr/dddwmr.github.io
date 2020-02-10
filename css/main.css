@@ -7,10 +7,10 @@ header,
 }
 body {
   background-color: #eee;
-  color: #3c4858;
+  color: #c9d6de;
 }
 body a {
-  color: #3c4858;
+  color: #c9d6de;
 }
 body a:hover {
   color: #1abc9c;
@@ -69,25 +69,25 @@ body a:hover {
 .navbar {
   background-color: transparent;
   font-size: 0.875rem;
-  color: white;
+  color: #f8ecc9;
 }
 .navbar a {
-  color: white;
+  color: #f8ecc9;
 }
 .navbar a:hover {
   background-color: rgba(0,0,0,0.1);
 }
 .navbar-custom {
-  color: white;
+  color: #f8ecc9;
 }
 .navbar-custom a {
-  color: white;
+  color: #f8ecc9;
 }
 .top-nav-collapse {
-  background-color: #2f4154;
+  background-color: ##d3e0f7;
 }
 .navbar-col-show {
-  background-color: #2f4154;
+  background-color: ##d3e0f7;
 }
 @media (max-width: 768px) {
   .navbar {
@@ -513,7 +513,7 @@ h6::before {
   font-size: 15px;
 }
 .tocbot-link {
-  color: #3c4858;
+  color: #c9d6de;
 }
 .tocbot-active-link {
   font-weight: 600;
