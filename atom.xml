@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://dddwmr.github.io/"/>
-  <updated>2019-12-12T13:42:34.221Z</updated>
+  <updated>2020-02-10T10:08:51.996Z</updated>
   <id>http://dddwmr.github.io/</id>
   
   <author>
@@ -21,18 +21,11 @@
     <link href="http://dddwmr.github.io/2019/11/30/md5%E6%89%A9%E5%B1%95%E6%94%BB%E5%87%BB/"/>
     <id>http://dddwmr.github.io/2019/11/30/md5扩展攻击/</id>
     <published>2019-11-29T21:26:59.000Z</published>
-    <updated>2019-12-12T13:42:34.221Z</updated>
+    <updated>2020-02-10T10:08:51.996Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;p&gt;因为遇到了相关题目，下面以md5为例，写一下md5的工作原理和对hash扩展攻击的理解。&lt;/p&gt;
-&lt;h1 id=&quot;md5的工作原理&quot;&gt;&lt;a href=&quot;#md5的工作原理&quot; class=&quot;headerlink&quot;
-        
-      
+      &lt;p&gt;因为遇到了相关题目，下面以md5为例，写一下md5的工作原理和对hash扩展攻击的理解。&lt;/p&gt;
     
     </summary>
     
@@ -48,17 +41,12 @@
     <link href="http://dddwmr.github.io/2019/11/13/Jarvis%20OJ(web)WP/"/>
     <id>http://dddwmr.github.io/2019/11/13/Jarvis OJ(web)WP/</id>
     <published>2019-11-13T00:00:00.000Z</published>
-    <updated>2019-11-15T06:37:31.929Z</updated>
+    <updated>2020-02-10T10:08:36.287Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;h1 id=&quot;jarvis-OJ&quot;&gt;&lt;a href=&quot;#jarvis-OJ&quot; class=&quot;headerlink&quot; title=&quot;jarvis OJ&quot;&gt;&lt;/a&gt;jarvis OJ&lt;/h1&gt;&lt;h2 id=&quot;神盾局&quot;&gt;&lt;a href=&quot;#神盾局&quot;
-        
-      
+      &lt;h1 id=&quot;jarvis-OJ&quot;&gt;&lt;a href=&quot;#jarvis-OJ&quot; class=&quot;headerlink&quot; title=&quot;jarvis OJ&quot;&gt;&lt;/a&gt;jarvis OJ&lt;/h1&gt;&lt;h2 id=&quot;神盾局&quot;&gt;&lt;a href=&quot;#神盾局&quot; class=&quot;headerlink&quot; title=&quot;神盾局&quot;&gt;&lt;/a&gt;神盾局&lt;/h2&gt;&lt;p&gt;打开网页是一张图片&lt;br&gt;查看源码发现&lt;/p&gt;
+&lt;img src=&quot;/2019/11/13/Jarvis%20OJ(web)WP/Image1.png&quot; srcset=&quot;/img/loading.gif&quot; title=&quot;image&quot;&gt;
     
     </summary>
     
@@ -74,13 +62,14 @@
     <link href="http://dddwmr.github.io/2019/10/21/BUUCTFwp/"/>
     <id>http://dddwmr.github.io/2019/10/21/BUUCTFwp/</id>
     <published>2019-10-21T00:00:00.000Z</published>
-    <updated>2020-02-10T09:53:32.387Z</updated>
+    <updated>2020-02-10T10:07:15.301Z</updated>
     
     <summary type="html">
     
       &lt;h1 id=&quot;BUUCTF-WEBwp&quot;&gt;&lt;a href=&quot;#BUUCTF-WEBwp&quot; class=&quot;headerlink&quot; title=&quot;BUUCTF WEBwp&quot;&gt;&lt;/a&gt;&lt;strong&gt;BUUCTF WEBwp&lt;/strong&gt;&lt;/h1&gt;&lt;ul&gt;
 &lt;li&gt;&lt;h2 id=&quot;HCTF2018WarmUp&quot;&gt;&lt;a href=&quot;#HCTF2018WarmUp&quot; class=&quot;headerlink&quot; title=&quot;HCTF2018WarmUp&quot;&gt;&lt;/a&gt;HCTF2018WarmUp&lt;/h2&gt;&lt;/li&gt;
 &lt;/ul&gt;
+&lt;p&gt;菜鸡发现了一个平台BUUCTF，web第一题就要去查wp，哎&lt;br&gt;查看源码给了source.php,如下&lt;/p&gt;
     
     </summary>
     
@@ -98,20 +87,16 @@
     <link href="http://dddwmr.github.io/2019/08/24/insert%20into/"/>
     <id>http://dddwmr.github.io/2019/08/24/insert into/</id>
     <published>2019-08-24T00:00:00.000Z</published>
-    <updated>2019-11-13T15:40:52.609Z</updated>
+    <updated>2020-02-10T10:08:15.656Z</updated>
     
     <summary type="html">
     
-      
-      
-        
-        
-          &lt;img src=&quot;/2019/08/24/insert%20into/1-01.png&quot; title=&quot;image&quot;&gt;
+      &lt;img src=&quot;/2019/08/24/insert%20into/1-01.png&quot; srcset=&quot;/img/loading.gif&quot; title=&quot;image&quot;&gt;
 
 &lt;p&gt;观察题目&lt;/p&gt;
-&lt;img src=&quot;/2019/08/24/insert%20into/1-02.png&quot;
-        
-      
+&lt;img src=&quot;/2019/08/24/insert%20into/1-02.png&quot; srcset=&quot;/img/loading.gif&quot; title=&quot;image&quot;&gt;
+
+&lt;p&gt;可以看到注入点应该在http头的x-forwarded-for上&lt;/p&gt;
     
     </summary>
     
