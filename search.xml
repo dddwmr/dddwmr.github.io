@@ -103,14 +103,11 @@
 <p>因为user值不变，也相当于salt的一部分，所以data直接填admin，salt长度为20（15+5）</p>
 <img src="/2019/11/30/md5扩展攻击/5.png" srcset="/img/loading.gif" title="image">
 
-<pre><code>f599284f8f2116348036a3f46e79c12b</code></pre><p>传到cookie的getmein里</p>
-<pre><code>password=admin%80%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%c8%00%00%00%00%00%00%00dwm2</code></pre><p>由于还有个urldecode,转下码post上去得到flag。</p>
+<p>$$<br>f599284f8f2116348036a3f46e79c12b<br>$$<br>传到cookie的getmein里</p>
+<p>$$<br>password=admin%80%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%c8%00%00%00%00%00%00%00dwm2<br>$$<br>由于还有个urldecode,转下码post上去得到flag。</p>
 <p>//HashPump下载</p>
-<pre><code>git clone https://github.com/bwall/HashPump
-apt-get install g++ libssl-dev
-cd HashPump
-make
-make install</code></pre><h3 id="未知salt长度"><a href="#未知salt长度" class="headerlink" title="未知salt长度"></a><strong>未知salt长度</strong></h3><p><strong>Jarvis OJ–flag在管理员手里</strong></p>
+<p>$$<br>git clone <a href="https://github.com/bwall/HashPump" target="_blank" rel="noopener">https://github.com/bwall/HashPump</a><br>apt-get install g++ libssl-dev<br>cd HashPump<br>make<br>make install<br>$$</p>
+<h3 id="未知salt长度"><a href="#未知salt长度" class="headerlink" title="未知salt长度"></a><strong>未知salt长度</strong></h3><p><strong>Jarvis OJ–flag在管理员手里</strong></p>
 <pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
                 <span class="token variable">$auth</span> <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
                 <span class="token variable">$role</span> <span class="token operator">=</span> <span class="token string">"guest"</span><span class="token punctuation">;</span>
@@ -165,17 +162,14 @@ make install</code></pre><h3 id="未知salt长度"><a href="#未知salt长度" c
             <span class="token keyword">print</span><span class="token punctuation">(</span>html<span class="token punctuation">)</span>
 webre<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
 <p>hashpump库使用说明</p>
-<pre><code>hashpump(...)
-    hashpump(hexdigest, original_data, data_to_add, key_length) -&gt; (digest, message)
-    Arguments:
-        hexdigest(str):      Hex-encoded result of hashing key + original_data.
-        original_data(str):  Known data used to get the hash result hexdigest.
-        data_to_add(str):    Data to append
-        key_length(int):     Length of unknown data prepended to the hash
-    Returns:
-        A tuple containing the new hex digest and the new message.
-&gt;&gt;&gt; hashpumpy.hashpump('ffffffff', 'original_data', 'data_to_add', len('KEYKEYKEY'))
-('e3c4a05f', 'original_datadata_to_add')</code></pre><p>===&gt; 也可以用bp爆破</p>
+<p>$$<br>hashpump(…)<br>    hashpump(hexdigest, original_data, data_to_add, key_length) -&gt; (digest, message)<br>    Arguments:<br>        hexdigest(str):      Hex-encoded result of hashing key + original_data.<br>        original_data(str):  Known data used to get the hash result hexdigest.<br>        data_to_add(str):    Data to append<br>        key_length(int):     Length of unknown data prepended to the hash<br>    Returns:<br>        A tuple containing the new hex digest and the new message.</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>hashpumpy.hashpump(‘ffffffff’, ‘original_data’, ‘data_to_add’, len(‘KEYKEYKEY’))<br>(‘e3c4a05f’, ‘original_datadata_to_add’)<br>$$<br>===&gt; 也可以用bp爆破</p>
+</blockquote>
+</blockquote>
+</blockquote>
 <img src="/2019/11/30/md5扩展攻击/7.png" srcset="/img/loading.gif" title="image">
 
 <img src="/2019/11/30/md5扩展攻击/5.jpg" srcset="/img/loading.gif" title="image">
