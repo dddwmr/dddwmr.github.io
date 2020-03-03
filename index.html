@@ -55,7 +55,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/">ホーム</a>
+            <a class="nav-link" href="/">Home</a>
           </li>
         
           
@@ -63,7 +63,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/archives/">アーカイブ</a>
+            <a class="nav-link" href="/archives/">Archives</a>
           </li>
         
           
@@ -71,7 +71,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/categories/">カテゴリー</a>
+            <a class="nav-link" href="/categories/">Categories</a>
           </li>
         
           
@@ -79,7 +79,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/tags/">タグ</a>
+            <a class="nav-link" href="/tags/">Tags</a>
           </li>
         
           
@@ -87,7 +87,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/about/">本ブログ情報　</a>
+            <a class="nav-link" href="/about/">About</a>
           </li>
         
         
@@ -135,6 +135,71 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
+
+  <div class="row mb-4 mx-auto">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/2020/03/04/I春秋新春战‘疫’复现/" target="_self">
+          <img src="/img/4.png" srcset="/img/loading.gif" alt="i春秋新春战‘疫’复现" class="img-fluid rounded z-depth-3 index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 m-auto">
+      <a href="/2020/03/04/I春秋新春战‘疫’复现/">
+        <p class="h4 index-header">i春秋新春战‘疫’复现</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">i春秋新春战‘疫’WEB复现这个假期过得确实太颓了，再不学习是真的要凉凉。
+反思反思反思…
+还是做题太少了。
+ezsqli首先常规输下1,2回显不同
+
+
+输入1 or 回显SQL Injection Checked.
+这里or被过滤（其实这里直接or返回的是bool(false)，可能间接说明用的不是preg_match?没想清楚是怎么写的，参考别人的wp应该是题目与原题有出入）
+
+
+fuzz一下过滤了的关键词
+
+
+其中的information被过滤意味着我们常规的查表语句无法使用，就需要有其他数据库来代替它：
+MySQL5.7的新增了sys schemma，基础数据来自于performance_schema和information_schema两个库，本身数据库不存储数据。（需要root权限）
+sys.schema_auto_increment_columns
+schema_table_statistics_with_buffer
+x$schema_table_statistics_with_buffer
+sys.x$schema_flattened_keys
+…
+诸如此类还有很多能</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-04&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/ctfweb">ctfweb</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/BUUCTF">BUUCTF</a>&nbsp;
+          
+            <a href="/tags/%E6%97%A0%E5%88%97%E5%90%8D%E6%97%A0unionselect%E6%B3%A8%E6%95%B0%E6%8D%AE">无列名无unionselect注数据</a>&nbsp;
+          
+            <a href="/tags/%E6%97%A0in%E6%B3%A8%E8%A1%A8%E5%90%8D">无in注表名</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
 
   <div class="row mb-4 mx-auto">
     
@@ -341,7 +406,7 @@ HCTF2018WarmUp
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">検索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -350,7 +415,7 @@ HCTF2018WarmUp
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">キーワード</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
