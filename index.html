@@ -151,29 +151,12 @@
         
         
           
+          
         
-        <div class="index-excerpt" >
+        <div class="index-excerpt" style="max-height: none;">
           <div class="index-text mb-1">i春秋新春战‘疫’WEB复现这个假期过得确实太颓了，再不学习是真的要凉凉。
 反思反思反思…
-还是做题太少了。
-ezsqli首先常规输下1,2回显不同
-
-
-输入1 or 回显SQL Injection Checked.
-这里or被过滤（其实这里直接or返回的是bool(false)，可能间接说明用的不是preg_match?没想清楚是怎么写的，参考别人的wp应该是题目与原题有出入）
-
-
-fuzz一下过滤了的关键词
-
-
-其中的information被过滤意味着我们常规的查表语句无法使用，就需要有其他数据库来代替它：
-MySQL5.7的新增了sys schemma，基础数据来自于performance_schema和information_schema两个库，本身数据库不存储数据。（需要root权限）
-sys.schema_auto_increment_columns
-schema_table_statistics_with_buffer
-x$schema_table_statistics_with_buffer
-sys.x$schema_flattened_keys
-…
-诸如此类还有很多能</div>
+还是做题太少了。...</div>
         </div>
       </a>
 
