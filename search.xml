@@ -32,9 +32,9 @@
 <p>如果表中仅有一列：substr((select * from table),1,1)=‘x’即可实现目的。</p>
 <p>但本题中不止一列，需要将查询语句与相同数量的列进行比较，进行盲注 。</p>
 <p>例如：</p>
-<pre><code>执行select (select '1','e~')&gt;(select * from table2 limit 1)显示0
-执行select (select '1','f~')&gt;(select * from table2 limit 1)显示1
-执行select (select '1','fl~')&gt;(select * from table2 limit 1)显示1
+<pre><code>执行select (select &#39;1&#39;,&#39;e~&#39;)&gt;(select * from table2 limit 1)显示0
+执行select (select &#39;1&#39;,&#39;f~&#39;)&gt;(select * from table2 limit 1)显示1
+执行select (select &#39;1&#39;,&#39;fl~&#39;)&gt;(select * from table2 limit 1)显示1
 所以可以进行盲注</code></pre><p>但问题在于，mysql默认不区分大小写，因此这种形式只有在flag仅为大/小写时适用。（比如本题）</p>
 <p>而区分大小写需要使用 <strong>SELECT CONCAT(“A”, CAST(0 AS JSON))</strong> 来另其返回二进制字符串。</p>
 <p>综上，脚本如下</p>
@@ -101,25 +101,7 @@ url <span class="token operator">=</span> <span class="token string">"http://55e
 <p><a href="https://blog.csdn.net/a3320315/article/details/104476566" target="_blank" rel="noopener">https://blog.csdn.net/a3320315/article/details/104476566</a></p>
 <p><a href="https://blog.csdn.net/qq_42967398/article/details/104472352?fps=1&amp;locationNum=2" target="_blank" rel="noopener">https://blog.csdn.net/qq_42967398/article/details/104472352?fps=1&amp;locationNum=2</a></p>
 <p><strong>持续更新…</strong></p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
+]]></content>
       <categories>
         <category>ctfweb</category>
       </categories>
@@ -265,7 +247,7 @@ url <span class="token operator">=</span> <span class="token string">"http://55e
 <p>分析代码，flag输出条件是 $role===”admin” &amp;&amp;hsh===md5($salt.strrev($_COOKIE[“role”]))</p>
 <img src="/2019/11/30/md5扩展攻击/4.jpg" srcset="/img/loading.gif" title="image">
 
-<p>这里得到<strong>$salt.strrev(s:5:”guest”;)</strong>的hsh，即$salt.’;"tseug":5:s’的md5值： hsh=3a4727d57463f122833d9e732f94e4e0</p>
+<p>这里得到<strong>$salt.strrev(s:5:”guest”;)</strong>的hsh，即$salt.’;&quot;tseug&quot;:5:s’的md5值： hsh=3a4727d57463f122833d9e732f94e4e0</p>
 <p>以上是已知条件。</p>
 <p>满足第一个条件只需要比较时$role开头是admin,接下来的字符是’\0’即可。</p>
 <p>结合条件二，就可以这样构造</p>
@@ -300,8 +282,8 @@ webre<span class="token punctuation">(</span><span class="token punctuation">)</
         key_length(int):     Length of unknown data prepended to the hash
     Returns:
         A tuple containing the new hex digest and the new message.
-&gt;&gt;&gt; hashpumpy.hashpump('ffffffff', 'original_data', 'data_to_add', len('KEYKEYKEY'))
-('e3c4a05f', 'original_datadata_to_add')</code></pre><p>===&gt; 也可以用bp爆破</p>
+&gt;&gt;&gt; hashpumpy.hashpump(&#39;ffffffff&#39;, &#39;original_data&#39;, &#39;data_to_add&#39;, len(&#39;KEYKEYKEY&#39;))
+(&#39;e3c4a05f&#39;, &#39;original_datadata_to_add&#39;)</code></pre><p>===&gt; 也可以用bp爆破</p>
 <img src="/2019/11/30/md5扩展攻击/7.png" srcset="/img/loading.gif" title="image">
 
 <img src="/2019/11/30/md5扩展攻击/5.jpg" srcset="/img/loading.gif" title="image">
@@ -309,25 +291,7 @@ webre<span class="token punctuation">(</span><span class="token punctuation">)</
 <p>参考：</p>
 <p><a href="https://blog.csdn.net/qq1045553189/article/details/87566846" target="_blank" rel="noopener">https://blog.csdn.net/qq1045553189/article/details/87566846</a></p>
 <p><a href="https://err0rzz.github.io/2017/09/18/hash长度扩展攻击/" target="_blank" rel="noopener">https://err0rzz.github.io/2017/09/18/hash%E9%95%BF%E5%BA%A6%E6%89%A9%E5%B1%95%E6%94%BB%E5%87%BB/</a></p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
+]]></content>
       <categories>
         <category>攻击原理</category>
       </categories>
@@ -399,25 +363,7 @@ webre<span class="token punctuation">(</span><span class="token punctuation">)</
 
 
 <p><strong>持续更新</strong></p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
+]]></content>
       <categories>
         <category>ctfweb</category>
       </categories>
@@ -548,25 +494,7 @@ webre<span class="token punctuation">(</span><span class="token punctuation">)</
 <p>参考：</p>
 <p>[]: <a href="https://www.jianshu.com/p/0d75017c154f" target="_blank" rel="noopener">https://www.jianshu.com/p/0d75017c154f</a></p>
 <p><strong>持续更新</strong></p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
+]]></content>
       <categories>
         <category>ctfweb</category>
       </categories>
@@ -627,25 +555,7 @@ flag <span class="token operator">=</span> <span class="token string">''</span>
           <span class="token keyword">break</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'The final flag:'</span><span class="token operator">+</span>flag<span class="token punctuation">)</span></code></pre>
 <p>由于延时不是很稳定 所以很容易出错 多试几次才能有正确答案flag{cdbf14c9551d5be5612f7bb5d2867853}<br>（最好每次只开一个运行 不然出错概率太大）</p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>]]></content>
+]]></content>
       <categories>
         <category>ctfweb</category>
       </categories>

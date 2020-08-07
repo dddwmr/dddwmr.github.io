@@ -126,7 +126,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    821 字
+                    781 字
                   </span>&nbsp;
                 
 
@@ -200,9 +200,9 @@
 <p>如果表中仅有一列：substr((select * from table),1,1)=‘x’即可实现目的。</p>
 <p>但本题中不止一列，需要将查询语句与相同数量的列进行比较，进行盲注 。</p>
 <p>例如：</p>
-<pre><code>执行select (select '1','e~')&gt;(select * from table2 limit 1)显示0
-执行select (select '1','f~')&gt;(select * from table2 limit 1)显示1
-执行select (select '1','fl~')&gt;(select * from table2 limit 1)显示1
+<pre><code>执行select (select &#39;1&#39;,&#39;e~&#39;)&gt;(select * from table2 limit 1)显示0
+执行select (select &#39;1&#39;,&#39;f~&#39;)&gt;(select * from table2 limit 1)显示1
+执行select (select &#39;1&#39;,&#39;fl~&#39;)&gt;(select * from table2 limit 1)显示1
 所以可以进行盲注</code></pre><p>但问题在于，mysql默认不区分大小写，因此这种形式只有在flag仅为大/小写时适用。（比如本题）</p>
 <p>而区分大小写需要使用 <strong>SELECT CONCAT(“A”, CAST(0 AS JSON))</strong> 来另其返回二进制字符串。</p>
 <p>综上，脚本如下</p>
@@ -269,25 +269,7 @@ url <span class="token operator">=</span> <span class="token string">"http://55e
 <p><a href="https://blog.csdn.net/a3320315/article/details/104476566" target="_blank" rel="noopener">https://blog.csdn.net/a3320315/article/details/104476566</a></p>
 <p><a href="https://blog.csdn.net/qq_42967398/article/details/104472352?fps=1&amp;locationNum=2" target="_blank" rel="noopener">https://blog.csdn.net/qq_42967398/article/details/104472352?fps=1&amp;locationNum=2</a></p>
 <p><strong>持续更新…</strong></p>
-<script>
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-            if (!el.dataset.src) { return; }
-            const img = document.createElement('img');
-            img.style = 'display:none !important;';
-            img.src = el.dataset.src;
-            img.addEventListener('error', () => {
-              img.remove();
-              el.style.color = 'inherit';
-              el.style.backgroundImage = 'none';
-              el.style.background = 'none';
-            });
-            img.addEventListener('load', () => {
-              img.remove();
-            });
-            document.body.appendChild(img);
-          });
-      </script>
+
             <hr>
           </div>
           <br>
