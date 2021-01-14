@@ -140,6 +140,78 @@
     
     
       <div class="col-12 col-md-4 m-auto">
+        <a href="/2021/01/07/BUUCTFwp2/" target="_self">
+          <img src="/img/9.jpg" srcset="/img/loading.gif" alt="BUUCTF WEB wp2" class="img-fluid rounded z-depth-3 index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 m-auto">
+      <a href="/2021/01/07/BUUCTFwp2/">
+        <p class="h4 index-header">BUUCTF WEB wp2</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">[CISCN2019 华北赛区 Day1 Web2]ikun考点：JWT伪造，PYTHON反序列化
+点进来是个商店，看这意思是要买lv6的东西。翻了几页找不到lv6。
+那写个脚本找找Lv6。
+除此之外还有登录注册。随便注册一个用户进来，余额1000。
+跑着脚本的期间看看购买的包。两个值得注意的点，一个是JWT,那就意味着可能可以通过伪造JWT登入管理员用户。另一个是传参中的price和discount,可以尝试是否可以通过更改他们改变价格。
+
+这时候脚本也跑出来了，在181页。
+
+
+抓这个的包，尝试后发现改discount可行。得到新页面/b1g_m4mber
+
+访问，要求admin权限。
+
+那就正好jwt改改。
+爆一下密码1Kun。
+
+得到新的JWT。
+
+传入JWT进来了。
+
+进个人中心得到新hint。
+
+解码，说是有后门。
+
+点点成为大会员，抓个包。程序员跑路前留下了源码。
+
+翻翻源码，在Admin.py里发现了序列化
+def post(self, *args, **kwargs):
+    try:
+        become = self.get_argument('beco</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2021-01-07&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/ctfweb">ctfweb</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/BUUCTF">BUUCTF</a>&nbsp;
+          
+            <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1">代码审计</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
         <a href="/2020/12/31/Python反序列化/" target="_self">
           <img src="/img/8.jpg" srcset="/img/loading.gif" alt="Python反序列化" class="img-fluid rounded z-depth-3 index-thumbnails">
         </a>
@@ -317,78 +389,6 @@ t：从堆栈中弹出对象，直到一</div>
           <i class="iconfont icon-tag"></i>
           
             <a href="/tags/jarvis%20OJ">jarvis OJ</a>&nbsp;
-          
-        
-      </div>
-    </div>
-  </div>
-
-  <div class="row mb-4 mx-auto">
-    
-    
-      <div class="col-12 col-md-4 m-auto">
-        <a href="/2019/10/21/BUUCTFwp2/" target="_self">
-          <img src="/img/9.jpg" srcset="/img/loading.gif" alt="BUUCTF WEB wp" class="img-fluid rounded z-depth-3 index-thumbnails">
-        </a>
-      </div>
-    
-    <div class="col-12 col-md-8 m-auto">
-      <a href="/2019/10/21/BUUCTFwp2/">
-        <p class="h4 index-header">BUUCTF WEB wp</p>
-        
-        
-          
-        
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">[CISCN2019 华北赛区 Day1 Web2]ikun考点：JWT伪造，PYTHON反序列化
-点进来是个商店，看这意思是要买lv6的东西。翻了几页找不到lv6。
-那写个脚本找找Lv6。
-除此之外还有登录注册。随便注册一个用户进来，余额1000。
-跑着脚本的期间看看购买的包。两个值得注意的点，一个是JWT,那就意味着可能可以通过伪造JWT登入管理员用户。另一个是传参中的price和discount,可以尝试是否可以通过更改他们改变价格。
-
-这时候脚本也跑出来了，在181页。
-
-
-抓这个的包，尝试后发现改discount可行。得到新页面/b1g_m4mber
-
-访问，要求admin权限。
-
-那就正好jwt改改。
-爆一下密码1Kun。
-
-得到新的JWT。
-
-传入JWT进来了。
-
-进个人中心得到新hint。
-
-解码，说是有后门。
-
-点点成为大会员，抓个包。程序员跑路前留下了源码。
-
-翻翻源码，在Admin.py里发现了序列化
-def post(self, *args, **kwargs):
-    try:
-        become = self.get_argument('beco</div>
-        </div>
-      </a>
-
-      <div>
-        
-          <i class="iconfont icon-riqi2"></i>&nbsp;2019-10-21&nbsp;&nbsp;
-        
-        
-          <i class="iconfont icon-inbox"></i>
-          
-            <a href="/categories/ctfweb">ctfweb</a>&nbsp;
-          &nbsp;
-        
-        
-          <i class="iconfont icon-tag"></i>
-          
-            <a href="/tags/BUUCTF">BUUCTF</a>&nbsp;
-          
-            <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1">代码审计</a>&nbsp;
           
         
       </div>
