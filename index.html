@@ -140,6 +140,60 @@
     
     
       <div class="col-12 col-md-4 m-auto">
+        <a href="/2020/12/31/Python反序列化/" target="_self">
+          <img src="/img/3.png" srcset="/img/loading.gif" alt="Python反序列化" class="img-fluid rounded z-depth-3 index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 m-auto">
+      <a href="/2020/12/31/Python反序列化/">
+        <p class="h4 index-header">Python反序列化</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">Python反序列化简介Python 的序列化和反序列化是将一个类对象向字节流转化从而进行存储和传输，然后使用的时候再将字节流转化回原始的对象的一个过程。python序列化出来的是pickle流，这是一种栈语言。
+pickle简介
+
+pickle 是一种栈语言，有不同的编写方式，基于一个轻量的 PVM（Pickle Virtual Machine）。PVM 由三部分组成：指令处理器从流中读取 opcode 和参数，并对其进行解释处理。重复这个动作，直到遇到 . 这个结束符后停止。最终留在栈顶的值将被作为反序列化对象返回。栈区stack由 Python 的 list 实现，被用来临时存储数据、参数以及对象。标签区memo由 Python 的 dict 实现，为 PVM 的整个生命周期提供存储。
+
+PVM操作码
+//pickle.py
+
+
+重点关注
+
+c：读取新的一行作为模块名module，读取下一行作为对象名object，然后将module.object压入到堆栈中。
+(：将一个标记对象插入到堆栈中。为了实现我们的目的，该指令会与t搭配使用，以产生一个元组。
+t：从堆栈中弹出对象，直到一</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-12-31&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E5%B8%B8%E8%A7%81%E6%BC%8F%E6%B4%9E">常见漏洞</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Python%E5%8F%8D%E5%BA%8F%E5%88%97">Python反序列</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
         <a href="/2020/03/04/I春秋新春战‘疫’复现/" target="_self">
           <img src="/img/4.png" srcset="/img/loading.gif" alt="i春秋新春战‘疫’复现" class="img-fluid rounded z-depth-3 index-thumbnails">
         </a>
@@ -287,10 +341,7 @@
           
         
         <div class="index-excerpt" style="max-height: none;">
-          <div class="index-text mb-1">BUUCTF WEBwp
-HCTF2018WarmUp
-
-菜鸡发现了一个平台BUUCTF，web第一题就要去查wp，哎查看源码给了source.php,如下...</div>
+          <div class="index-text mb-1">BUUCTF WEBwpHCTF2018WarmUp菜鸡发现了一个平台BUUCTF，web第一题就要去查wp，哎查看源码给了source.php,如下...</div>
         </div>
       </a>
 
