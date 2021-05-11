@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title></title>
-    <url>/2021/05/11/LFI%20RCE%E6%80%BB%E7%BB%93/</url>
+    <title>LFI RCE总结</title>
+    <url>/2021/03/20/LFI%20RCE%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<h1 id="LFI-RCE总结"><a href="#LFI-RCE总结" class="headerlink" title="LFI RCE总结"></a>LFI RCE总结</h1><p>​    PHP LFI即本地文件包含漏洞，通过包含本地服务器上存储的一些文件，例如session文件、日志文件、临时文件等达到拿服务器权限的目的。</p>
 <p>​    比较常用的方法有：PHPINFO()和 PHP7 Segment Fault。他们的基本原理都是向服务器上传生成恶意的临时文件，再对恶意文件进行包含即可RCE。</p>
 <h2 id="临时文件"><a href="#临时文件" class="headerlink" title="临时文件"></a>临时文件</h2><p><strong>文件名</strong></p>
@@ -304,6 +304,12 @@ r <span class="token operator">=</span>  requests<span class="token punctuation"
 <p>参考：<a href="https://www.freebuf.com/column/235054.html" target="_blank" rel="noopener">https://www.freebuf.com/column/235054.html</a></p>
 </blockquote>
 ]]></content>
+      <categories>
+        <category>RCE</category>
+      </categories>
+      <tags>
+        <tag>LFI RCE</tag>
+      </tags>
   </entry>
   <entry>
     <title>BUUCTF WEB wp3</title>
