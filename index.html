@@ -139,6 +139,42 @@
   <div class="row mb-4 mx-auto">
     
     
+    <div class="col-12 col-md-8 m-auto">
+      <a href="/2021/05/11/LFI RCE总结/">
+        <p class="h4 index-header"></p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">LFI RCE总结​    PHP LFI即本地文件包含漏洞，通过包含本地服务器上存储的一些文件，例如session文件、日志文件、临时文件等达到拿服务器权限的目的。
+​    比较常用的方法有：PHPINFO()和 PHP7 Segment Fault。他们的基本原理都是向服务器上传生成恶意的临时文件，再对恶意文件进行包含即可RCE。
+临时文件文件名
+由于临时文件名是由随机函数生成的，我们需要获取正确的文件名，也就是$_FILES[&#39;userfile&#39;][&#39;name&#39;]。
+存储目录及命名规律
+文件被上传后，默认会被存储到服务端的默认临时目录中，该临时目录由php.ini的upload_tmp_dir属性指定，假如upload_tmp_dir的路径不可写，PHP会上传到系统默认的临时目录中。
+了解不同系统的默认存储路径很重要，因为在很多时候服务器都是按照默认设置来运行的。
+linux：
+路径 — /tmp/
+命名规则 — /tmp/php[6个随机字符]
+windows:
+路径 — C:/Windows/              C:/Windows/</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2021-05-11&nbsp;&nbsp;
+        
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
       <div class="col-12 col-md-4 m-auto">
         <a href="/2021/01/08/BUUCTFwp3/" target="_self">
           <img src="/img/3.png" srcset="/img/loading.gif" alt="BUUCTF WEB wp3" class="img-fluid rounded z-depth-3 index-thumbnails">
